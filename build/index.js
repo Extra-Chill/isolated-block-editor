@@ -173,12 +173,15 @@ var _excluded = ["children", "onSaveContent", "onSaveBlocks", "__experimentalUnd
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2["default"])(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function initializeEditor() {
+  console.log('[IBE Debug] initializeEditor called, isoInitialised:', window.isoInitialised);
   if (window.isoInitialised) {
     return;
   }
 
   // Register all core blocks
+  console.log('[IBE Debug] Registering core blocks...');
   (0, _blockLibrary.registerCoreBlocks)();
+  console.log('[IBE Debug] Core blocks registered');
   window.isoInitialised = true;
 }
 /**
@@ -188,17 +191,21 @@ function initializeEditor() {
 function useInitializeIsoEditor() {
   var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
     undoManager = _ref.undoManager;
+  console.log('[IBE Debug] useInitializeIsoEditor called, isoInitialisedBlocks:', window.isoInitialisedBlocks);
   if (window.isoInitialisedBlocks) {
     return;
   }
   initializeEditor();
 
   // This allows the editor to swap stores dynamically
+  console.log('[IBE Debug] Registering storeHotSwapPlugin...');
   (0, _data.use)(_storeHotSwap["default"], {});
+  console.log('[IBE Debug] Registering API handlers...');
   (0, _apiFetch["default"])();
 
   // Don't run this again
   window.isoInitialisedBlocks = true;
+  console.log('[IBE Debug] Initialization complete');
 }
 
 /**

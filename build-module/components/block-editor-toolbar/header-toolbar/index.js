@@ -6,7 +6,7 @@ import { useViewportMatch } from '@wordpress/compose';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { __, _x } from '@wordpress/i18n';
 import { ToolbarItem, Button, Popover } from '@wordpress/components';
-import { NavigableToolbar, __experimentalLibrary as Library, ToolSelector } from '@wordpress/block-editor';
+import { NavigableToolbar, __experimentalLibrary as Library } from '@wordpress/block-editor';
 import { plus, listView } from '@wordpress/icons';
 import { useRef, useCallback } from '@wordpress/element';
 import { store as keyboardShortcutsStore } from '@wordpress/keyboard-shortcuts';
@@ -128,7 +128,7 @@ function HeaderToolbar(props) {
             }
           }
         })
-      }), selectorTool && /*#__PURE__*/_jsx(ToolSelector, {}), undo && /*#__PURE__*/_jsx(ToolbarItem, {
+      }), undo && /*#__PURE__*/_jsx(ToolbarItem, {
         as: EditorHistoryUndo,
         showTooltip: !showIconLabels,
         variant: showIconLabels ? 'tertiary' : undefined

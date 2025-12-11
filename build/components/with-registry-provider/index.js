@@ -62,15 +62,22 @@ function (WrappedComponent) {
       subRegistry = _useState2[0],
       setSubRegistry = _useState2[1];
     (0, _element.useEffect)(function () {
+      console.log('[IBE Debug] withRegistryProvider useEffect - creating registry');
+      console.log('[IBE Debug] Parent registry:', registry);
+      console.log('[IBE Debug] blockEditorStoreConfig:', _blockEditor.storeConfig);
+      console.log('[IBE Debug] coreEditorStoreConfig:', _editor.storeConfig);
+
       // Create a new registry for this editor. We have the STORE_NAME for storing blocks and other data
       // and a duplicate of `core/block-editor` for storing block selections
       var newRegistry = (0, _data.createRegistry)({
         'core/reusable-blocks': _reusableStore["default"],
         'core/interface': _interfaceStore["default"]
       }, registry);
+      console.log('[IBE Debug] New registry created:', newRegistry);
 
       // Enable the persistence plugin so we use settings in `localStorage`
       if (persistenceKey) {
+        console.log('[IBE Debug] Enabling persistence plugin with key:', persistenceKey);
         // @ts-ignore
         newRegistry.use(_data.plugins.persistence, {
           persistenceKey: persistenceKey
@@ -78,18 +85,24 @@ function (WrappedComponent) {
       }
 
       // Create our custom store
+      console.log('[IBE Debug] Registering isolated/editor store...');
       var store = newRegistry.registerStore(STORE_NAME, (0, _store["default"])(preferencesKey, defaultPreferences));
+      console.log('[IBE Debug] isolated/editor store registered:', store);
 
       // Create the core/block-editor store separatley as we need the persistence plugin to be active
+      console.log('[IBE Debug] Registering core/block-editor store...');
       var blockEditorStore = newRegistry.registerStore('core/block-editor', _objectSpread(_objectSpread({}, _blockEditor.storeConfig), {}, {
         persist: ['preferences']
       }));
+      console.log('[IBE Debug] core/block-editor store registered:', blockEditorStore);
 
       // Duplicate the core/editor store so we can decorate it
+      console.log('[IBE Debug] Registering core/editor store...');
       var editorStore = newRegistry.registerStore('core/editor', _objectSpread(_objectSpread({}, _editor.storeConfig), {}, {
         selectors: _objectSpread(_objectSpread({}, _editor.storeConfig.selectors), (0, _coreEditor["default"])(_editor.storeConfig.selectors, newRegistry.select)),
         persist: ['preferences']
       }));
+      console.log('[IBE Debug] core/editor store registered:', editorStore);
 
       // Create any custom stores inside our registry
       customStores.map(function (store) {
@@ -100,8 +113,10 @@ function (WrappedComponent) {
       registries.push(editorStore);
 
       // @ts-ignore
+      console.log('[IBE Debug] Setting subRegistry...');
       setSubRegistry(newRegistry);
       return function cleanup() {
+        console.log('[IBE Debug] Cleaning up registry');
         registries = registries.filter(function (item) {
           return item !== store;
         });

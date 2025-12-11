@@ -138,12 +138,16 @@ import './style.scss';
  * Initialize Gutenberg
  */
 export function initializeEditor() {
+	console.log( '[IBE Debug] initializeEditor called, isoInitialised:', window.isoInitialised );
+
 	if ( window.isoInitialised ) {
 		return;
 	}
 
 	// Register all core blocks
+	console.log( '[IBE Debug] Registering core blocks...' );
 	registerCoreBlocks();
+	console.log( '[IBE Debug] Core blocks registered' );
 
 	window.isoInitialised = true;
 }
@@ -152,6 +156,8 @@ export function initializeEditor() {
  * @param {UndoManager} [props.undoManager]
  */
 export function useInitializeIsoEditor( { undoManager } = {} ) {
+	console.log( '[IBE Debug] useInitializeIsoEditor called, isoInitialisedBlocks:', window.isoInitialisedBlocks );
+
 	if ( window.isoInitialisedBlocks ) {
 		return;
 	}
@@ -159,12 +165,15 @@ export function useInitializeIsoEditor( { undoManager } = {} ) {
 	initializeEditor();
 
 	// This allows the editor to swap stores dynamically
+	console.log( '[IBE Debug] Registering storeHotSwapPlugin...' );
 	use( storeHotSwapPlugin, {} );
 
+	console.log( '[IBE Debug] Registering API handlers...' );
 	registerApiHandlers();
 
 	// Don't run this again
 	window.isoInitialisedBlocks = true;
+	console.log( '[IBE Debug] Initialization complete' );
 }
 
 /**

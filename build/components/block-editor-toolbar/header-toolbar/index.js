@@ -135,7 +135,7 @@ function HeaderToolbar(props) {
             }
           }
         })
-      }), selectorTool && /*#__PURE__*/(0, _jsxRuntime.jsx)(_blockEditor.ToolSelector, {}), undo && /*#__PURE__*/(0, _jsxRuntime.jsx)(_components.ToolbarItem, {
+      }), undo && /*#__PURE__*/(0, _jsxRuntime.jsx)(_components.ToolbarItem, {
         as: _undo["default"],
         showTooltip: !showIconLabels,
         variant: showIconLabels ? 'tertiary' : undefined
