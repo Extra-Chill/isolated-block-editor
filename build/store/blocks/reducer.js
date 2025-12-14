@@ -5,22 +5,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
-var _reduxUndo = _interopRequireDefault(require("redux-undo"));
 var _isShallowEqual = _interopRequireDefault(require("@wordpress/is-shallow-equal"));
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2["default"])(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * External dependencies
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          */ /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                              * WordPress dependencies
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                              */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * WordPress dependencies
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                          */
 var DEFAULT_STATE = {
   editCount: 0,
   selection: null,
   blocks: null
-};
-var groupBy = function groupBy(action, currentState, previousHistory) {
-  return currentState.editCount;
 };
 function getSelectedBlock(blocks, selection) {
   return blocks.find(function (block) {
@@ -70,7 +65,67 @@ var reducer = function reducer() {
   }
   return state;
 };
-var _default = exports["default"] = (0, _reduxUndo["default"])(reducer, {
-  groupBy: groupBy
-});
+var DEFAULT_HISTORY_STATE = {
+  past: [],
+  present: DEFAULT_STATE,
+  future: []
+};
+var isHistory = function isHistory(state) {
+  return state && Array.isArray(state.past) && Array.isArray(state.future) && state.present !== undefined;
+};
+var blocksHistoryReducer = function blocksHistoryReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_HISTORY_STATE;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  var historyState = isHistory(state) ? state : DEFAULT_HISTORY_STATE;
+  switch (action.type) {
+    case 'UNDO':
+      {
+        if (historyState.past.length === 0) {
+          return historyState;
+        }
+        var previous = historyState.past[historyState.past.length - 1];
+        return {
+          past: historyState.past.slice(0, -1),
+          present: previous,
+          future: [historyState.present].concat((0, _toConsumableArray2["default"])(historyState.future))
+        };
+      }
+    case 'REDO':
+      {
+        if (historyState.future.length === 0) {
+          return historyState;
+        }
+        var next = historyState.future[0];
+        return {
+          past: [].concat((0, _toConsumableArray2["default"])(historyState.past), [historyState.present]),
+          present: next,
+          future: historyState.future.slice(1)
+        };
+      }
+    case 'UPDATE_BLOCKS_WITH_UNDO':
+      {
+        var nextPresent = reducer(historyState.present, action);
+        var shouldCreateNewUndoLevel = historyState.present.editCount !== nextPresent.editCount;
+        if (!shouldCreateNewUndoLevel) {
+          return _objectSpread(_objectSpread({}, historyState), {}, {
+            present: nextPresent
+          });
+        }
+        return {
+          past: [].concat((0, _toConsumableArray2["default"])(historyState.past), [historyState.present]),
+          present: nextPresent,
+          future: []
+        };
+      }
+    case 'UPDATE_BLOCKS_WITHOUT_UNDO':
+      {
+        var _nextPresent = reducer(historyState.present, action);
+        return _objectSpread(_objectSpread({}, historyState), {}, {
+          present: _nextPresent
+        });
+      }
+  }
+  return historyState;
+};
+var _default = exports["default"] = blocksHistoryReducer;
 //# sourceMappingURL=reducer.js.map

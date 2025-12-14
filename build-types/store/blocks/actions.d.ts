@@ -1,7 +1,11 @@
 export default actions;
 declare namespace actions {
-    function undo(): Generator<import("redux").Action, any, unknown>;
-    function redo(): Generator<import("redux").Action, any, unknown>;
+    function undo(): Generator<{
+        type: string;
+    }, any, unknown>;
+    function redo(): Generator<{
+        type: string;
+    }, any, unknown>;
     /**
      * Update blocks without undo history
      *

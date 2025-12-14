@@ -32,7 +32,7 @@ import LinkMenu from './link-menu';
 
 const POPOVER_PROPS = {
 	className: 'edit-post-more-menu__content',
-	position: 'bottom left',
+	placement: 'bottom-start',
 };
 const TOGGLE_PROPS = {
 	tooltipPosition: 'bottom',

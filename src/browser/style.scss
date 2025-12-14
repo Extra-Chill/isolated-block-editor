@@ -1,6 +1,6 @@
 .iso-editor {
-	--wp-admin-theme-color: #0085ba;
-	--wp-admin-theme-color-darker-10: #0073a1;
-	--wp-admin-theme-color-darker-20: #006187;
+	--wp-admin-theme-color: var(--wp-components-color-accent);
+	--wp-admin-theme-color-darker-10: var(--wp-components-color-accent-darker-10);
+	--wp-admin-theme-color-darker-20: var(--wp-components-color-accent-darker-20);
 	--wp-admin-border-width-focus: 2px;
 }

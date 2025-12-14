@@ -12,6 +12,7 @@
 			"dom",
 			"esnext"
 		],
+		"types": [],
 		"declaration": true,
 		"declarationMap": true,
 		"composite": true,
@@ -34,9 +35,6 @@
 		"esModuleInterop": false,
 		"resolveJsonModule": true,
 
-		"typeRoots": [
-			"./node_modules/@types"
-		],
 		"rootDir": "src",
 		"declarationDir": "build-types",
 		"skipLibCheck": true,

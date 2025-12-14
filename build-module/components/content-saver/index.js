@@ -22,46 +22,27 @@ function ContentSaver(props) {
     onSaveContent
   } = props;
   const firstTime = useRef(true);
-
-  // Debug: Log component mount
-  console.log('[IBE Debug] ContentSaver mounted');
-  const dispatchResult = useDispatch('isolated/editor');
-  console.log('[IBE Debug] useDispatch result:', dispatchResult);
   const {
     setReady
-  } = dispatchResult || {};
+  } = useDispatch('isolated/editor');
   const {
     blocks,
     ignoredContent
   } = useSelect(select => {
-    const store = select('isolated/editor');
-    console.log('[IBE Debug] useSelect - isolated/editor store:', store);
-    if (!store) {
-      console.error('[IBE Debug] isolated/editor store not found!');
-      return {
-        blocks: undefined,
-        ignoredContent: []
-      };
-    }
+    var _store$getIgnoredCont;
+    const store = /** @type {any} */select('isolated/editor');
     return {
-      blocks: store.getBlocks?.(),
-      ignoredContent: store.getIgnoredContent?.()
+      blocks: store?.getBlocks?.(),
+      ignoredContent: (_store$getIgnoredCont = store?.getIgnoredContent?.()) !== null && _store$getIgnoredCont !== void 0 ? _store$getIgnoredCont : []
     };
   }, []);
-  console.log('[IBE Debug] blocks:', blocks);
   function saveBlocks() {
     // Save the content in the format wanted by the user
     onSaveBlocks?.(blocks, ignoredContent);
     onSaveContent?.(serialize(blocks));
   }
   useEffect(() => {
-    console.log('[IBE Debug] ContentSaver useEffect triggered, blocks:', blocks);
-    if (!setReady) {
-      console.error('[IBE Debug] setReady is not available!');
-      return;
-    }
     if (!blocks) {
-      console.log('[IBE Debug] No blocks, calling setReady(true)');
       setReady(true);
       return;
     }
@@ -69,7 +50,6 @@ function ContentSaver(props) {
     // Try and avoid an initial first save if no content
     if (firstTime.current) {
       firstTime.current = false;
-      console.log('[IBE Debug] First time, calling setReady(true)');
       setReady(true);
 
       // The editor has initial content - save it
@@ -79,7 +59,7 @@ function ContentSaver(props) {
     } else {
       saveBlocks();
     }
-  }, [blocks]);
+  }, [blocks, setReady]);
   return null;
 }
 export default ContentSaver;

@@ -8,12 +8,11 @@ import classnames from 'classnames';
  * WordPress dependencies
  */
 import { withDispatch, useSelect } from '@wordpress/data';
-import { KeyboardShortcuts } from '@wordpress/components';
+import { KeyboardShortcuts, Slot } from '@wordpress/components';
 import { rawShortcut } from '@wordpress/keycodes';
 import { useViewportMatch } from '@wordpress/compose';
 import { BlockEditorKeyboardShortcuts, BlockToolbar } from '@wordpress/block-editor';
-import { EditorNotices, EditorSnackbars } from '@wordpress/editor';
-import { FullscreenMode, ComplementaryArea, InterfaceSkeleton, store as interfaceStore } from '@wordpress/interface';
+import { InterfaceSkeleton } from '@wordpress/interface';
 import { __ } from '@wordpress/i18n';
 import { store as keyboardShortcutsStore } from '@wordpress/keyboard-shortcuts';
 import { useEffect } from '@wordpress/element';
@@ -91,7 +90,7 @@ function BlockEditor( props ) {
 		const { isFeatureActive, isInserterOpened, isListViewOpened, isOptionActive } = select( 'isolated/editor' );
 
 		return {
-			sidebarIsOpened: !!select( interfaceStore ).getActiveComplementaryArea( 'isolated/editor' ),
+			sidebarIsOpened: !! select( 'core/interface' ).getActiveComplementaryArea( 'isolated/editor' ),
 			fixedToolbar: isFeatureActive( 'fixedToolbar', settings?.editor.hasFixedToolbar ),
 			isInserterOpened: isInserterOpened(),
 			isListViewOpened: isListViewOpened(),
@@ -100,9 +99,8 @@ function BlockEditor( props ) {
 			previousShortcut: select( keyboardShortcutsStore ).getAllShortcutKeyCombinations(
 				'core/edit-post/previous-region'
 			),
-			nextShortcut: select( keyboardShortcutsStore ).getAllShortcutKeyCombinations(
-				'core/edit-post/next-region'
-			),
+			nextShortcut:
+				select( keyboardShortcutsStore ).getAllShortcutKeyCombinations( 'core/edit-post/next-region' ),
 		};
 	}, [] );
 	const className = classnames( 'edit-post-layout', 'is-mode-' + editorMode, {
@@ -110,7 +108,7 @@ function BlockEditor( props ) {
 		'show-icon-labels': showIconLabels,
 	} );
 	const secondarySidebar = () => {
-		if ( !inserterInSidebar ) {
+		if ( ! inserterInSidebar ) {
 			return null;
 		}
 
@@ -152,7 +150,6 @@ function BlockEditor( props ) {
 	return (
 		<>
 			<CustomSettingsSidebar documentInspector={ settings?.iso?.toolbar?.documentInspector ?? false } />
-			<FullscreenMode isActive={ isFullscreenActive } />
 
 			<InterfaceSkeleton
 				className={ className }
@@ -160,14 +157,11 @@ function BlockEditor( props ) {
 				header={ header }
 				secondarySidebar={ secondarySidebar() }
 				sidebar={
-					( !isMobileViewport || sidebarIsOpened ) &&
-					inspectorInSidebar && <ComplementaryArea.Slot scope="isolated/editor" />
+					( ! isMobileViewport || sidebarIsOpened ) &&
+					inspectorInSidebar && <Slot name="ComplementaryArea/isolated/editor" />
 				}
-				notices={ <EditorSnackbars /> }
 				content={
 					<>
-						<EditorNotices />
-
 						{ isEditing && (
 							<>
 								<BlockEditorKeyboardShortcuts />

@@ -22,7 +22,9 @@ import ListViewOutline from './list-view-outline';
 
 import { unlock } from './unlock';
 
-const { Tabs } = unlock( componentsPrivateApis );
+// Get Tabs from unlock
+const unlockedComponents = unlock( componentsPrivateApis );
+const Tabs = unlockedComponents?.Tabs;
 
 
 export default function ListViewSidebar( { canClose = true } ) {

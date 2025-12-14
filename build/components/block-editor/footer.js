@@ -9,7 +9,6 @@ var _compose = require("@wordpress/compose");
 var _data = require("@wordpress/data");
 var _blockEditor = require("@wordpress/block-editor");
 var _i18n = require("@wordpress/i18n");
-var _editor = require("@wordpress/editor");
 var _footerSlot = _interopRequireDefault(require("../footer-slot"));
 var _jsxRuntime = require("react/jsx-runtime");
 /**
@@ -24,10 +23,10 @@ var Footer = function Footer(_ref) {
   var editorMode = _ref.editorMode;
   var isMobileViewport = (0, _compose.useViewportMatch)('medium', '<');
   var _useSelect = (0, _data.useSelect)(function (select) {
-      // @ts-ignore
-      var _select = select(_editor.store),
-        getPostTypeLabel = _select.getPostTypeLabel;
-      var postTypeLabel = getPostTypeLabel();
+      var _select = select(_blockEditor.store),
+        getSettings = _select.getSettings;
+      var settings = getSettings();
+      var postTypeLabel = settings === null || settings === void 0 ? void 0 : settings.postTypeLabel;
       return {
         // TODO: This is currently disabled until it can be better worked in
         showBlockBreadcrumbs: false,

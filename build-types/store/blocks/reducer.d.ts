@@ -1,8 +1,27 @@
-/// <reference types="redux-undo" />
-declare const _default: import("redux").Reducer<import("redux-undo").StateWithHistory<{
-    editCount: number;
-    blocks: any;
-    selection: any;
-}>>;
-export default _default;
+export default blocksHistoryReducer;
+declare function blocksHistoryReducer(state: {
+    past: never[];
+    present: {
+        editCount: number;
+        selection: null;
+        blocks: null;
+    };
+    future: never[];
+} | undefined, action: any): {
+    past: never[];
+    present: any;
+    future: {
+        editCount: number;
+        selection: null;
+        blocks: null;
+    }[];
+} | {
+    past: {
+        editCount: number;
+        selection: null;
+        blocks: null;
+    }[];
+    present: any;
+    future: never[];
+};
 //# sourceMappingURL=reducer.d.ts.map

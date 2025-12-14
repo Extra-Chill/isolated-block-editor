@@ -17,10 +17,11 @@ import { ESCAPE } from '@wordpress/keycodes';
  */
 import ListViewOutline from './list-view-outline';
 import { unlock } from './unlock';
+
+// Get Tabs from unlock
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-const {
-  Tabs
-} = unlock(componentsPrivateApis);
+const unlockedComponents = unlock(componentsPrivateApis);
+const Tabs = unlockedComponents?.Tabs;
 export default function ListViewSidebar({
   canClose = true
 }) {

@@ -7,41 +7,35 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
 var _classnames2 = _interopRequireDefault(require("classnames"));
 var _compose = require("@wordpress/compose");
-var _editor = require("@wordpress/editor");
+var _element = require("@wordpress/element");
 var _data = require("@wordpress/data");
 var _clickOutside = _interopRequireDefault(require("./click-outside"));
 var _blockEditorContents = _interopRequireDefault(require("../block-editor-contents"));
 var _hotSwapper = _interopRequireDefault(require("./hot-swapper"));
 require("./style.scss");
 var _jsxRuntime = require("react/jsx-runtime");
-// @ts-nocheck
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } } // @ts-nocheck
 /**
  * External dependencies
- */
-
-/**
- * WordPress dependencies
- */
-
-/**
- * Internal dependencies
- */
-
-/** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
-/** @typedef {import('../../index').OnError} OnError */
-/** @typedef {import('../../index').OnMore} OnMore */
-/** @typedef {import('../../store/editor/reducer').EditorMode} EditorMode */
-/** @typedef {import('../../index').OnLoad} OnLoad */
-/** @typedef {import('../block-editor-contents/index').OnUpdate} OnUpdate */
-
-/**
- * Set editing callback
- *
- * @callback OnSetEditing
- * @param {boolean} isEditing
- */var SIZE_LARGE = 720;
+ */ /**
+     * WordPress dependencies
+     */ /**
+         * Internal dependencies
+         */ /** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */ /** @typedef {import('../../index').OnError} OnError */ /** @typedef {import('../../index').OnMore} OnMore */ /** @typedef {import('../../store/editor/reducer').EditorMode} EditorMode */ /** @typedef {import('../../index').OnLoad} OnLoad */ /** @typedef {import('../block-editor-contents/index').OnUpdate} OnUpdate */ /**
+                                                                                                                                                                                                                                                                                                                                                                                                                           * Set editing callback
+                                                                                                                                                                                                                                                                                                                                                                                                                           *
+                                                                                                                                                                                                                                                                                                                                                                                                                           * @callback OnSetEditing
+                                                                                                                                                                                                                                                                                                                                                                                                                           * @param {boolean} isEditing
+                                                                                                                                                                                                                                                                                                                                                                                                                           */
+var SIZE_LARGE = 720;
 var SIZE_MEDIUM = 480;
 
 /**
@@ -64,6 +58,42 @@ var SIZE_MEDIUM = 480;
  * @param {OnUpdate} [props.onChange] - Gutenberg's onChange callback
  * @param {object[]} [props.blocks] - Gutenberg's blocks
  */
+var LocalErrorBoundary = /*#__PURE__*/function (_Component) {
+  (0, _inherits2["default"])(LocalErrorBoundary, _Component);
+  var _super = _createSuper(LocalErrorBoundary);
+  function LocalErrorBoundary(props) {
+    var _this;
+    (0, _classCallCheck2["default"])(this, LocalErrorBoundary);
+    _this = _super.call(this, props);
+    _this.state = {
+      hasError: false
+    };
+    return _this;
+  }
+  (0, _createClass2["default"])(LocalErrorBoundary, [{
+    key: "componentDidCatch",
+    value: function componentDidCatch(error) {
+      var _this$props$onError, _this$props;
+      (_this$props$onError = (_this$props = this.props).onError) === null || _this$props$onError === void 0 || _this$props$onError.call(_this$props, error);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      if (this.state.hasError) {
+        return null;
+      }
+      return this.props.children;
+    }
+  }], [{
+    key: "getDerivedStateFromError",
+    value: function getDerivedStateFromError() {
+      return {
+        hasError: true
+      };
+    }
+  }]);
+  return LocalErrorBoundary;
+}(_element.Component);
 function BlockEditorContainer(props) {
   var _classnames;
   var children = props.children,
@@ -97,9 +127,10 @@ function BlockEditorContainer(props) {
     'edit-post-layout': true,
     'has-fixed-toolbar': fixedToolbar
   }, (0, _defineProperty2["default"])(_classnames, 'is-mode-' + editorMode, true), (0, _defineProperty2["default"])(_classnames, 'is-preview-mode', isPreview), _classnames));
+  var Boundary = LocalErrorBoundary;
   return /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
     className: classes,
-    children: /*#__PURE__*/(0, _jsxRuntime.jsxs)(_editor.ErrorBoundary, {
+    children: /*#__PURE__*/(0, _jsxRuntime.jsxs)(Boundary, {
       onError: onError,
       children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_hotSwapper["default"], {}), resizeListener, /*#__PURE__*/(0, _jsxRuntime.jsx)(_clickOutside["default"], {
         onOutside: function onOutside() {

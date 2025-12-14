@@ -23,7 +23,7 @@ html.interface-interface-skeleton__html-container {
 		font-family: $default-font;
 		font-size: $default-font-size;
 		line-height: $default-line-height;
-		color: $gray-900;
+		color: var(--wp-components-color-foreground);
 	}
 
 	// Change the box model for inputs.
@@ -77,9 +77,9 @@ html.interface-interface-skeleton__html-container {
 .iso-editor {
 	width: 100%;
 	min-height: 145px;
-	background-color: $white;
+	background-color: var(--wp-components-color-background);
 	position: relative;
-	border: $border-width solid $gray-200;
+	border: $border-width solid var(--wp-components-color-gray-300);
 }
 
 .components-modal__frame {
@@ -95,8 +95,8 @@ html.interface-interface-skeleton__html-container {
 // Loading style
 .iso-editor__loading {
 	min-height: 125px;
-	background-color: $gray-200;
-	border: 1px solid $gray-200;
+	background-color: var(--wp-components-color-gray-100);
+	border: 1px solid var(--wp-components-color-gray-300);
 	animation: loading-fade 1.6s ease-in-out infinite;
 	margin-bottom: 57px;
 

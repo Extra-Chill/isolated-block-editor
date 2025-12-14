@@ -1,18 +1,18 @@
 /**
  * WordPress dependencies
  */
-import { store as interfaceStore } from '@wordpress/interface';
-import { Panel, Fill } from '@wordpress/components';
+import { Fill, Panel, Slot } from '@wordpress/components';
+import { useSelect } from '@wordpress/data';
 
 /**
  * Internal dependencies
  */
-import { useSelect } from '@wordpress/data';
-
 import ComplementaryAreaHeader from './complementary-area-header';
 
+const EDITOR_SCOPE = 'isolated/editor';
+
 function isActiveArea( area ) {
-	return [ 'edit-post/document', 'edit-post/block' ].includes( area )
+	return [ 'edit-post/document', 'edit-post/block' ].includes( area );
 }
 
 function ComplementaryAreaFill( { scope, children, className } ) {
@@ -23,33 +23,41 @@ function ComplementaryAreaFill( { scope, children, className } ) {
 	);
 }
 
-export default function ComplementaryArea( { className, children, header, headerClassName, toggleShortcut, closeLabel, title, identifier, ...props } ) {
-	const scope = "isolated/editor";
+export default function ComplementaryArea( {
+	className,
+	children,
+	header,
+	headerClassName,
+	toggleShortcut,
+	closeLabel,
+	identifier,
+	...props
+} ) {
 	const { isActive } = useSelect( ( select ) => {
-		// @ts-ignore
-		const { getActiveComplementaryArea } = select( interfaceStore );
-		const _activeArea = getActiveComplementaryArea( 'isolated/editor' );
+		const interfaceStore = /** @type {any} */ ( select( 'core/interface' ) );
+		const activeArea = interfaceStore?.getActiveComplementaryArea?.( EDITOR_SCOPE );
 
 		return {
-			isActive: isActiveArea( _activeArea ),
+			isActive: isActiveArea( activeArea ),
 		};
 	}, [] );
 
-	if ( !isActive ) {
+	if ( ! isActive ) {
 		return null;
 	}
 
+	const fillClassName = className
+		? `interface-complementary-area ${ className }`
+		: 'interface-complementary-area';
+
 	return (
-		<ComplementaryAreaFill
-			className="interface-complementary-area"
-			scope="isolated/editor"
-		>
+		<ComplementaryAreaFill className={ fillClassName } scope={ EDITOR_SCOPE }>
 			<ComplementaryAreaHeader
 				className={ headerClassName }
 				toggleButtonProps={ {
 					label: closeLabel,
 					shortcut: toggleShortcut,
-					scope,
+					scope: EDITOR_SCOPE,
 					identifier,
 				} }
 			>
@@ -59,3 +67,7 @@ export default function ComplementaryArea( { className, children, header, header
 		</ComplementaryAreaFill>
 	);
 }
+
+ComplementaryArea.Slot = function ComplementaryAreaSlot( { scope } ) {
+	return <Slot name={ `ComplementaryArea/${ scope }` } />;
+};

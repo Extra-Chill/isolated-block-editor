@@ -10,7 +10,6 @@ var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/h
 var _classnames = _interopRequireDefault(require("classnames"));
 var _components = require("@wordpress/components");
 var _data = require("@wordpress/data");
-var _interface = require("@wordpress/interface");
 var _icons = require("@wordpress/icons");
 var _jsxRuntime = require("react/jsx-runtime");
 var _excluded = ["as", "scope", "identifier", "icon", "selectedIcon", "name"];
@@ -33,12 +32,11 @@ function ComplementaryAreaToggle(_ref) {
     props = (0, _objectWithoutProperties2["default"])(_ref, _excluded);
   var ComponentToUse = as;
   var isSelected = (0, _data.useSelect)(function (select) {
-    return (
-      // @ts-ignore
-      select(_interface.store).getActiveComplementaryArea(scope) === identifier
-    );
-  }, [identifier]);
-  var _useDispatch = (0, _data.useDispatch)(_interface.store),
+    var _interfaceStore$getAc;
+    var interfaceStore = /** @type {any} */select('core/interface');
+    return (interfaceStore === null || interfaceStore === void 0 || (_interfaceStore$getAc = interfaceStore.getActiveComplementaryArea) === null || _interfaceStore$getAc === void 0 ? void 0 : _interfaceStore$getAc.call(interfaceStore, scope)) === identifier;
+  }, [identifier, scope]);
+  var _useDispatch = (0, _data.useDispatch)('core/interface'),
     enableComplementaryArea = _useDispatch.enableComplementaryArea,
     disableComplementaryArea = _useDispatch.disableComplementaryArea;
   return /*#__PURE__*/(0, _jsxRuntime.jsx)(ComponentToUse, _objectSpread({

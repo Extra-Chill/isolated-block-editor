@@ -9,7 +9,7 @@ import classnames from 'classnames';
  * WordPress dependencies
  */
 import { compose, useResizeObserver } from '@wordpress/compose';
-import { ErrorBoundary } from '@wordpress/editor';
+import { Component } from '@wordpress/element';
 import { withDispatch, withSelect } from '@wordpress/data';
 
 /**
@@ -57,6 +57,28 @@ const SIZE_MEDIUM = 480;
  * @param {OnUpdate} [props.onChange] - Gutenberg's onChange callback
  * @param {object[]} [props.blocks] - Gutenberg's blocks
  */
+class LocalErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      hasError: false
+    };
+  }
+  static getDerivedStateFromError() {
+    return {
+      hasError: true
+    };
+  }
+  componentDidCatch(error) {
+    this.props.onError?.(error);
+  }
+  render() {
+    if (this.state.hasError) {
+      return null;
+    }
+    return this.props.children;
+  }
+}
 function BlockEditorContainer(props) {
   const {
     children,
@@ -94,9 +116,10 @@ function BlockEditorContainer(props) {
     ['is-mode-' + editorMode]: true,
     'is-preview-mode': isPreview
   });
+  const Boundary = LocalErrorBoundary;
   return /*#__PURE__*/_jsx("div", {
     className: classes,
-    children: /*#__PURE__*/_jsxs(ErrorBoundary, {
+    children: /*#__PURE__*/_jsxs(Boundary, {
       onError: onError,
       children: [/*#__PURE__*/_jsx(HotSwapper, {}), resizeListener, /*#__PURE__*/_jsx(ClickOutsideWrapper, {
         onOutside: () => setEditing(false),

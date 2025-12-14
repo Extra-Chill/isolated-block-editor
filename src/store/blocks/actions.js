@@ -1,14 +1,13 @@
 /**
- * External dependencies
+ * Internal dependencies
  */
-import { ActionCreators } from 'redux-undo';
 
 const actions = {
 	*undo() {
-		return yield ActionCreators.undo();
+		return yield { type: 'UNDO' };
 	},
 	*redo() {
-		return yield ActionCreators.redo();
+		return yield { type: 'REDO' };
 	},
 	/**
 	 * Update blocks without undo history

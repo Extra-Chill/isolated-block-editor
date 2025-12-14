@@ -3,7 +3,6 @@
  */
 
 import { controls } from '@wordpress/data';
-import { store as interfaceStore } from '@wordpress/interface';
 
 /** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
 /** @typedef {import('./reducer').EditorMode} EditorMode */
@@ -114,13 +113,13 @@ const actions = {
 	 * @param {string} name Name of sidebar section
 	 */
 	*openGeneralSidebar( name ) {
-		yield controls.dispatch( interfaceStore, 'enableComplementaryArea', 'isolated/editor', name );
+		yield controls.dispatch( 'core/interface', 'enableComplementaryArea', 'isolated/editor', name );
 	},
 	/**
 	 * Close the sidebar (or popover)
 	 */
 	*closeGeneralSidebar() {
-		yield controls.dispatch( interfaceStore, 'disableComplementaryArea', 'isolated/editor' );
+		yield controls.dispatch( 'core/interface', 'disableComplementaryArea', 'isolated/editor' );
 	},
 	/**
 	 * Set the status of the listview sidebar section

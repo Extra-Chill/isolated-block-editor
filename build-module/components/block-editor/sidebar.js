@@ -5,9 +5,8 @@
 import { BlockInspector, store as blockEditorStore } from '@wordpress/block-editor';
 import { cog } from '@wordpress/icons';
 import { store as keyboardShortcutsStore } from '@wordpress/keyboard-shortcuts';
-import { store as interfaceStore } from '@wordpress/interface';
 import { useContext } from '@wordpress/element';
-import { privateApis as componentsPrivateApis } from "@wordpress/components";
+import { privateApis as componentsPrivateApis } from '@wordpress/components';
 
 /**
  * Internal dependencies
@@ -19,10 +18,11 @@ import { default as SettingsHeader, sidebars } from './sidebar-heading';
 import Document from '../document';
 import ComplementaryArea from '../complementary-area';
 import { unlock } from './unlock';
+
+// Get Tabs from unlock
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-const {
-  Tabs
-} = unlock(componentsPrivateApis);
+const unlockedComponents = unlock(componentsPrivateApis);
+const Tabs = unlockedComponents?.Tabs;
 function isActiveArea(area) {
   return [sidebars.document, sidebars.block].includes(area);
 }
@@ -73,7 +73,7 @@ const SettingsSidebar = ({
     keyboardShortcut,
     isSettingsSidebarActive
   } = useSelect(select => {
-    let sidebar = select(interfaceStore).getActiveComplementaryArea('isolated/editor');
+    let sidebar = select('core/interface').getActiveComplementaryArea('isolated/editor');
     let isSettingsSidebar = true;
     if (!isActiveArea(sidebar)) {
       isSettingsSidebar = false;
@@ -94,9 +94,9 @@ const SettingsSidebar = ({
   } = useDispatch('isolated/editor');
   return /*#__PURE__*/_jsx(Tabs
   // Due to how this component is controlled (via a value from the
-  // `interfaceStore`), when the sidebar closes the currently selected
+  // interface store), when the sidebar closes the currently selected
   // tab can't be found. This causes the component to continuously reset
-  // the selection to `null` in an infinite loop.Proactively setting
+  // the selection to `null` in an infinite loop. Proactively setting
   // the selected tab to `null` avoids that.
   , {
     selectedTabId: isSettingsSidebarActive ? sidebarName : null,

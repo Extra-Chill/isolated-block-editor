@@ -34,7 +34,9 @@ function BlockNavigationDropdown(props, ref) {
   var isEnabled = hasBlocks && !isDisabled;
   return /*#__PURE__*/(0, _jsxRuntime.jsx)(_components.Dropdown, {
     contentClassName: "block-editor-block-navigation__popover",
-    position: "bottom right",
+    popoverProps: {
+      placement: 'bottom-end'
+    },
     renderToggle: function renderToggle(_ref) {
       var isOpen = _ref.isOpen,
         onToggle = _ref.onToggle;

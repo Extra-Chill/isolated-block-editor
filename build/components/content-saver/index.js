@@ -24,45 +24,25 @@ function ContentSaver(props) {
   var onSaveBlocks = props.onSaveBlocks,
     onSaveContent = props.onSaveContent;
   var firstTime = (0, _element.useRef)(true);
-
-  // Debug: Log component mount
-  console.log('[IBE Debug] ContentSaver mounted');
-  var dispatchResult = (0, _data.useDispatch)('isolated/editor');
-  console.log('[IBE Debug] useDispatch result:', dispatchResult);
-  var _ref = dispatchResult || {},
-    setReady = _ref.setReady;
+  var _useDispatch = (0, _data.useDispatch)('isolated/editor'),
+    setReady = _useDispatch.setReady;
   var _useSelect = (0, _data.useSelect)(function (select) {
-      var _store$getBlocks, _store$getIgnoredCont;
-      var store = select('isolated/editor');
-      console.log('[IBE Debug] useSelect - isolated/editor store:', store);
-      if (!store) {
-        console.error('[IBE Debug] isolated/editor store not found!');
-        return {
-          blocks: undefined,
-          ignoredContent: []
-        };
-      }
+      var _store$getBlocks, _store$getIgnoredCont, _store$getIgnoredCont2;
+      var store = /** @type {any} */select('isolated/editor');
       return {
-        blocks: (_store$getBlocks = store.getBlocks) === null || _store$getBlocks === void 0 ? void 0 : _store$getBlocks.call(store),
-        ignoredContent: (_store$getIgnoredCont = store.getIgnoredContent) === null || _store$getIgnoredCont === void 0 ? void 0 : _store$getIgnoredCont.call(store)
+        blocks: store === null || store === void 0 || (_store$getBlocks = store.getBlocks) === null || _store$getBlocks === void 0 ? void 0 : _store$getBlocks.call(store),
+        ignoredContent: (_store$getIgnoredCont = store === null || store === void 0 || (_store$getIgnoredCont2 = store.getIgnoredContent) === null || _store$getIgnoredCont2 === void 0 ? void 0 : _store$getIgnoredCont2.call(store)) !== null && _store$getIgnoredCont !== void 0 ? _store$getIgnoredCont : []
       };
     }, []),
     blocks = _useSelect.blocks,
     ignoredContent = _useSelect.ignoredContent;
-  console.log('[IBE Debug] blocks:', blocks);
   function saveBlocks() {
     // Save the content in the format wanted by the user
     onSaveBlocks === null || onSaveBlocks === void 0 || onSaveBlocks(blocks, ignoredContent);
     onSaveContent === null || onSaveContent === void 0 || onSaveContent((0, _blocks.serialize)(blocks));
   }
   (0, _element.useEffect)(function () {
-    console.log('[IBE Debug] ContentSaver useEffect triggered, blocks:', blocks);
-    if (!setReady) {
-      console.error('[IBE Debug] setReady is not available!');
-      return;
-    }
     if (!blocks) {
-      console.log('[IBE Debug] No blocks, calling setReady(true)');
       setReady(true);
       return;
     }
@@ -70,7 +50,6 @@ function ContentSaver(props) {
     // Try and avoid an initial first save if no content
     if (firstTime.current) {
       firstTime.current = false;
-      console.log('[IBE Debug] First time, calling setReady(true)');
       setReady(true);
 
       // The editor has initial content - save it
@@ -80,7 +59,7 @@ function ContentSaver(props) {
     } else {
       saveBlocks();
     }
-  }, [blocks]);
+  }, [blocks, setReady]);
   return null;
 }
 var _default = exports["default"] = ContentSaver;

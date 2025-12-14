@@ -8,12 +8,11 @@ import classnames from 'classnames';
  * WordPress dependencies
  */
 import { withDispatch, useSelect } from '@wordpress/data';
-import { KeyboardShortcuts } from '@wordpress/components';
+import { KeyboardShortcuts, Slot } from '@wordpress/components';
 import { rawShortcut } from '@wordpress/keycodes';
 import { useViewportMatch } from '@wordpress/compose';
 import { BlockEditorKeyboardShortcuts, BlockToolbar } from '@wordpress/block-editor';
-import { EditorNotices, EditorSnackbars } from '@wordpress/editor';
-import { FullscreenMode, ComplementaryArea, InterfaceSkeleton, store as interfaceStore } from '@wordpress/interface';
+import { InterfaceSkeleton } from '@wordpress/interface';
 import { __ } from '@wordpress/i18n';
 import { store as keyboardShortcutsStore } from '@wordpress/keyboard-shortcuts';
 import { useEffect } from '@wordpress/element';
@@ -104,7 +103,7 @@ function BlockEditor(props) {
       isOptionActive
     } = select('isolated/editor');
     return {
-      sidebarIsOpened: !!select(interfaceStore).getActiveComplementaryArea('isolated/editor'),
+      sidebarIsOpened: !!select('core/interface').getActiveComplementaryArea('isolated/editor'),
       fixedToolbar: isFeatureActive('fixedToolbar', settings?.editor.hasFixedToolbar),
       isInserterOpened: isInserterOpened(),
       isListViewOpened: isListViewOpened(),
@@ -156,19 +155,16 @@ function BlockEditor(props) {
   return /*#__PURE__*/_jsxs(_Fragment, {
     children: [/*#__PURE__*/_jsx(CustomSettingsSidebar, {
       documentInspector: (_settings$iso$toolbar = settings?.iso?.toolbar?.documentInspector) !== null && _settings$iso$toolbar !== void 0 ? _settings$iso$toolbar : false
-    }), /*#__PURE__*/_jsx(FullscreenMode, {
-      isActive: isFullscreenActive
     }), /*#__PURE__*/_jsx(InterfaceSkeleton, {
       className: className,
       labels: interfaceLabels,
       header: header,
       secondarySidebar: secondarySidebar(),
-      sidebar: (!isMobileViewport || sidebarIsOpened) && inspectorInSidebar && /*#__PURE__*/_jsx(ComplementaryArea.Slot, {
-        scope: "isolated/editor"
+      sidebar: (!isMobileViewport || sidebarIsOpened) && inspectorInSidebar && /*#__PURE__*/_jsx(Slot, {
+        name: "ComplementaryArea/isolated/editor"
       }),
-      notices: /*#__PURE__*/_jsx(EditorSnackbars, {}),
       content: /*#__PURE__*/_jsxs(_Fragment, {
-        children: [/*#__PURE__*/_jsx(EditorNotices, {}), isEditing && /*#__PURE__*/_jsxs(_Fragment, {
+        children: [isEditing && /*#__PURE__*/_jsxs(_Fragment, {
           children: [/*#__PURE__*/_jsx(BlockEditorKeyboardShortcuts, {}), /*#__PURE__*/_jsx(BlockEditorKeyboardShortcuts.Register, {})]
         }), /*#__PURE__*/_jsxs(KeyboardShortcuts, {
           bindGlobal: false,

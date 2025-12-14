@@ -129,6 +129,9 @@ function HeaderToolbar(props) {
         children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_blockEditor.__experimentalLibrary, {
           showMostUsedBlocks: false,
           showInserterHelpPanel: true,
+          onClose: function onClose() {
+            return setIsInserterOpened(false);
+          },
           onSelect: function onSelect() {
             if (isMobileViewport) {
               setIsInserterOpened(false);

@@ -12,7 +12,6 @@ var _components = require("@wordpress/components");
 var _keycodes = require("@wordpress/keycodes");
 var _compose = require("@wordpress/compose");
 var _blockEditor = require("@wordpress/block-editor");
-var _editor = require("@wordpress/editor");
 var _interface = require("@wordpress/interface");
 var _i18n = require("@wordpress/i18n");
 var _keyboardShortcuts = require("@wordpress/keyboard-shortcuts");
@@ -99,7 +98,7 @@ function BlockEditor(props) {
         isListViewOpened = _select.isListViewOpened,
         isOptionActive = _select.isOptionActive;
       return {
-        sidebarIsOpened: !!select(_interface.store).getActiveComplementaryArea('isolated/editor'),
+        sidebarIsOpened: !!select('core/interface').getActiveComplementaryArea('isolated/editor'),
         fixedToolbar: isFeatureActive('fixedToolbar', settings === null || settings === void 0 ? void 0 : settings.editor.hasFixedToolbar),
         isInserterOpened: isInserterOpened(),
         isListViewOpened: isListViewOpened(),
@@ -159,19 +158,16 @@ function BlockEditor(props) {
   return /*#__PURE__*/(0, _jsxRuntime.jsxs)(_jsxRuntime.Fragment, {
     children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(CustomSettingsSidebar, {
       documentInspector: (_settings$iso$toolbar = settings === null || settings === void 0 || (_settings$iso6 = settings.iso) === null || _settings$iso6 === void 0 || (_settings$iso6 = _settings$iso6.toolbar) === null || _settings$iso6 === void 0 ? void 0 : _settings$iso6.documentInspector) !== null && _settings$iso$toolbar !== void 0 ? _settings$iso$toolbar : false
-    }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_interface.FullscreenMode, {
-      isActive: isFullscreenActive
     }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_interface.InterfaceSkeleton, {
       className: className,
       labels: interfaceLabels,
       header: header,
       secondarySidebar: secondarySidebar(),
-      sidebar: (!isMobileViewport || sidebarIsOpened) && inspectorInSidebar && /*#__PURE__*/(0, _jsxRuntime.jsx)(_interface.ComplementaryArea.Slot, {
-        scope: "isolated/editor"
+      sidebar: (!isMobileViewport || sidebarIsOpened) && inspectorInSidebar && /*#__PURE__*/(0, _jsxRuntime.jsx)(_components.Slot, {
+        name: "ComplementaryArea/isolated/editor"
       }),
-      notices: /*#__PURE__*/(0, _jsxRuntime.jsx)(_editor.EditorSnackbars, {}),
       content: /*#__PURE__*/(0, _jsxRuntime.jsxs)(_jsxRuntime.Fragment, {
-        children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_editor.EditorNotices, {}), isEditing && /*#__PURE__*/(0, _jsxRuntime.jsxs)(_jsxRuntime.Fragment, {
+        children: [isEditing && /*#__PURE__*/(0, _jsxRuntime.jsxs)(_jsxRuntime.Fragment, {
           children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_blockEditor.BlockEditorKeyboardShortcuts, {}), /*#__PURE__*/(0, _jsxRuntime.jsx)(_blockEditor.BlockEditorKeyboardShortcuts.Register, {})]
         }), /*#__PURE__*/(0, _jsxRuntime.jsxs)(_components.KeyboardShortcuts, {
           bindGlobal: false,

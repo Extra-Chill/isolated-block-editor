@@ -9,7 +9,6 @@ exports["default"] = void 0;
 var _blockEditor = require("@wordpress/block-editor");
 var _icons = require("@wordpress/icons");
 var _keyboardShortcuts = require("@wordpress/keyboard-shortcuts");
-var _interface = require("@wordpress/interface");
 var _element = require("@wordpress/element");
 var _components = require("@wordpress/components");
 var _i18n = require("@wordpress/i18n");
@@ -17,7 +16,7 @@ var _data = require("@wordpress/data");
 var _sidebarHeading = _interopRequireWildcard(require("./sidebar-heading"));
 var _document = _interopRequireDefault(require("../document"));
 var _complementaryArea = _interopRequireDefault(require("../complementary-area"));
-var _unlock2 = require("./unlock");
+var _unlock = require("./unlock");
 var _jsxRuntime = require("react/jsx-runtime");
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != _typeof(e) && "function" != typeof e) return { "default": e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n["default"] = e, t && t.set(e, n), n; }
@@ -30,8 +29,9 @@ function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; 
  * Internal dependencies
  */
 
-var _unlock = (0, _unlock2.unlock)(_components.privateApis),
-  Tabs = _unlock.Tabs;
+// Get Tabs from unlock
+var unlockedComponents = (0, _unlock.unlock)(_components.privateApis);
+var Tabs = unlockedComponents === null || unlockedComponents === void 0 ? void 0 : unlockedComponents.Tabs;
 function isActiveArea(area) {
   return [_sidebarHeading.sidebars.document, _sidebarHeading.sidebars.block].includes(area);
 }
@@ -76,7 +76,7 @@ var SettingsSidebarInternal = function SettingsSidebarInternal(_ref) {
 var SettingsSidebar = function SettingsSidebar(_ref2) {
   var documentInspector = _ref2.documentInspector;
   var _useSelect = (0, _data.useSelect)(function (select) {
-      var sidebar = select(_interface.store).getActiveComplementaryArea('isolated/editor');
+      var sidebar = select('core/interface').getActiveComplementaryArea('isolated/editor');
       var isSettingsSidebar = true;
       if (!isActiveArea(sidebar)) {
         isSettingsSidebar = false;
@@ -99,9 +99,9 @@ var SettingsSidebar = function SettingsSidebar(_ref2) {
     onTabSelect = _useDispatch.openGeneralSidebar;
   return /*#__PURE__*/(0, _jsxRuntime.jsx)(Tabs
   // Due to how this component is controlled (via a value from the
-  // `interfaceStore`), when the sidebar closes the currently selected
+  // interface store), when the sidebar closes the currently selected
   // tab can't be found. This causes the component to continuously reset
-  // the selection to `null` in an infinite loop.Proactively setting
+  // the selection to `null` in an infinite loop. Proactively setting
   // the selected tab to `null` avoids that.
   , {
     selectedTabId: isSettingsSidebarActive ? sidebarName : null,

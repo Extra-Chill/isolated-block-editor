@@ -1,9 +1,4 @@
 /**
- * External dependencies
- */
-import undoable from 'redux-undo';
-
-/**
  * WordPress dependencies
  */
 import isShallowEqual from '@wordpress/is-shallow-equal';
@@ -11,9 +6,6 @@ const DEFAULT_STATE = {
   editCount: 0,
   selection: null,
   blocks: null
-};
-const groupBy = (action, currentState, previousHistory) => {
-  return currentState.editCount;
 };
 function getSelectedBlock(blocks, selection) {
   return blocks.find(block => block.clientId === selection.clientId);
@@ -62,7 +54,67 @@ const reducer = (state = DEFAULT_STATE, action) => {
   }
   return state;
 };
-export default undoable(reducer, {
-  groupBy
-});
+const DEFAULT_HISTORY_STATE = {
+  past: [],
+  present: DEFAULT_STATE,
+  future: []
+};
+const isHistory = state => {
+  return state && Array.isArray(state.past) && Array.isArray(state.future) && state.present !== undefined;
+};
+const blocksHistoryReducer = (state = DEFAULT_HISTORY_STATE, action) => {
+  const historyState = isHistory(state) ? state : DEFAULT_HISTORY_STATE;
+  switch (action.type) {
+    case 'UNDO':
+      {
+        if (historyState.past.length === 0) {
+          return historyState;
+        }
+        const previous = historyState.past[historyState.past.length - 1];
+        return {
+          past: historyState.past.slice(0, -1),
+          present: previous,
+          future: [historyState.present, ...historyState.future]
+        };
+      }
+    case 'REDO':
+      {
+        if (historyState.future.length === 0) {
+          return historyState;
+        }
+        const next = historyState.future[0];
+        return {
+          past: [...historyState.past, historyState.present],
+          present: next,
+          future: historyState.future.slice(1)
+        };
+      }
+    case 'UPDATE_BLOCKS_WITH_UNDO':
+      {
+        const nextPresent = reducer(historyState.present, action);
+        const shouldCreateNewUndoLevel = historyState.present.editCount !== nextPresent.editCount;
+        if (!shouldCreateNewUndoLevel) {
+          return {
+            ...historyState,
+            present: nextPresent
+          };
+        }
+        return {
+          past: [...historyState.past, historyState.present],
+          present: nextPresent,
+          future: []
+        };
+      }
+    case 'UPDATE_BLOCKS_WITHOUT_UNDO':
+      {
+        const nextPresent = reducer(historyState.present, action);
+        return {
+          ...historyState,
+          present: nextPresent
+        };
+      }
+  }
+  return historyState;
+};
+export default blocksHistoryReducer;
 //# sourceMappingURL=reducer.js.map

@@ -85,7 +85,7 @@
 
 	// Ensure that we always override the black background from core
 	.edit-post-visual-editor {
-		background-color: #fff;
+		background-color: var(--wp-components-color-background);
 	}
 
 	.edit-post-visual-editor:not(.has-inline-canvas) {

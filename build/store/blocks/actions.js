@@ -7,18 +7,21 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
-var _reduxUndo = require("redux-undo");
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2["default"])(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * External dependencies
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          */
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2["default"])(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+/**
+ * Internal dependencies
+ */
+
 var actions = {
   undo: /*#__PURE__*/_regenerator["default"].mark(function undo() {
     return _regenerator["default"].wrap(function undo$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           _context.next = 2;
-          return _reduxUndo.ActionCreators.undo();
+          return {
+            type: 'UNDO'
+          };
         case 2:
           return _context.abrupt("return", _context.sent);
         case 3:
@@ -32,7 +35,9 @@ var actions = {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
           _context2.next = 2;
-          return _reduxUndo.ActionCreators.redo();
+          return {
+            type: 'REDO'
+          };
         case 2:
           return _context2.abrupt("return", _context2.sent);
         case 3:

@@ -1,12 +1,23 @@
-/// <reference types="redux-undo" />
 export default storeConfig;
 declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
     reducer: import("redux").Reducer<{
-        blocks: import("redux-undo").StateWithHistory<{
-            editCount: number;
-            blocks: any;
-            selection: any;
-        }>;
+        blocks: {
+            past: never[];
+            present: any;
+            future: {
+                editCount: number;
+                selection: null;
+                blocks: null;
+            }[];
+        } | {
+            past: {
+                editCount: number;
+                selection: null;
+                blocks: null;
+            }[];
+            present: any;
+            future: never[];
+        };
         editor: {
             patterns: any;
             currentPattern: any;
@@ -446,11 +457,15 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
         preferences: any;
         options: {};
     }, any, Partial<{
-        blocks: import("redux-undo").StateWithHistory<{
-            editCount: number;
-            blocks: any;
-            selection: any;
-        }> | undefined;
+        blocks: {
+            past: never[];
+            present: {
+                editCount: number;
+                selection: null;
+                blocks: null;
+            };
+            future: never[];
+        } | undefined;
         editor: import("./editor/reducer").EditorState | undefined;
         preferences: any;
         options: {} | undefined;
@@ -506,8 +521,12 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
             type: string;
             isOpen: boolean;
         };
-        undo(): Generator<import("redux").Action, any, unknown>;
-        redo(): Generator<import("redux").Action, any, unknown>;
+        undo(): Generator<{
+            type: string;
+        }, any, unknown>;
+        redo(): Generator<{
+            type: string;
+        }, any, unknown>;
         updateBlocksWithUndo(blocks: any[], options?: any): Generator<any, any, unknown>;
         updateBlocksWithoutUndo(blocks: any[], options?: any): Generator<any, any, unknown>;
     };

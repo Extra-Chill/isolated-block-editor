@@ -5,9 +5,9 @@
 import { BlockInspector, store as blockEditorStore } from '@wordpress/block-editor';
 import { cog } from '@wordpress/icons';
 import { store as keyboardShortcutsStore } from '@wordpress/keyboard-shortcuts';
-import { store as interfaceStore } from '@wordpress/interface';
+
 import { useContext } from '@wordpress/element';
-import {privateApis as componentsPrivateApis} from "@wordpress/components";
+import { privateApis as componentsPrivateApis } from '@wordpress/components';
 
 /**
  * Internal dependencies
@@ -20,7 +20,9 @@ import Document from '../document';
 import ComplementaryArea from '../complementary-area';
 import { unlock } from './unlock';
 
-const { Tabs } = unlock( componentsPrivateApis );
+// Get Tabs from unlock
+const unlockedComponents = unlock( componentsPrivateApis );
+const Tabs = unlockedComponents?.Tabs;
 
 function isActiveArea( area ) {
 	return [ sidebars.document, sidebars.block ].includes( area )
@@ -62,7 +64,7 @@ const SettingsSidebarInternal = ( { documentInspector, keyboardShortcut, sidebar
 
 const SettingsSidebar = ( { documentInspector } ) => {
 	const { sidebarName, keyboardShortcut, isSettingsSidebarActive } = useSelect( ( select ) => {
-		let sidebar = select( interfaceStore ).getActiveComplementaryArea( 'isolated/editor' );
+		let sidebar = select( 'core/interface' ).getActiveComplementaryArea( 'isolated/editor' );
 
 		let isSettingsSidebar = true;
 		if ( ! isActiveArea( sidebar ) ) {
@@ -85,9 +87,9 @@ const SettingsSidebar = ( { documentInspector } ) => {
 
 	return <Tabs
 		// Due to how this component is controlled (via a value from the
-		// `interfaceStore`), when the sidebar closes the currently selected
+		// interface store), when the sidebar closes the currently selected
 		// tab can't be found. This causes the component to continuously reset
-		// the selection to `null` in an infinite loop.Proactively setting
+		// the selection to `null` in an infinite loop. Proactively setting
 		// the selected tab to `null` avoids that.
 		selectedTabId={ isSettingsSidebarActive ? sidebarName : null }
 		onSelect={ onTabSelect }

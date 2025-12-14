@@ -3,7 +3,6 @@
  * WordPress dependencies
  */
 
-import '@wordpress/editor';
 import { StrictMode, useEffect } from '@wordpress/element';
 import { SlotFillProvider } from '@wordpress/components';
 import { registerCoreBlocks } from '@wordpress/block-library';
@@ -139,15 +138,10 @@ import './style.scss';
  */
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 export function initializeEditor() {
-  console.log('[IBE Debug] initializeEditor called, isoInitialised:', window.isoInitialised);
   if (window.isoInitialised) {
     return;
   }
-
-  // Register all core blocks
-  console.log('[IBE Debug] Registering core blocks...');
   registerCoreBlocks();
-  console.log('[IBE Debug] Core blocks registered');
   window.isoInitialised = true;
 }
 /**
@@ -157,21 +151,15 @@ export function initializeEditor() {
 export function useInitializeIsoEditor({
   undoManager
 } = {}) {
-  console.log('[IBE Debug] useInitializeIsoEditor called, isoInitialisedBlocks:', window.isoInitialisedBlocks);
   if (window.isoInitialisedBlocks) {
     return;
   }
   initializeEditor();
 
   // This allows the editor to swap stores dynamically
-  console.log('[IBE Debug] Registering storeHotSwapPlugin...');
   use(storeHotSwapPlugin, {});
-  console.log('[IBE Debug] Registering API handlers...');
   registerApiHandlers();
-
-  // Don't run this again
   window.isoInitialisedBlocks = true;
-  console.log('[IBE Debug] Initialization complete');
 }
 
 /**

@@ -1,15 +1,20 @@
 "use strict";
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
-var _interface = require("@wordpress/interface");
 var _components = require("@wordpress/components");
+var _complementaryArea = _interopRequireDefault(require("../../complementary-area"));
 require("./style.scss");
 var _jsxRuntime = require("react/jsx-runtime");
 /**
  * WordPress dependencies
+ */
+
+/**
+ * Internal dependencies
  */
 
 /**
@@ -31,7 +36,7 @@ function Inspector(_ref) {
     className: "iso-inspector",
     anchor: button === null || button === void 0 ? void 0 : button.current,
     onFocusOutside: onOutside,
-    children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_interface.ComplementaryArea.Slot, {
+    children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_complementaryArea["default"].Slot, {
       scope: "isolated/editor"
     })
   });

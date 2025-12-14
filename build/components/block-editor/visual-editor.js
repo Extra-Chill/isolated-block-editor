@@ -10,15 +10,15 @@ var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/sli
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 var _classnames = _interopRequireDefault(require("classnames"));
 var _blockEditor = require("@wordpress/block-editor");
+var _editor = require("@wordpress/editor");
 var _element = require("@wordpress/element");
 var _components = require("@wordpress/components");
 var _data = require("@wordpress/data");
 var _compose = require("@wordpress/compose");
 var _blocks = require("@wordpress/blocks");
-var _editor = require("@wordpress/editor");
 var _editorHeadingSlot = _interopRequireDefault(require("../editor-heading-slot"));
 var _footerSlot = _interopRequireDefault(require("../footer-slot"));
-var _unlock2 = require("./unlock");
+var _unlock = require("./unlock");
 var _usePaddingAppender3 = require("./use-padding-appender");
 var _jsxRuntime = require("react/jsx-runtime");
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
@@ -28,18 +28,17 @@ function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t =
                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * WordPress dependencies
                                                                                                                                                                                                                                                                                                                                                                                                                                                                               */ // @ts-ignore
 // @ts-ignore
-// @ts-ignore
 var isGutenbergPlugin = true;
 
 /**
  * Internal dependencies
  */
 
-var _unlock = (0, _unlock2.unlock)(_blockEditor.privateApis),
-  LayoutStyle = _unlock.LayoutStyle,
-  useLayoutClasses = _unlock.useLayoutClasses,
-  useLayoutStyles = _unlock.useLayoutStyles,
-  BlockCanvas = _unlock.ExperimentalBlockCanvas;
+// Get layout components from unlock (will use fallback if private APIs fail)
+var unlockedLayout = (0, _unlock.unlock)(_blockEditor.privateApis);
+var LayoutStyle = unlockedLayout.LayoutStyle,
+  useLayoutClasses = unlockedLayout.useLayoutClasses,
+  useLayoutStyles = unlockedLayout.useLayoutStyles;
 
 /**
  * Given an array of nested blocks, find the first Post Content
@@ -85,12 +84,11 @@ function VisualEditor(_ref) {
   var _useSelect = (0, _data.useSelect)(function (select) {
       var _select = select('isolated/editor'),
         isFeatureActive = _select.isFeatureActive;
-      var _select2 = select(_editor.store),
-        getCurrentPostId = _select2.getCurrentPostId,
-        getCurrentPostType = _select2.getCurrentPostType,
-        getEditorSettings = _select2.getEditorSettings;
+      var _select2 = select(_blockEditor.store),
+        getSettings = _select2.getSettings;
+      var settings = getSettings();
       var _isTemplateMode = false;
-      var postTypeSlug = getCurrentPostType();
+      var postTypeSlug = (settings === null || settings === void 0 ? void 0 : settings.postType) || 'post';
       var _wrapperBlockName;
       if (postTypeSlug === 'wp_block') {
         _wrapperBlockName = 'core/block';
@@ -102,13 +100,12 @@ function VisualEditor(_ref) {
         // @ts-ignore
         isWelcomeGuideVisible: isFeatureActive('welcomeGuide'),
         isTemplateMode: _isTemplateMode,
-        // @ts-ignore
-        postContentAttributes: getEditorSettings().postContentAttributes,
+        postContentAttributes: settings === null || settings === void 0 ? void 0 : settings.postContentAttributes,
         // Post template fetch returns a 404 on classic themes, which
         // messes with e2e tests, so check it's a block theme first.
         editedPostTemplate: undefined,
         wrapperBlockName: _wrapperBlockName,
-        wrapperUniqueId: getCurrentPostId()
+        wrapperUniqueId: (settings === null || settings === void 0 ? void 0 : settings.postId) || 0
       };
     }, []),
     deviceType = _useSelect.deviceType,
@@ -119,7 +116,6 @@ function VisualEditor(_ref) {
     editedPostTemplate = _useSelect$editedPost === void 0 ? {} : _useSelect$editedPost,
     wrapperBlockName = _useSelect.wrapperBlockName,
     wrapperUniqueId = _useSelect.wrapperUniqueId;
-  // @ts-ignore
   var _useSelect2 = (0, _data.useSelect)(_editor.store),
     isCleanNewPost = _useSelect2.isCleanNewPost;
   var hasMetaBoxes = false;
@@ -144,15 +140,17 @@ function VisualEditor(_ref) {
     flexFlow: 'column',
     // Default background color so that grey
     // .edit-post-editor-regions__content color doesn't show through.
-    background: 'white'
+    background: 'var(--wp-components-color-background)'
   };
   var templateModeStyles = _objectSpread(_objectSpread({}, desktopCanvasStyles), {}, {
     borderRadius: '2px 2px 0 0',
-    border: '1px solid #ddd',
+    border: '1px solid var(--wp-components-color-gray-300)',
     borderBottom: 0
   });
   var resizedCanvasStyles = (0, _blockEditor.__experimentalUseResizeCanvas)(deviceType, isTemplateMode);
-  var globalLayoutSettings = (0, _blockEditor.useSetting)('layout');
+  var _useSettings = (0, _blockEditor.useSettings)('layout'),
+    _useSettings2 = (0, _slicedToArray2["default"])(_useSettings, 1),
+    globalLayoutSettings = _useSettings2[0];
   var previewMode = 'is-' + deviceType.toLowerCase() + '-preview';
   var animatedStyles = isTemplateMode ? templateModeStyles : desktopCanvasStyles;
   if (resizedCanvasStyles) {
@@ -297,7 +295,7 @@ function VisualEditor(_ref) {
         animate: animatedStyles,
         initial: desktopCanvasStyles,
         className: previewMode,
-        children: /*#__PURE__*/(0, _jsxRuntime.jsxs)(BlockCanvas, {
+        children: /*#__PURE__*/(0, _jsxRuntime.jsxs)(_blockEditor.BlockCanvas, {
           shouldIframe: false,
           contentRef: contentRef,
           styles: styles,
@@ -317,7 +315,7 @@ function VisualEditor(_ref) {
             })]
           }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_editorHeadingSlot["default"].Slot, {
             mode: "visual"
-          }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_blockEditor.__experimentalRecursionProvider, {
+          }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_blockEditor.RecursionProvider, {
             blockName: wrapperBlockName,
             uniqueId: wrapperUniqueId,
             children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_blockEditor.BlockList, {

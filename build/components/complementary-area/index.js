@@ -6,18 +6,18 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = ComplementaryArea;
 var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutProperties"));
-var _interface = require("@wordpress/interface");
 var _components = require("@wordpress/components");
 var _data = require("@wordpress/data");
 var _complementaryAreaHeader = _interopRequireDefault(require("./complementary-area-header"));
 var _jsxRuntime = require("react/jsx-runtime");
-var _excluded = ["className", "children", "header", "headerClassName", "toggleShortcut", "closeLabel", "title", "identifier"];
+var _excluded = ["className", "children", "header", "headerClassName", "toggleShortcut", "closeLabel", "identifier"];
 /**
  * WordPress dependencies
  */
 /**
  * Internal dependencies
  */
+var EDITOR_SCOPE = 'isolated/editor';
 function isActiveArea(area) {
   return ['edit-post/document', 'edit-post/block'].includes(area);
 }
@@ -40,32 +40,30 @@ function ComplementaryArea(_ref2) {
     headerClassName = _ref2.headerClassName,
     toggleShortcut = _ref2.toggleShortcut,
     closeLabel = _ref2.closeLabel,
-    title = _ref2.title,
     identifier = _ref2.identifier,
     props = (0, _objectWithoutProperties2["default"])(_ref2, _excluded);
-  var scope = "isolated/editor";
   var _useSelect = (0, _data.useSelect)(function (select) {
-      // @ts-ignore
-      var _select = select(_interface.store),
-        getActiveComplementaryArea = _select.getActiveComplementaryArea;
-      var _activeArea = getActiveComplementaryArea('isolated/editor');
+      var _interfaceStore$getAc;
+      var interfaceStore = /** @type {any} */select('core/interface');
+      var activeArea = interfaceStore === null || interfaceStore === void 0 || (_interfaceStore$getAc = interfaceStore.getActiveComplementaryArea) === null || _interfaceStore$getAc === void 0 ? void 0 : _interfaceStore$getAc.call(interfaceStore, EDITOR_SCOPE);
       return {
-        isActive: isActiveArea(_activeArea)
+        isActive: isActiveArea(activeArea)
       };
     }, []),
     isActive = _useSelect.isActive;
   if (!isActive) {
     return null;
   }
+  var fillClassName = className ? "interface-complementary-area ".concat(className) : 'interface-complementary-area';
   return /*#__PURE__*/(0, _jsxRuntime.jsxs)(ComplementaryAreaFill, {
-    className: "interface-complementary-area",
-    scope: "isolated/editor",
+    className: fillClassName,
+    scope: EDITOR_SCOPE,
     children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_complementaryAreaHeader["default"], {
       className: headerClassName,
       toggleButtonProps: {
         label: closeLabel,
         shortcut: toggleShortcut,
-        scope: scope,
+        scope: EDITOR_SCOPE,
         identifier: identifier
       },
       children: header
@@ -75,4 +73,10 @@ function ComplementaryArea(_ref2) {
     })]
   });
 }
+ComplementaryArea.Slot = function ComplementaryAreaSlot(_ref3) {
+  var scope = _ref3.scope;
+  return /*#__PURE__*/(0, _jsxRuntime.jsx)(_components.Slot, {
+    name: "ComplementaryArea/".concat(scope)
+  });
+};
 //# sourceMappingURL=index.js.map

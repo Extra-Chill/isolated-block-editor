@@ -5,7 +5,7 @@ import { useViewportMatch } from '@wordpress/compose';
 import { useSelect } from '@wordpress/data';
 import { BlockBreadcrumb } from '@wordpress/block-editor';
 import { _x } from '@wordpress/i18n';
-import { store as editorStore } from '@wordpress/editor';
+import { store as blockEditorStore } from '@wordpress/block-editor';
 
 /**
  * Internal dependencies
@@ -16,9 +16,9 @@ import FooterSection from '../footer-slot';
 const Footer = ( { editorMode } ) => {
 	const isMobileViewport = useViewportMatch( 'medium', '<' );
 	const { showBlockBreadcrumbs, documentLabel } = useSelect( ( select ) => {
-		// @ts-ignore
-		const { getPostTypeLabel } = select( editorStore );
-		const postTypeLabel = getPostTypeLabel();
+		const { getSettings } = select( blockEditorStore );
+		const settings = getSettings();
+		const postTypeLabel = settings?.postTypeLabel;
 
 		return {
 			// TODO: This is currently disabled until it can be better worked in

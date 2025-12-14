@@ -7,7 +7,7 @@ import { includes } from 'lodash';
  * WordPress dependencies
  */
 import { createRegistrySelector } from '@wordpress/data';
-import { store as interfaceStore } from '@wordpress/interface';
+
 
 /** @typedef {import('../../index').IsoSettings} IsoSettings */
 /** @typedef {import('./reducer').EditorMode} EditorMode */
@@ -120,7 +120,7 @@ export function isInserterOpened( state ) {
 }
 
 export const isEditorSidebarOpened = createRegistrySelector( ( select ) => () => {
-	const activeGeneralSidebar = select( interfaceStore ).getActiveComplementaryArea( 'isolated/editor' );
+	const activeGeneralSidebar = select( 'core/interface' ).getActiveComplementaryArea( 'isolated/editor' );
 
 	return includes( [ 'edit-post/document', 'edit-post/block' ], activeGeneralSidebar );
 } );

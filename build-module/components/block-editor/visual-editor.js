@@ -6,17 +6,14 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-import { BlockList, BlockTools, store as blockEditorStore, __unstableUseTypewriter as useTypewriter, __experimentalUseResizeCanvas as useResizeCanvas, useSetting, __experimentalRecursionProvider as RecursionProvider, privateApis as blockEditorPrivateApis
-// @ts-ignore
-} from '@wordpress/block-editor';
+import { BlockList, BlockTools, BlockCanvas, store as blockEditorStore, __unstableUseTypewriter as useTypewriter, __experimentalUseResizeCanvas as useResizeCanvas, useSettings, RecursionProvider, privateApis as blockEditorPrivateApis } from '@wordpress/block-editor';
+import { store as editorStore } from '@wordpress/editor';
 import { useEffect, useRef, useMemo } from '@wordpress/element';
 import { __unstableMotion as motion } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import { useMergeRefs } from '@wordpress/compose';
 // @ts-ignore
 import { parse, store as blocksStore } from '@wordpress/blocks';
-// @ts-ignore
-import { store as editorStore } from '@wordpress/editor';
 
 // @ts-ignore
 const isGutenbergPlugin = true;
@@ -28,13 +25,15 @@ import EditorHeading from '../editor-heading-slot';
 import FooterSlot from '../footer-slot';
 import { unlock } from './unlock';
 import { usePaddingAppender } from './use-padding-appender';
+
+// Get layout components from unlock (will use fallback if private APIs fail)
 import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
+const unlockedLayout = unlock(blockEditorPrivateApis);
 const {
   LayoutStyle,
   useLayoutClasses,
-  useLayoutStyles,
-  ExperimentalBlockCanvas: BlockCanvas
-} = unlock(blockEditorPrivateApis);
+  useLayoutStyles
+} = unlockedLayout;
 
 /**
  * Given an array of nested blocks, find the first Post Content
@@ -91,12 +90,11 @@ export default function VisualEditor({
       isFeatureActive
     } = select('isolated/editor');
     const {
-      getCurrentPostId,
-      getCurrentPostType,
-      getEditorSettings
-    } = select(editorStore);
+      getSettings
+    } = select(blockEditorStore);
+    const settings = getSettings();
     const _isTemplateMode = false;
-    const postTypeSlug = getCurrentPostType();
+    const postTypeSlug = settings?.postType || 'post';
     let _wrapperBlockName;
     if (postTypeSlug === 'wp_block') {
       _wrapperBlockName = 'core/block';
@@ -108,16 +106,14 @@ export default function VisualEditor({
       // @ts-ignore
       isWelcomeGuideVisible: isFeatureActive('welcomeGuide'),
       isTemplateMode: _isTemplateMode,
-      // @ts-ignore
-      postContentAttributes: getEditorSettings().postContentAttributes,
+      postContentAttributes: settings?.postContentAttributes,
       // Post template fetch returns a 404 on classic themes, which
       // messes with e2e tests, so check it's a block theme first.
       editedPostTemplate: undefined,
       wrapperBlockName: _wrapperBlockName,
-      wrapperUniqueId: getCurrentPostId()
+      wrapperUniqueId: settings?.postId || 0
     };
   }, []);
-  // @ts-ignore
   const {
     isCleanNewPost
   } = useSelect(editorStore);
@@ -143,16 +139,16 @@ export default function VisualEditor({
     flexFlow: 'column',
     // Default background color so that grey
     // .edit-post-editor-regions__content color doesn't show through.
-    background: 'white'
+    background: 'var(--wp-components-color-background)'
   };
   const templateModeStyles = {
     ...desktopCanvasStyles,
     borderRadius: '2px 2px 0 0',
-    border: '1px solid #ddd',
+    border: '1px solid var(--wp-components-color-gray-300)',
     borderBottom: 0
   };
   const resizedCanvasStyles = useResizeCanvas(deviceType, isTemplateMode);
-  const globalLayoutSettings = useSetting('layout');
+  const [globalLayoutSettings] = useSettings('layout');
   const previewMode = 'is-' + deviceType.toLowerCase() + '-preview';
   let animatedStyles = isTemplateMode ? templateModeStyles : desktopCanvasStyles;
   if (resizedCanvasStyles) {

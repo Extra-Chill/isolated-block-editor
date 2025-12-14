@@ -4,7 +4,6 @@
 import classnames from 'classnames';
 import { Button } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
-import { store as interfaceStore } from '@wordpress/interface';
 
 /**
  * WordPress dependencies
@@ -22,14 +21,14 @@ function ComplementaryAreaToggle( {
 } ) {
 	const ComponentToUse = as;
 	const isSelected = useSelect(
-		( select ) =>
-			// @ts-ignore
-			select( interfaceStore ).getActiveComplementaryArea( scope ) ===
-			identifier,
-		[ identifier ]
+		( select ) => {
+			const interfaceStore = /** @type {any} */ ( select( 'core/interface' ) );
+			return interfaceStore?.getActiveComplementaryArea?.( scope ) === identifier;
+		},
+		[ identifier, scope ]
 	);
 	const { enableComplementaryArea, disableComplementaryArea } =
-		useDispatch( interfaceStore );
+		useDispatch( 'core/interface' );
 	return (
 		<ComponentToUse
 			icon={ selectedIcon && isSelected ? selectedIcon : icon }

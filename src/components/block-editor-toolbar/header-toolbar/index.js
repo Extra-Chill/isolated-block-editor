@@ -110,23 +110,24 @@ function HeaderToolbar( props ) {
 						/>
 					) }
 
-					{ isInserterOpened && !inserterInSidebar && (
-						<Popover
-							position="bottom right"
+				{ isInserterOpened && !inserterInSidebar && (
+					<Popover
+						position="bottom right"
+						onClose={ () => setIsInserterOpened( false ) }
+						anchor={ inserterButton.current }
+					>
+						<Library
+							showMostUsedBlocks={ false }
+							showInserterHelpPanel
 							onClose={ () => setIsInserterOpened( false ) }
-							anchor={ inserterButton.current }
-						>
-							<Library
-								showMostUsedBlocks={ false }
-								showInserterHelpPanel
-								onSelect={ () => {
-									if ( isMobileViewport ) {
-										setIsInserterOpened( false );
-									}
-								} }
-							/>
-						</Popover>
-					) }
+							onSelect={ () => {
+								if ( isMobileViewport ) {
+									setIsInserterOpened( false );
+								}
+							} }
+						/>
+					</Popover>
+				) }
 
 					{ /* ToolSelector removed in Gutenberg 22.x - selectorTool option no longer functional */ }
 					{ undo && (

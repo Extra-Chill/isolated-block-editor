@@ -2,8 +2,12 @@
  * WordPress dependencies
  */
 
-import { ComplementaryArea } from '@wordpress/interface';
 import { Popover } from '@wordpress/components';
+
+/**
+ * Internal dependencies
+ */
+import ComplementaryArea from '../../complementary-area';
 
 /**
  * Internal dependencies

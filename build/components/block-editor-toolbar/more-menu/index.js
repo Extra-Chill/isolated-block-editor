@@ -32,7 +32,7 @@ function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t =
                                                                                                 */
 var POPOVER_PROPS = {
   className: 'edit-post-more-menu__content',
-  position: 'bottom left'
+  placement: 'bottom-start'
 };
 var TOGGLE_PROPS = {
   tooltipPosition: 'bottom'

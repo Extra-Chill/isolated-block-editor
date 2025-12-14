@@ -1,15 +1,15 @@
 /**
  * WordPress dependencies
  */
-import { store as interfaceStore } from '@wordpress/interface';
-import { Panel, Fill } from '@wordpress/components';
+import { Fill, Panel, Slot } from '@wordpress/components';
+import { useSelect } from '@wordpress/data';
 
 /**
  * Internal dependencies
  */
-import { useSelect } from '@wordpress/data';
 import ComplementaryAreaHeader from './complementary-area-header';
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+const EDITOR_SCOPE = 'isolated/editor';
 function isActiveArea(area) {
   return ['edit-post/document', 'edit-post/block'].includes(area);
 }
@@ -33,35 +33,31 @@ export default function ComplementaryArea({
   headerClassName,
   toggleShortcut,
   closeLabel,
-  title,
   identifier,
   ...props
 }) {
-  const scope = "isolated/editor";
   const {
     isActive
   } = useSelect(select => {
-    // @ts-ignore
-    const {
-      getActiveComplementaryArea
-    } = select(interfaceStore);
-    const _activeArea = getActiveComplementaryArea('isolated/editor');
+    const interfaceStore = /** @type {any} */select('core/interface');
+    const activeArea = interfaceStore?.getActiveComplementaryArea?.(EDITOR_SCOPE);
     return {
-      isActive: isActiveArea(_activeArea)
+      isActive: isActiveArea(activeArea)
     };
   }, []);
   if (!isActive) {
     return null;
   }
+  const fillClassName = className ? `interface-complementary-area ${className}` : 'interface-complementary-area';
   return /*#__PURE__*/_jsxs(ComplementaryAreaFill, {
-    className: "interface-complementary-area",
-    scope: "isolated/editor",
+    className: fillClassName,
+    scope: EDITOR_SCOPE,
     children: [/*#__PURE__*/_jsx(ComplementaryAreaHeader, {
       className: headerClassName,
       toggleButtonProps: {
         label: closeLabel,
         shortcut: toggleShortcut,
-        scope,
+        scope: EDITOR_SCOPE,
         identifier
       },
       children: header
@@ -71,4 +67,11 @@ export default function ComplementaryArea({
     })]
   });
 }
+ComplementaryArea.Slot = function ComplementaryAreaSlot({
+  scope
+}) {
+  return /*#__PURE__*/_jsx(Slot, {
+    name: `ComplementaryArea/${scope}`
+  });
+};
 //# sourceMappingURL=index.js.map
