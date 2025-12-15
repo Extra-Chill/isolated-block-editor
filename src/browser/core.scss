@@ -1,9 +1,13 @@
 /* Core Gutenberg styles for clients that aren't loading WordPress CSS */
 /* Note: Some packages no longer export their CSS via package.json exports field */
-@import '@wordpress/components/build-style/style.css';
-@import '@wordpress/block-editor/build-style/style.css';
-@import '@wordpress/block-library/build-style/style.css';
-@import '@wordpress/block-library/build-style/editor.css';
-@import '@wordpress/block-library/build-style/theme.css';
-/* @wordpress/format-library and @wordpress/edit-post no longer export CSS - 
+
+@use 'sass:meta';
+
+@include meta.load-css('@wordpress/components/build-style/style.css');
+@include meta.load-css('@wordpress/block-editor/build-style/style.css');
+@include meta.load-css('@wordpress/block-library/build-style/style.css');
+@include meta.load-css('@wordpress/block-library/build-style/editor.css');
+@include meta.load-css('@wordpress/block-library/build-style/theme.css');
+
+/* @wordpress/format-library and @wordpress/edit-post no longer export CSS -
    these styles are loaded by WordPress core when running in WP context */

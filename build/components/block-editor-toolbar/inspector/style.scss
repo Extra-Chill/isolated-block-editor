@@ -1,6 +1,6 @@
-@import '@wordpress/base-styles/_colors';
-@import '@wordpress/base-styles/_mixins';
-@import '@wordpress/base-styles/_variables';
+@use '@wordpress/base-styles/colors' as *;
+@use '@wordpress/base-styles/mixins' as *;
+@use '@wordpress/base-styles/variables' as *;
 
 .iso-editor .popover-slot {
 	.iso-inspector ul:not(.editor-post-taxonomies__flat-term-most-used-list) li {
@@ -8,7 +8,9 @@
 	}
 
 	.block-editor-inserter__menu {
-		min-width: $sidebar-width + 20;
+		width: $sidebar-width + 20;
+		max-width: calc(100vw - 2rem);
+		min-width: 0;
 		max-height: 55vh;
 	}
 }
