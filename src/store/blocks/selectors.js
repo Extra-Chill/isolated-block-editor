@@ -1,4 +1,9 @@
 /**
+ * WordPress dependencies
+ */
+import { serialize } from '@wordpress/blocks';
+
+/**
  * Internal dependencies
  */
 import { getEditorMode } from '../editor/selectors';
@@ -11,6 +16,17 @@ import { getEditorMode } from '../editor/selectors';
  */
 export function getBlocks( state ) {
 	return state.blocks.present.blocks;
+}
+
+/**
+ * Get the editor content as serialized HTML.
+ *
+ * @param {Object} state - Current state
+ * @return {string} Serialized block markup.
+ */
+export function getSerializedContent( state ) {
+	const blocks = getBlocks( state );
+	return blocks ? serialize( blocks ) : '';
 }
 
 /**

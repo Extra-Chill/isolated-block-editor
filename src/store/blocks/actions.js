@@ -10,7 +10,7 @@ const actions = {
 		return yield { type: 'REDO' };
 	},
 	/**
-	 * Update blocks without undo history
+	 * Update blocks with undo history
 	 *
 	 * @param {object[]} blocks
 	 * @param {Object} options
@@ -33,6 +33,24 @@ const actions = {
 			type: 'UPDATE_BLOCKS_WITHOUT_UNDO',
 			blocks,
 			...options,
+		};
+	},
+	/**
+	 * Replace all editor content with new blocks and reset undo history.
+	 *
+	 * Use this when loading entirely new content (e.g. switching documents,
+	 * restoring a draft, or loading a template). Unlike updateBlocksWithoutUndo,
+	 * this clears the undo/redo history so the user starts fresh.
+	 *
+	 * Accepts parsed block objects — call parse(html) before dispatching
+	 * if you have serialized HTML.
+	 *
+	 * @param {object[]} blocks - Parsed block objects to load.
+	 */
+	*replaceContent( blocks ) {
+		return yield {
+			type: 'REPLACE_CONTENT',
+			blocks: blocks || [],
 		};
 	},
 };
