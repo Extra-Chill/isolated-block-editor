@@ -322,7 +322,6 @@ export default function VisualEditor({
             children: /*#__PURE__*/_jsx(BlockList, {
               className: isTemplateMode ? 'wp-site-blocks' : `${blockListLayoutClass} wp-block-post-content` // Ensure root level blocks receive default/flow blockGap styling rules.
               ,
-
               layout: blockListLayout
             })
           }), /*#__PURE__*/_jsx(FooterSlot.Slot, {

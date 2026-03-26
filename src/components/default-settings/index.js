@@ -61,6 +61,11 @@ export default function applyDefaultSettings( settings ) {
 				inserter: false,
 				inspector: false,
 				customComponent: null,
+				detached: {
+					persistent: false,
+					defaultView: 'inserter',
+					...( iso?.sidebar?.detached ?? {} ),
+				},
 
 				...( iso?.sidebar ?? {} ),
 			},

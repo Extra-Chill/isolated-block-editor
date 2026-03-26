@@ -27,6 +27,7 @@ import './style.scss';
 import BlockEditorToolbar from '../block-editor-toolbar';
 import InserterSidebar from './inserter-sidebar';
 import ListViewSidebar from './listview-sidebar';
+import DetachedSidebar from './detached-sidebar';
 import Footer from './footer';
 import ActionArea from '../action-area';
 
@@ -75,6 +76,12 @@ function BlockEditor( props ) {
 	const isLargeViewport = useViewportMatch( 'medium' );
 	const inspectorInSidebar = settings?.iso?.sidebar?.inspector || false;
 	const inserterInSidebar = settings?.iso?.sidebar?.inserter || false;
+	const detachedSidebar = settings?.iso?.sidebar?.detached || null;
+	const detachedSidebarViews = detachedSidebar?.views || null;
+	const detachedInserterView = detachedSidebarViews?.inserter || null;
+	const detachedListView = detachedSidebarViews?.listView || null;
+	const isDetachedSidebarPersistent = Boolean( detachedSidebar?.persistent && detachedSidebar?.target );
+	const detachedSidebarDefaultView = detachedSidebar?.defaultView || 'inserter';
 	const showHeader = settings?.iso?.header ?? true;
 	const showFooter = settings?.iso?.footer || false;
 	const {
@@ -107,9 +114,17 @@ function BlockEditor( props ) {
 		'has-fixed-toolbar': fixedToolbar,
 		'show-icon-labels': showIconLabels,
 	} );
-	const secondarySidebar = () => {
+	const secondarySidebarContent = () => {
 		if ( ! inserterInSidebar ) {
 			return null;
+		}
+
+		if ( isDetachedSidebarPersistent ) {
+			if ( detachedSidebarDefaultView === 'list-view' ) {
+				return <ListViewSidebar canClose={ false } />;
+			}
+
+			return <InserterSidebar canClose={ false } />;
 		}
 
 		if ( editorMode === 'visual' && isInserterOpened ) {
@@ -122,6 +137,12 @@ function BlockEditor( props ) {
 
 		return null;
 	};
+	const renderedSecondarySidebar = secondarySidebarContent();
+	const shouldUseDetachedSidebar =
+		Boolean( detachedSidebar?.target ) &&
+		Boolean( renderedSecondarySidebar ) &&
+		( isDetachedSidebarPersistent || ( editorMode === 'visual' && ( isInserterOpened || isListViewOpened ) ) );
+	const hasSplitDetachedTargets = Boolean( detachedInserterView?.target || detachedListView?.target );
 
 	// For back-compat with older iso-editor
 	useEffect( () => {
@@ -150,12 +171,36 @@ function BlockEditor( props ) {
 	return (
 		<>
 			<CustomSettingsSidebar documentInspector={ settings?.iso?.toolbar?.documentInspector ?? false } />
+			{ shouldUseDetachedSidebar && (
+				<DetachedSidebar
+					target={ detachedSidebar.target }
+					className={ detachedSidebar.className }
+				>
+					{ renderedSecondarySidebar }
+				</DetachedSidebar>
+			) }
+			{ detachedInserterView?.target && (
+				<DetachedSidebar
+					target={ detachedInserterView.target }
+					className={ detachedInserterView.className }
+				>
+					<InserterSidebar canClose={ false } />
+				</DetachedSidebar>
+			) }
+			{ detachedListView?.target && (
+				<DetachedSidebar
+					target={ detachedListView.target }
+					className={ detachedListView.className }
+				>
+					<ListViewSidebar canClose={ false } />
+				</DetachedSidebar>
+			) }
 
 			<InterfaceSkeleton
 				className={ className }
 				labels={ interfaceLabels }
 				header={ header }
-				secondarySidebar={ secondarySidebar() }
+				secondarySidebar={ shouldUseDetachedSidebar || hasSplitDetachedTargets ? null : renderedSecondarySidebar }
 				sidebar={
 					( ! isMobileViewport || sidebarIsOpened ) &&
 					inspectorInSidebar && <Slot name="ComplementaryArea/isolated/editor" />

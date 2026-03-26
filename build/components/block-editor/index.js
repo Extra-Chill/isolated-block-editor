@@ -23,6 +23,7 @@ require("./style.scss");
 var _blockEditorToolbar = _interopRequireDefault(require("../block-editor-toolbar"));
 var _inserterSidebar = _interopRequireDefault(require("./inserter-sidebar"));
 var _listviewSidebar = _interopRequireDefault(require("./listview-sidebar"));
+var _detachedSidebar = _interopRequireDefault(require("./detached-sidebar"));
 var _footer = _interopRequireDefault(require("./footer"));
 var _actionArea = _interopRequireDefault(require("../action-area"));
 var _jsxRuntime = require("react/jsx-runtime");
@@ -76,7 +77,7 @@ var _jsxRuntime = require("react/jsx-runtime");
  * @param {OnMore} props.renderMoreMenu - Callback to render additional items in the more menu
  */
 function BlockEditor(props) {
-  var _settings$iso, _settings$iso2, _settings$iso$header, _settings$iso3, _settings$iso4, _settings$iso$sidebar, _settings$iso5, _settings$iso$toolbar, _settings$iso6, _ref;
+  var _settings$iso, _settings$iso2, _settings$iso3, _settings$iso$header, _settings$iso4, _settings$iso5, _settings$iso$sidebar, _settings$iso6, _settings$iso$toolbar, _settings$iso7;
   var isEditing = props.isEditing,
     editorMode = props.editorMode,
     children = props.children,
@@ -89,8 +90,14 @@ function BlockEditor(props) {
   var isLargeViewport = (0, _compose.useViewportMatch)('medium');
   var inspectorInSidebar = (settings === null || settings === void 0 || (_settings$iso = settings.iso) === null || _settings$iso === void 0 || (_settings$iso = _settings$iso.sidebar) === null || _settings$iso === void 0 ? void 0 : _settings$iso.inspector) || false;
   var inserterInSidebar = (settings === null || settings === void 0 || (_settings$iso2 = settings.iso) === null || _settings$iso2 === void 0 || (_settings$iso2 = _settings$iso2.sidebar) === null || _settings$iso2 === void 0 ? void 0 : _settings$iso2.inserter) || false;
-  var showHeader = (_settings$iso$header = settings === null || settings === void 0 || (_settings$iso3 = settings.iso) === null || _settings$iso3 === void 0 ? void 0 : _settings$iso3.header) !== null && _settings$iso$header !== void 0 ? _settings$iso$header : true;
-  var showFooter = (settings === null || settings === void 0 || (_settings$iso4 = settings.iso) === null || _settings$iso4 === void 0 ? void 0 : _settings$iso4.footer) || false;
+  var detachedSidebar = (settings === null || settings === void 0 || (_settings$iso3 = settings.iso) === null || _settings$iso3 === void 0 || (_settings$iso3 = _settings$iso3.sidebar) === null || _settings$iso3 === void 0 ? void 0 : _settings$iso3.detached) || null;
+  var detachedSidebarViews = (detachedSidebar === null || detachedSidebar === void 0 ? void 0 : detachedSidebar.views) || null;
+  var detachedInserterView = (detachedSidebarViews === null || detachedSidebarViews === void 0 ? void 0 : detachedSidebarViews.inserter) || null;
+  var detachedListView = (detachedSidebarViews === null || detachedSidebarViews === void 0 ? void 0 : detachedSidebarViews.listView) || null;
+  var isDetachedSidebarPersistent = Boolean((detachedSidebar === null || detachedSidebar === void 0 ? void 0 : detachedSidebar.persistent) && (detachedSidebar === null || detachedSidebar === void 0 ? void 0 : detachedSidebar.target));
+  var detachedSidebarDefaultView = (detachedSidebar === null || detachedSidebar === void 0 ? void 0 : detachedSidebar.defaultView) || 'inserter';
+  var showHeader = (_settings$iso$header = settings === null || settings === void 0 || (_settings$iso4 = settings.iso) === null || _settings$iso4 === void 0 ? void 0 : _settings$iso4.header) !== null && _settings$iso$header !== void 0 ? _settings$iso$header : true;
+  var showFooter = (settings === null || settings === void 0 || (_settings$iso5 = settings.iso) === null || _settings$iso5 === void 0 ? void 0 : _settings$iso5.footer) || false;
   var _useSelect = (0, _data.useSelect)(function (select) {
       var _select = select('isolated/editor'),
         isFeatureActive = _select.isFeatureActive,
@@ -120,9 +127,19 @@ function BlockEditor(props) {
     'has-fixed-toolbar': fixedToolbar,
     'show-icon-labels': showIconLabels
   });
-  var secondarySidebar = function secondarySidebar() {
+  var secondarySidebarContent = function secondarySidebarContent() {
     if (!inserterInSidebar) {
       return null;
+    }
+    if (isDetachedSidebarPersistent) {
+      if (detachedSidebarDefaultView === 'list-view') {
+        return /*#__PURE__*/(0, _jsxRuntime.jsx)(_listviewSidebar["default"], {
+          canClose: false
+        });
+      }
+      return /*#__PURE__*/(0, _jsxRuntime.jsx)(_inserterSidebar["default"], {
+        canClose: false
+      });
     }
     if (editorMode === 'visual' && isInserterOpened) {
       return /*#__PURE__*/(0, _jsxRuntime.jsx)(_inserterSidebar["default"], {});
@@ -132,6 +149,9 @@ function BlockEditor(props) {
     }
     return null;
   };
+  var renderedSecondarySidebar = secondarySidebarContent();
+  var shouldUseDetachedSidebar = Boolean(detachedSidebar === null || detachedSidebar === void 0 ? void 0 : detachedSidebar.target) && Boolean(renderedSecondarySidebar) && (isDetachedSidebarPersistent || editorMode === 'visual' && (isInserterOpened || isListViewOpened));
+  var hasSplitDetachedTargets = Boolean((detachedInserterView === null || detachedInserterView === void 0 ? void 0 : detachedInserterView.target) || (detachedListView === null || detachedListView === void 0 ? void 0 : detachedListView.target));
 
   // For back-compat with older iso-editor
   (0, _element.useEffect)(function () {
@@ -154,15 +174,31 @@ function BlockEditor(props) {
     settings: settings,
     renderMoreMenu: renderMoreMenu
   }) : null;
-  var CustomSettingsSidebar = (_settings$iso$sidebar = settings === null || settings === void 0 || (_settings$iso5 = settings.iso) === null || _settings$iso5 === void 0 || (_settings$iso5 = _settings$iso5.sidebar) === null || _settings$iso5 === void 0 ? void 0 : _settings$iso5.customComponent) !== null && _settings$iso$sidebar !== void 0 ? _settings$iso$sidebar : _sidebar["default"];
+  var CustomSettingsSidebar = (_settings$iso$sidebar = settings === null || settings === void 0 || (_settings$iso6 = settings.iso) === null || _settings$iso6 === void 0 || (_settings$iso6 = _settings$iso6.sidebar) === null || _settings$iso6 === void 0 ? void 0 : _settings$iso6.customComponent) !== null && _settings$iso$sidebar !== void 0 ? _settings$iso$sidebar : _sidebar["default"];
   return /*#__PURE__*/(0, _jsxRuntime.jsxs)(_jsxRuntime.Fragment, {
     children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(CustomSettingsSidebar, {
-      documentInspector: (_settings$iso$toolbar = settings === null || settings === void 0 || (_settings$iso6 = settings.iso) === null || _settings$iso6 === void 0 || (_settings$iso6 = _settings$iso6.toolbar) === null || _settings$iso6 === void 0 ? void 0 : _settings$iso6.documentInspector) !== null && _settings$iso$toolbar !== void 0 ? _settings$iso$toolbar : false
+      documentInspector: (_settings$iso$toolbar = settings === null || settings === void 0 || (_settings$iso7 = settings.iso) === null || _settings$iso7 === void 0 || (_settings$iso7 = _settings$iso7.toolbar) === null || _settings$iso7 === void 0 ? void 0 : _settings$iso7.documentInspector) !== null && _settings$iso$toolbar !== void 0 ? _settings$iso$toolbar : false
+    }), shouldUseDetachedSidebar && /*#__PURE__*/(0, _jsxRuntime.jsx)(_detachedSidebar["default"], {
+      target: detachedSidebar.target,
+      className: detachedSidebar.className,
+      children: renderedSecondarySidebar
+    }), (detachedInserterView === null || detachedInserterView === void 0 ? void 0 : detachedInserterView.target) && /*#__PURE__*/(0, _jsxRuntime.jsx)(_detachedSidebar["default"], {
+      target: detachedInserterView.target,
+      className: detachedInserterView.className,
+      children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_inserterSidebar["default"], {
+        canClose: false
+      })
+    }), (detachedListView === null || detachedListView === void 0 ? void 0 : detachedListView.target) && /*#__PURE__*/(0, _jsxRuntime.jsx)(_detachedSidebar["default"], {
+      target: detachedListView.target,
+      className: detachedListView.className,
+      children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_listviewSidebar["default"], {
+        canClose: false
+      })
     }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_interface.InterfaceSkeleton, {
       className: className,
       labels: interfaceLabels,
       header: header,
-      secondarySidebar: secondarySidebar(),
+      secondarySidebar: shouldUseDetachedSidebar || hasSplitDetachedTargets ? null : renderedSecondarySidebar,
       sidebar: (!isMobileViewport || sidebarIsOpened) && inspectorInSidebar && /*#__PURE__*/(0, _jsxRuntime.jsx)(_components.Slot, {
         name: "ComplementaryArea/isolated/editor"
       }),
@@ -171,7 +207,7 @@ function BlockEditor(props) {
           children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_blockEditor.BlockEditorKeyboardShortcuts, {}), /*#__PURE__*/(0, _jsxRuntime.jsx)(_blockEditor.BlockEditorKeyboardShortcuts.Register, {})]
         }), /*#__PURE__*/(0, _jsxRuntime.jsxs)(_components.KeyboardShortcuts, {
           bindGlobal: false,
-          shortcuts: (_ref = {}, (0, _defineProperty2["default"])(_ref, _keycodes.rawShortcut.primary('z'), undo), (0, _defineProperty2["default"])(_ref, _keycodes.rawShortcut.primaryShift('z'), redo), _ref),
+          shortcuts: (0, _defineProperty2["default"])((0, _defineProperty2["default"])({}, _keycodes.rawShortcut.primary('z'), undo), _keycodes.rawShortcut.primaryShift('z'), redo),
           children: [editorMode === 'visual' && /*#__PURE__*/(0, _jsxRuntime.jsxs)(_jsxRuntime.Fragment, {
             children: [!isLargeViewport && /*#__PURE__*/(0, _jsxRuntime.jsx)(_blockEditor.BlockToolbar, {
               hideDragHandle: true

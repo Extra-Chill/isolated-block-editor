@@ -9,8 +9,8 @@ var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/de
 var _i18n = require("@wordpress/i18n");
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2["default"])(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * WordPress dependencies
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          */
+ * WordPress dependencies
+ */
 /** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
 
 function getMenu(current, defaultMenu) {
@@ -27,7 +27,7 @@ function getMenu(current, defaultMenu) {
  * @return {BlockEditorSettings}
  */
 function applyDefaultSettings(settings) {
-  var _iso$preferencesKey, _iso$persistenceKey, _iso$disallowEmbed, _iso$customStores, _iso$blocks$allowBloc, _iso$blocks, _iso$blocks$disallowB, _iso$blocks2, _iso$toolbar, _iso$header, _iso$sidebar, _iso$footer, _iso$moreMenu, _iso$linkMenu, _iso$defaultPreferenc, _iso$allowApi, _iso$disableCanvasAni, _iso$currentPattern, _iso$patterns, _editor$bodyPlacehold, _editor$fetchLinkSugg, _editor$fetchLinkSugg2;
+  var _iso$preferencesKey, _iso$persistenceKey, _iso$disallowEmbed, _iso$customStores, _iso$blocks$allowBloc, _iso$blocks, _iso$blocks$disallowB, _iso$blocks2, _iso$toolbar, _iso$header, _iso$sidebar$detached, _iso$sidebar, _iso$sidebar2, _iso$footer, _iso$moreMenu, _iso$linkMenu, _iso$defaultPreferenc, _iso$allowApi, _iso$disableCanvasAni, _iso$currentPattern, _iso$patterns, _editor$bodyPlacehold, _editor$fetchLinkSugg, _editor$fetchLinkSugg2;
   var iso = settings.iso,
     editor = settings.editor;
   return {
@@ -62,8 +62,12 @@ function applyDefaultSettings(settings) {
       sidebar: _objectSpread({
         inserter: false,
         inspector: false,
-        customComponent: null
-      }, (_iso$sidebar = iso === null || iso === void 0 ? void 0 : iso.sidebar) !== null && _iso$sidebar !== void 0 ? _iso$sidebar : {}),
+        customComponent: null,
+        detached: _objectSpread({
+          persistent: false,
+          defaultView: 'inserter'
+        }, (_iso$sidebar$detached = iso === null || iso === void 0 || (_iso$sidebar = iso.sidebar) === null || _iso$sidebar === void 0 ? void 0 : _iso$sidebar.detached) !== null && _iso$sidebar$detached !== void 0 ? _iso$sidebar$detached : {})
+      }, (_iso$sidebar2 = iso === null || iso === void 0 ? void 0 : iso.sidebar) !== null && _iso$sidebar2 !== void 0 ? _iso$sidebar2 : {}),
       footer: (_iso$footer = iso === null || iso === void 0 ? void 0 : iso.footer) !== null && _iso$footer !== void 0 ? _iso$footer : false,
       // Nothing appears in the 'more menu'
       moreMenu: getMenu(iso === null || iso === void 0 ? void 0 : iso.moreMenu, _objectSpread({

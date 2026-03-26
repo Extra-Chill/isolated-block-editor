@@ -7,10 +7,9 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = exports.PostTextEditor = void 0;
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
-var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
-var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
 var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
 var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
 var _reactAutosizeTextarea = _interopRequireDefault(require("react-autosize-textarea"));
 var _i18n = require("@wordpress/i18n");
 var _element = require("@wordpress/element");
@@ -18,25 +17,24 @@ var _data = require("@wordpress/data");
 var _compose = require("@wordpress/compose");
 var _blocks = require("@wordpress/blocks");
 var _jsxRuntime = require("react/jsx-runtime");
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } } /**
-                                                                                                                                                                                                                                                                                                                                           * External dependencies
-                                                                                                                                                                                                                                                                                                                                           */ /**
-                                                                                                                                                                                                                                                                                                                                               * WordPress dependencies
-                                                                                                                                                                                                                                                                                                                                               */
+function _callSuper(t, o, e) { return o = (0, _getPrototypeOf2["default"])(o), (0, _possibleConstructorReturn2["default"])(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], (0, _getPrototypeOf2["default"])(t).constructor) : o.apply(t, e)); }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); } /**
+ * External dependencies
+ */ /**
+ * WordPress dependencies
+ */
 var PostTextEditor = exports.PostTextEditor = /*#__PURE__*/function (_Component) {
-  (0, _inherits2["default"])(PostTextEditor, _Component);
-  var _super = _createSuper(PostTextEditor);
   function PostTextEditor(props) {
     var _this;
     (0, _classCallCheck2["default"])(this, PostTextEditor);
-    _this = _super.call(this, props);
-    _this.edit = _this.edit.bind((0, _assertThisInitialized2["default"])(_this));
-    _this.stopEditing = _this.stopEditing.bind((0, _assertThisInitialized2["default"])(_this));
+    _this = _callSuper(this, PostTextEditor, [props]);
+    _this.edit = _this.edit.bind(_this);
+    _this.stopEditing = _this.stopEditing.bind(_this);
     _this.state = {};
     return _this;
   }
-  (0, _createClass2["default"])(PostTextEditor, [{
+  (0, _inherits2["default"])(PostTextEditor, _Component);
+  return (0, _createClass2["default"])(PostTextEditor, [{
     key: "edit",
     value:
     /**
@@ -111,7 +109,6 @@ var PostTextEditor = exports.PostTextEditor = /*#__PURE__*/function (_Component)
       };
     }
   }]);
-  return PostTextEditor;
 }(_element.Component); // @ts-ignore
 var _default = exports["default"] = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
   var _select = select('isolated/editor'),

@@ -18,18 +18,18 @@ function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t =
 /**
  * WordPress dependencies
  */ /**
-     * Internal dependencies
-     */ /** @typedef {import('../../../index').BlockEditorSettings} BlockEditorSettings */ /**
-                                                                                            * Close dropdown callback
-                                                                                            *
-                                                                                            * @callback OnClose
-                                                                                            */ /**
-                                                                                                * More menu render callback
-                                                                                                *
-                                                                                                * @callback OnMore
-                                                                                                * @param {BlockEditorSettings} settings - Settings
-                                                                                                * @param {OnClose} onClose - Callback to close the menu
-                                                                                                */
+ * Internal dependencies
+ */ /** @typedef {import('../../../index').BlockEditorSettings} BlockEditorSettings */ /**
+ * Close dropdown callback
+ *
+ * @callback OnClose
+ */ /**
+ * More menu render callback
+ *
+ * @callback OnMore
+ * @param {BlockEditorSettings} settings - Settings
+ * @param {OnClose} onClose - Callback to close the menu
+ */
 var POPOVER_PROPS = {
   className: 'edit-post-more-menu__content',
   placement: 'bottom-start'

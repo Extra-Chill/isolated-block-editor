@@ -15,9 +15,11 @@ var _compose = require("@wordpress/compose");
 var _jsxRuntime = require("react/jsx-runtime");
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2["default"])(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * WordPress dependencies
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                          */
-function InserterSidebar() {
+ * WordPress dependencies
+ */
+function InserterSidebar(_ref) {
+  var _ref$canClose = _ref.canClose,
+    canClose = _ref$canClose === void 0 ? true : _ref$canClose;
   var _useDispatch = (0, _data.useDispatch)('isolated/editor'),
     setIsInserterOpened = _useDispatch.setIsInserterOpened;
   var isMobileViewport = (0, _compose.useViewportMatch)('medium', '<');
@@ -39,7 +41,7 @@ function InserterSidebar() {
     ref: inserterDialogRef
   }, inserterDialogProps), {}, {
     className: "edit-widgets-layout__inserter-panel",
-    children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(TagName, {
+    children: [canClose && /*#__PURE__*/(0, _jsxRuntime.jsx)(TagName, {
       className: "edit-widgets-layout__inserter-panel-header",
       children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_components.Button, {
         icon: _icons.close,
@@ -53,9 +55,9 @@ function InserterSidebar() {
         showMostUsedBlocks: false,
         showInserterHelpPanel: true,
         shouldFocusBlock: isMobileViewport,
-        onClose: function onClose() {
+        onClose: canClose ? function () {
           return setIsInserterOpened(false);
-        }
+        } : undefined
       })
     })]
   }));

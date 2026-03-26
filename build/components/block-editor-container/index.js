@@ -9,9 +9,9 @@ var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/de
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
-var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
 var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
 var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
 var _classnames2 = _interopRequireDefault(require("classnames"));
 var _compose = require("@wordpress/compose");
 var _element = require("@wordpress/element");
@@ -21,20 +21,20 @@ var _blockEditorContents = _interopRequireDefault(require("../block-editor-conte
 var _hotSwapper = _interopRequireDefault(require("./hot-swapper"));
 require("./style.scss");
 var _jsxRuntime = require("react/jsx-runtime");
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } } // @ts-nocheck
+function _callSuper(t, o, e) { return o = (0, _getPrototypeOf2["default"])(o), (0, _possibleConstructorReturn2["default"])(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], (0, _getPrototypeOf2["default"])(t).constructor) : o.apply(t, e)); }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); } // @ts-nocheck
 /**
  * External dependencies
  */ /**
-     * WordPress dependencies
-     */ /**
-         * Internal dependencies
-         */ /** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */ /** @typedef {import('../../index').OnError} OnError */ /** @typedef {import('../../index').OnMore} OnMore */ /** @typedef {import('../../store/editor/reducer').EditorMode} EditorMode */ /** @typedef {import('../../index').OnLoad} OnLoad */ /** @typedef {import('../block-editor-contents/index').OnUpdate} OnUpdate */ /**
-                                                                                                                                                                                                                                                                                                                                                                                                                           * Set editing callback
-                                                                                                                                                                                                                                                                                                                                                                                                                           *
-                                                                                                                                                                                                                                                                                                                                                                                                                           * @callback OnSetEditing
-                                                                                                                                                                                                                                                                                                                                                                                                                           * @param {boolean} isEditing
-                                                                                                                                                                                                                                                                                                                                                                                                                           */
+ * WordPress dependencies
+ */ /**
+ * Internal dependencies
+ */ /** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */ /** @typedef {import('../../index').OnError} OnError */ /** @typedef {import('../../index').OnMore} OnMore */ /** @typedef {import('../../store/editor/reducer').EditorMode} EditorMode */ /** @typedef {import('../../index').OnLoad} OnLoad */ /** @typedef {import('../block-editor-contents/index').OnUpdate} OnUpdate */ /**
+ * Set editing callback
+ *
+ * @callback OnSetEditing
+ * @param {boolean} isEditing
+ */
 var SIZE_LARGE = 720;
 var SIZE_MEDIUM = 480;
 
@@ -59,18 +59,17 @@ var SIZE_MEDIUM = 480;
  * @param {object[]} [props.blocks] - Gutenberg's blocks
  */
 var LocalErrorBoundary = /*#__PURE__*/function (_Component) {
-  (0, _inherits2["default"])(LocalErrorBoundary, _Component);
-  var _super = _createSuper(LocalErrorBoundary);
   function LocalErrorBoundary(props) {
     var _this;
     (0, _classCallCheck2["default"])(this, LocalErrorBoundary);
-    _this = _super.call(this, props);
+    _this = _callSuper(this, LocalErrorBoundary, [props]);
     _this.state = {
       hasError: false
     };
     return _this;
   }
-  (0, _createClass2["default"])(LocalErrorBoundary, [{
+  (0, _inherits2["default"])(LocalErrorBoundary, _Component);
+  return (0, _createClass2["default"])(LocalErrorBoundary, [{
     key: "componentDidCatch",
     value: function componentDidCatch(error) {
       var _this$props$onError, _this$props;
@@ -92,10 +91,8 @@ var LocalErrorBoundary = /*#__PURE__*/function (_Component) {
       };
     }
   }]);
-  return LocalErrorBoundary;
 }(_element.Component);
 function BlockEditorContainer(props) {
-  var _classnames;
   var children = props.children,
     settings = props.settings,
     className = props.className,
@@ -115,7 +112,7 @@ function BlockEditorContainer(props) {
     _useResizeObserver2 = (0, _slicedToArray2["default"])(_useResizeObserver, 2),
     resizeListener = _useResizeObserver2[0],
     width = _useResizeObserver2[1].width;
-  var classes = (0, _classnames2["default"])(className, (_classnames = {
+  var classes = (0, _classnames2["default"])(className, (0, _defineProperty2["default"])((0, _defineProperty2["default"])({
     'iso-editor': true,
     'is-large': width ? width >= SIZE_LARGE : false,
     'is-medium': width ? width >= SIZE_MEDIUM && width < SIZE_LARGE : true,
@@ -126,7 +123,7 @@ function BlockEditorContainer(props) {
     'block-editor': true,
     'edit-post-layout': true,
     'has-fixed-toolbar': fixedToolbar
-  }, (0, _defineProperty2["default"])(_classnames, 'is-mode-' + editorMode, true), (0, _defineProperty2["default"])(_classnames, 'is-preview-mode', isPreview), _classnames));
+  }, 'is-mode-' + editorMode, true), 'is-preview-mode', isPreview));
   var Boundary = LocalErrorBoundary;
   return /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
     className: classes,

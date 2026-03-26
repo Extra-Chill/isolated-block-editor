@@ -37,6 +37,7 @@
  * @property {boolean} [inspector=false] - Display the block inspector in a sidebar (true) or popover (false)
  * @property {boolean} [inserter=false] - Display the block inserter in a sidebar (true) or popover (false)
  * @property {function|null} [customComponent] - Function returning a custom sidebar component, or will default to the block inspector
+ * @property {{target?: string|Element|null, className?: string, persistent?: boolean, defaultView?: 'inserter'|'list-view', views?: { inserter?: { target?: string|Element|null, className?: string }, listView?: { target?: string|Element|null, className?: string } }}|null} [detached] - Render sidebar content into an external target instead of the internal editor shell
  */
 /**
  * Isolated Editor Settings
@@ -191,6 +192,25 @@ export type SidebarSettings = {
      * - Function returning a custom sidebar component, or will default to the block inspector
      */
     customComponent?: Function | null | undefined;
+    /**
+     * - Render sidebar content into an external target instead of the internal editor shell
+     */
+    detached?: {
+        target?: string | Element | null | undefined;
+        className?: string | undefined;
+        persistent?: boolean | undefined;
+        defaultView?: "inserter" | "list-view" | undefined;
+        views?: {
+            inserter?: {
+                target?: string | Element | null | undefined;
+                className?: string | undefined;
+            } | undefined;
+            listView?: {
+                target?: string | Element | null | undefined;
+                className?: string | undefined;
+            } | undefined;
+        } | undefined;
+    } | null | undefined;
 };
 /**
  * Isolated Editor Settings
