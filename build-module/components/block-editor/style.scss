@@ -3,6 +3,8 @@
 @use '@wordpress/base-styles/colors' as *;
 
 .iso-editor {
+	overflow-x: hidden;
+
 	// Restrict the interface skeleton to our container, and not assume it's own a WP admin page
 	.edit-post-layout.interface-interface-skeleton {
 		position: static;
