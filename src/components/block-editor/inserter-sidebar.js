@@ -7,7 +7,7 @@ import { __experimentalLibrary as Library } from '@wordpress/block-editor';
 import { close } from '@wordpress/icons';
 import { useViewportMatch, __experimentalUseDialog as useDialog } from '@wordpress/compose';
 
-export default function InserterSidebar() {
+export default function InserterSidebar( { canClose = true } ) {
 	const { setIsInserterOpened } = useDispatch( 'isolated/editor' );
 	const isMobileViewport = useViewportMatch( 'medium', '<' );
 	const TagName = ! isMobileViewport ? VisuallyHidden : 'div';
@@ -26,11 +26,18 @@ export default function InserterSidebar() {
 			{ ...inserterDialogProps }
 			className="edit-widgets-layout__inserter-panel"
 		>
-			<TagName className="edit-widgets-layout__inserter-panel-header">
-				<Button icon={ close } onClick={ () => setIsInserterOpened( false ) } />
-			</TagName>
+			{ canClose && (
+				<TagName className="edit-widgets-layout__inserter-panel-header">
+					<Button icon={ close } onClick={ () => setIsInserterOpened( false ) } />
+				</TagName>
+			) }
 			<div className="edit-widgets-layout__inserter-panel-content">
-				<Library showMostUsedBlocks={ false } showInserterHelpPanel shouldFocusBlock={ isMobileViewport } onClose={ () => setIsInserterOpened( false ) } />
+				<Library
+					showMostUsedBlocks={ false }
+					showInserterHelpPanel
+					shouldFocusBlock={ isMobileViewport }
+					onClose={ canClose ? () => setIsInserterOpened( false ) : undefined }
+				/>
 			</div>
 		</div>
 	);

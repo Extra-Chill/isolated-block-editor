@@ -13,6 +13,7 @@ var _data = require("@wordpress/data");
 /**
  * @callback OnLoad
  */
+
 /**
  * Used by clients to add an optional loading placeholder
  *

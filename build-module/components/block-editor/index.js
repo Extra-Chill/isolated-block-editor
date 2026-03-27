@@ -27,6 +27,7 @@ import './style.scss';
 import BlockEditorToolbar from '../block-editor-toolbar';
 import InserterSidebar from './inserter-sidebar';
 import ListViewSidebar from './listview-sidebar';
+import DetachedSidebar from './detached-sidebar';
 import Footer from './footer';
 import ActionArea from '../action-area';
 
@@ -84,6 +85,12 @@ function BlockEditor(props) {
   const isLargeViewport = useViewportMatch('medium');
   const inspectorInSidebar = settings?.iso?.sidebar?.inspector || false;
   const inserterInSidebar = settings?.iso?.sidebar?.inserter || false;
+  const detachedSidebar = settings?.iso?.sidebar?.detached || null;
+  const detachedSidebarViews = detachedSidebar?.views || null;
+  const detachedInserterView = detachedSidebarViews?.inserter || null;
+  const detachedListView = detachedSidebarViews?.listView || null;
+  const isDetachedSidebarPersistent = Boolean(detachedSidebar?.persistent && detachedSidebar?.target);
+  const detachedSidebarDefaultView = detachedSidebar?.defaultView || 'inserter';
   const showHeader = (_settings$iso$header = settings?.iso?.header) !== null && _settings$iso$header !== void 0 ? _settings$iso$header : true;
   const showFooter = settings?.iso?.footer || false;
   const {
@@ -117,9 +124,19 @@ function BlockEditor(props) {
     'has-fixed-toolbar': fixedToolbar,
     'show-icon-labels': showIconLabels
   });
-  const secondarySidebar = () => {
+  const secondarySidebarContent = () => {
     if (!inserterInSidebar) {
       return null;
+    }
+    if (isDetachedSidebarPersistent) {
+      if (detachedSidebarDefaultView === 'list-view') {
+        return /*#__PURE__*/_jsx(ListViewSidebar, {
+          canClose: false
+        });
+      }
+      return /*#__PURE__*/_jsx(InserterSidebar, {
+        canClose: false
+      });
     }
     if (editorMode === 'visual' && isInserterOpened) {
       return /*#__PURE__*/_jsx(InserterSidebar, {});
@@ -129,6 +146,9 @@ function BlockEditor(props) {
     }
     return null;
   };
+  const renderedSecondarySidebar = secondarySidebarContent();
+  const shouldUseDetachedSidebar = Boolean(detachedSidebar?.target) && Boolean(renderedSecondarySidebar) && (isDetachedSidebarPersistent || editorMode === 'visual' && (isInserterOpened || isListViewOpened));
+  const hasSplitDetachedTargets = Boolean(detachedInserterView?.target || detachedListView?.target);
 
   // For back-compat with older iso-editor
   useEffect(() => {
@@ -155,11 +175,27 @@ function BlockEditor(props) {
   return /*#__PURE__*/_jsxs(_Fragment, {
     children: [/*#__PURE__*/_jsx(CustomSettingsSidebar, {
       documentInspector: (_settings$iso$toolbar = settings?.iso?.toolbar?.documentInspector) !== null && _settings$iso$toolbar !== void 0 ? _settings$iso$toolbar : false
+    }), shouldUseDetachedSidebar && /*#__PURE__*/_jsx(DetachedSidebar, {
+      target: detachedSidebar.target,
+      className: detachedSidebar.className,
+      children: renderedSecondarySidebar
+    }), detachedInserterView?.target && /*#__PURE__*/_jsx(DetachedSidebar, {
+      target: detachedInserterView.target,
+      className: detachedInserterView.className,
+      children: /*#__PURE__*/_jsx(InserterSidebar, {
+        canClose: false
+      })
+    }), detachedListView?.target && /*#__PURE__*/_jsx(DetachedSidebar, {
+      target: detachedListView.target,
+      className: detachedListView.className,
+      children: /*#__PURE__*/_jsx(ListViewSidebar, {
+        canClose: false
+      })
     }), /*#__PURE__*/_jsx(InterfaceSkeleton, {
       className: className,
       labels: interfaceLabels,
       header: header,
-      secondarySidebar: secondarySidebar(),
+      secondarySidebar: shouldUseDetachedSidebar || hasSplitDetachedTargets ? null : renderedSecondarySidebar,
       sidebar: (!isMobileViewport || sidebarIsOpened) && inspectorInSidebar && /*#__PURE__*/_jsx(Slot, {
         name: "ComplementaryArea/isolated/editor"
       }),

@@ -20,7 +20,7 @@ function getMenu(current, defaultMenu) {
  * @return {BlockEditorSettings}
  */
 export default function applyDefaultSettings(settings) {
-  var _iso$preferencesKey, _iso$persistenceKey, _iso$disallowEmbed, _iso$customStores, _iso$blocks$allowBloc, _iso$blocks$disallowB, _iso$toolbar, _iso$header, _iso$sidebar, _iso$footer, _iso$moreMenu, _iso$linkMenu, _iso$defaultPreferenc, _iso$allowApi, _iso$disableCanvasAni, _iso$currentPattern, _iso$patterns, _editor$bodyPlacehold, _editor$fetchLinkSugg, _editor$fetchLinkSugg2;
+  var _iso$preferencesKey, _iso$persistenceKey, _iso$disallowEmbed, _iso$customStores, _iso$blocks$allowBloc, _iso$blocks$disallowB, _iso$toolbar, _iso$header, _iso$sidebar$detached, _iso$sidebar, _iso$footer, _iso$moreMenu, _iso$linkMenu, _iso$defaultPreferenc, _iso$allowApi, _iso$disableCanvasAni, _iso$currentPattern, _iso$patterns, _editor$bodyPlacehold, _editor$fetchLinkSugg, _editor$fetchLinkSugg2;
   const {
     iso,
     editor
@@ -59,6 +59,11 @@ export default function applyDefaultSettings(settings) {
         inserter: false,
         inspector: false,
         customComponent: null,
+        detached: {
+          persistent: false,
+          defaultView: 'inserter',
+          ...((_iso$sidebar$detached = iso?.sidebar?.detached) !== null && _iso$sidebar$detached !== void 0 ? _iso$sidebar$detached : {})
+        },
         ...((_iso$sidebar = iso?.sidebar) !== null && _iso$sidebar !== void 0 ? _iso$sidebar : {})
       },
       footer: (_iso$footer = iso?.footer) !== null && _iso$footer !== void 0 ? _iso$footer : false,

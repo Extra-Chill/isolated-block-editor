@@ -31,7 +31,7 @@ var preventDefault = function preventDefault(event) {
   event.preventDefault();
 };
 function HeaderToolbar(props) {
-  var _props$settings;
+  var _props$settings, _props$settings2;
   var inserterButton = (0, _element.useRef)();
   var _useDispatch = (0, _data.useDispatch)('isolated/editor'),
     setIsInserterOpened = _useDispatch.setIsInserterOpened,
@@ -85,6 +85,8 @@ function HeaderToolbar(props) {
     undo = _props$settings$iso$t.undo,
     selectorTool = _props$settings$iso$t.selectorTool;
   var inserterInSidebar = ((_props$settings = props.settings) === null || _props$settings === void 0 || (_props$settings = _props$settings.iso) === null || _props$settings === void 0 || (_props$settings = _props$settings.sidebar) === null || _props$settings === void 0 ? void 0 : _props$settings.inserter) || false;
+  var persistentDetachedSidebar = Boolean((_props$settings2 = props.settings) === null || _props$settings2 === void 0 || (_props$settings2 = _props$settings2.iso) === null || _props$settings2 === void 0 || (_props$settings2 = _props$settings2.sidebar) === null || _props$settings2 === void 0 || (_props$settings2 = _props$settings2.detached) === null || _props$settings2 === void 0 ? void 0 : _props$settings2.persistent);
+  var showInserterToggle = inserter && !(inserterInSidebar && persistentDetachedSidebar);
   var displayBlockToolbar = !isLargeViewport || previewDeviceType !== 'Desktop' || fixedToolbar;
   var toolbarAriaLabel = displayBlockToolbar ? /* translators: accessibility text for the editor toolbar when Top Toolbar is on */
   (0, _i18n.__)('Document and block tools') : /* translators: accessibility text for the editor toolbar when Top Toolbar is off */
@@ -104,9 +106,9 @@ function HeaderToolbar(props) {
   return /*#__PURE__*/(0, _jsxRuntime.jsx)(_blockEditor.NavigableToolbar, {
     className: "editor-document-tools edit-post-header-toolbar",
     "aria-label": toolbarAriaLabel,
-    children: (inserter || undo || navigation || selectorTool) && /*#__PURE__*/(0, _jsxRuntime.jsxs)("div", {
+    children: (showInserterToggle || undo || navigation || selectorTool) && /*#__PURE__*/(0, _jsxRuntime.jsxs)("div", {
       className: "editor-document-tools__left edit-post-header-toolbar__left",
-      children: [inserter && /*#__PURE__*/(0, _jsxRuntime.jsx)(_components.ToolbarItem, {
+      children: [showInserterToggle && /*#__PURE__*/(0, _jsxRuntime.jsx)(_components.ToolbarItem, {
         ref: inserterButton,
         as: _components.Button,
         className: "editor-document-tools__inserter-toggle",

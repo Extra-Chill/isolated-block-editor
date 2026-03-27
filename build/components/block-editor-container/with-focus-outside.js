@@ -8,28 +8,27 @@ exports["default"] = void 0;
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
-var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
-var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
 var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
 var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
 var _lodash = require("lodash");
 var _element = require("@wordpress/element");
 var _compose = require("@wordpress/compose");
 var _jsxRuntime = require("react/jsx-runtime");
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2["default"])(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } } // @ts-nocheck
+function _callSuper(t, o, e) { return o = (0, _getPrototypeOf2["default"])(o), (0, _possibleConstructorReturn2["default"])(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], (0, _getPrototypeOf2["default"])(t).constructor) : o.apply(t, e)); }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); } // @ts-nocheck
 /**
  * External dependencies
  */ /**
-     * WordPress dependencies
-     */ /**
-         * Input types which are classified as button types, for use in considering
-         * whether element is a (focus-normalized) button.
-         *
-         * @type {string[]}
-         */
+ * WordPress dependencies
+ */ /**
+ * Input types which are classified as button types, for use in considering
+ * whether element is a (focus-normalized) button.
+ *
+ * @type {string[]}
+ */
 var INPUT_BUTTON_TYPES = ['button', 'submit'];
 
 /**
@@ -54,19 +53,18 @@ function isFocusNormalizedButton(element) {
 }
 var _default = exports["default"] = (0, _compose.createHigherOrderComponent)(function (WrappedComponent) {
   return /*#__PURE__*/function (_Component) {
-    (0, _inherits2["default"])(_class, _Component);
-    var _super = _createSuper(_class);
     function _class() {
       var _this;
       (0, _classCallCheck2["default"])(this, _class);
-      _this = _super.apply(this, arguments);
-      _this.bindNode = _this.bindNode.bind((0, _assertThisInitialized2["default"])(_this));
-      _this.cancelBlurCheck = _this.cancelBlurCheck.bind((0, _assertThisInitialized2["default"])(_this));
-      _this.queueBlurCheck = _this.queueBlurCheck.bind((0, _assertThisInitialized2["default"])(_this));
-      _this.normalizeButtonFocus = _this.normalizeButtonFocus.bind((0, _assertThisInitialized2["default"])(_this));
+      _this = _callSuper(this, _class, arguments);
+      _this.bindNode = _this.bindNode.bind(_this);
+      _this.cancelBlurCheck = _this.cancelBlurCheck.bind(_this);
+      _this.queueBlurCheck = _this.queueBlurCheck.bind(_this);
+      _this.normalizeButtonFocus = _this.normalizeButtonFocus.bind(_this);
       return _this;
     }
-    (0, _createClass2["default"])(_class, [{
+    (0, _inherits2["default"])(_class, _Component);
+    return (0, _createClass2["default"])(_class, [{
       key: "componentWillUnmount",
       value: function componentWillUnmount() {
         clearTimeout(this.blurCheckTimeout);
@@ -160,7 +158,6 @@ var _default = exports["default"] = (0, _compose.createHigherOrderComponent)(fun
         /* eslint-enable jsx-a11y/no-static-element-interactions */
       }
     }]);
-    return _class;
   }(_element.Component);
 }, 'withFocusOutside');
 //# sourceMappingURL=with-focus-outside.js.map

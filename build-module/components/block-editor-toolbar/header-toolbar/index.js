@@ -82,6 +82,8 @@ function HeaderToolbar(props) {
     selectorTool
   } = props.settings.iso.toolbar;
   const inserterInSidebar = props.settings?.iso?.sidebar?.inserter || false;
+  const persistentDetachedSidebar = Boolean(props.settings?.iso?.sidebar?.detached?.persistent);
+  const showInserterToggle = inserter && !(inserterInSidebar && persistentDetachedSidebar);
   const displayBlockToolbar = !isLargeViewport || previewDeviceType !== 'Desktop' || fixedToolbar;
   const toolbarAriaLabel = displayBlockToolbar ? /* translators: accessibility text for the editor toolbar when Top Toolbar is on */
   __('Document and block tools') : /* translators: accessibility text for the editor toolbar when Top Toolbar is off */
@@ -99,9 +101,9 @@ function HeaderToolbar(props) {
   return /*#__PURE__*/_jsx(NavigableToolbar, {
     className: "editor-document-tools edit-post-header-toolbar",
     "aria-label": toolbarAriaLabel,
-    children: (inserter || undo || navigation || selectorTool) && /*#__PURE__*/_jsxs("div", {
+    children: (showInserterToggle || undo || navigation || selectorTool) && /*#__PURE__*/_jsxs("div", {
       className: "editor-document-tools__left edit-post-header-toolbar__left",
-      children: [inserter && /*#__PURE__*/_jsx(ToolbarItem, {
+      children: [showInserterToggle && /*#__PURE__*/_jsx(ToolbarItem, {
         ref: inserterButton,
         as: Button,
         className: "editor-document-tools__inserter-toggle",

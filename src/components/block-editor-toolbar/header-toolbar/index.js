@@ -67,6 +67,8 @@ function HeaderToolbar( props ) {
 	const isLargeViewport = useViewportMatch( 'medium' );
 	const { inserter, navigation, undo, selectorTool } = props.settings.iso.toolbar;
 	const inserterInSidebar = props.settings?.iso?.sidebar?.inserter || false;
+	const persistentDetachedSidebar = Boolean( props.settings?.iso?.sidebar?.detached?.persistent );
+	const showInserterToggle = inserter && !( inserterInSidebar && persistentDetachedSidebar );
 	const displayBlockToolbar = !isLargeViewport || previewDeviceType !== 'Desktop' || fixedToolbar;
 	const toolbarAriaLabel = displayBlockToolbar
 		? /* translators: accessibility text for the editor toolbar when Top Toolbar is on */
@@ -90,9 +92,9 @@ function HeaderToolbar( props ) {
 
 	return (
 		<NavigableToolbar className="editor-document-tools edit-post-header-toolbar" aria-label={ toolbarAriaLabel }>
-			{ ( inserter || undo || navigation || selectorTool ) && (
+			{ ( showInserterToggle || undo || navigation || selectorTool ) && (
 				<div className="editor-document-tools__left edit-post-header-toolbar__left">
-					{ inserter && (
+					{ showInserterToggle && (
 						<ToolbarItem
 							ref={ inserterButton }
 							as={ Button }

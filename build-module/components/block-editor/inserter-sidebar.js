@@ -7,7 +7,9 @@ import { __experimentalLibrary as Library } from '@wordpress/block-editor';
 import { close } from '@wordpress/icons';
 import { useViewportMatch, __experimentalUseDialog as useDialog } from '@wordpress/compose';
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-export default function InserterSidebar() {
+export default function InserterSidebar({
+  canClose = true
+}) {
   const {
     setIsInserterOpened
   } = useDispatch('isolated/editor');
@@ -25,7 +27,7 @@ export default function InserterSidebar() {
     ref: inserterDialogRef,
     ...inserterDialogProps,
     className: "edit-widgets-layout__inserter-panel",
-    children: [/*#__PURE__*/_jsx(TagName, {
+    children: [canClose && /*#__PURE__*/_jsx(TagName, {
       className: "edit-widgets-layout__inserter-panel-header",
       children: /*#__PURE__*/_jsx(Button, {
         icon: close,
@@ -37,7 +39,7 @@ export default function InserterSidebar() {
         showMostUsedBlocks: false,
         showInserterHelpPanel: true,
         shouldFocusBlock: isMobileViewport,
-        onClose: () => setIsInserterOpened(false)
+        onClose: canClose ? () => setIsInserterOpened(false) : undefined
       })
     })]
   });

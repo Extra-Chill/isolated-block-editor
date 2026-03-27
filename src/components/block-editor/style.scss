@@ -23,6 +23,16 @@
 		margin-bottom: 1px;
 	}
 
+	&__detached-sidebar {
+		height: 100%;
+		min-height: 0;
+
+		.edit-widgets-layout__inserter-panel,
+		.editor-list-view-sidebar {
+			height: 100%;
+		}
+	}
+
 	.edit-post-layout:not(.is-sidebar-opened):not(.is-inserter-opened) {
 		.interface-interface-skeleton__editor,
 		.interface-interface-skeleton__content,
