@@ -100,6 +100,7 @@ import './style.scss';
  * @property {boolean} [allowApi] - Allow API requests
  * @property {boolean} [disableCanvasAnimations] - Disable editor canvas animations
  * @property {SidebarSettings} [sidebar] - Configure sidebar functionality
+ * @property {{tabs?: string[]|null}} [inserter] - Inserter overrides. `tabs` controls which inserter tabs to show (e.g. ['blocks']). Defaults to all (['blocks','patterns','media']).
  */
 
 /**

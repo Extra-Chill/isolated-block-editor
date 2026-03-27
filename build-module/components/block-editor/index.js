@@ -28,6 +28,7 @@ import BlockEditorToolbar from '../block-editor-toolbar';
 import InserterSidebar from './inserter-sidebar';
 import ListViewSidebar from './listview-sidebar';
 import DetachedSidebar from './detached-sidebar';
+import MediaCategoryRegistrar from './media-categories';
 import Footer from './footer';
 import ActionArea from '../action-area';
 
@@ -91,6 +92,7 @@ function BlockEditor(props) {
   const detachedListView = detachedSidebarViews?.listView || null;
   const isDetachedSidebarPersistent = Boolean(detachedSidebar?.persistent && detachedSidebar?.target);
   const detachedSidebarDefaultView = detachedSidebar?.defaultView || 'inserter';
+  const inserterTabs = settings?.iso?.inserter?.tabs || null;
   // When a persistent detached sidebar is active on mobile, the inserter button
   // is hidden and the sidebar collapses to single-column (unreachable). The
   // header bar becomes dead chrome eating vertical space — suppress it.
@@ -138,11 +140,14 @@ function BlockEditor(props) {
         });
       }
       return /*#__PURE__*/_jsx(InserterSidebar, {
-        canClose: false
+        canClose: false,
+        tabs: inserterTabs
       });
     }
     if (editorMode === 'visual' && isInserterOpened) {
-      return /*#__PURE__*/_jsx(InserterSidebar, {});
+      return /*#__PURE__*/_jsx(InserterSidebar, {
+        tabs: inserterTabs
+      });
     }
     if (editorMode === 'visual' && isListViewOpened) {
       return /*#__PURE__*/_jsx(ListViewSidebar, {});
@@ -176,7 +181,9 @@ function BlockEditor(props) {
   }) : null;
   const CustomSettingsSidebar = (_settings$iso$sidebar = settings?.iso?.sidebar?.customComponent) !== null && _settings$iso$sidebar !== void 0 ? _settings$iso$sidebar : SettingsSidebar;
   return /*#__PURE__*/_jsxs(_Fragment, {
-    children: [/*#__PURE__*/_jsx(CustomSettingsSidebar, {
+    children: [/*#__PURE__*/_jsx(MediaCategoryRegistrar, {
+      settings: settings
+    }), /*#__PURE__*/_jsx(CustomSettingsSidebar, {
       documentInspector: (_settings$iso$toolbar = settings?.iso?.toolbar?.documentInspector) !== null && _settings$iso$toolbar !== void 0 ? _settings$iso$toolbar : false
     }), shouldUseDetachedSidebar && /*#__PURE__*/_jsx(DetachedSidebar, {
       target: detachedSidebar.target,

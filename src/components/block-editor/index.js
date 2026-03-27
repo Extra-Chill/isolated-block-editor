@@ -28,6 +28,7 @@ import BlockEditorToolbar from '../block-editor-toolbar';
 import InserterSidebar from './inserter-sidebar';
 import ListViewSidebar from './listview-sidebar';
 import DetachedSidebar from './detached-sidebar';
+import MediaCategoryRegistrar from './media-categories';
 import Footer from './footer';
 import ActionArea from '../action-area';
 
@@ -82,6 +83,7 @@ function BlockEditor( props ) {
 	const detachedListView = detachedSidebarViews?.listView || null;
 	const isDetachedSidebarPersistent = Boolean( detachedSidebar?.persistent && detachedSidebar?.target );
 	const detachedSidebarDefaultView = detachedSidebar?.defaultView || 'inserter';
+	const inserterTabs = settings?.iso?.inserter?.tabs || null;
 	// When a persistent detached sidebar is active on mobile, the inserter button
 	// is hidden and the sidebar collapses to single-column (unreachable). The
 	// header bar becomes dead chrome eating vertical space — suppress it.
@@ -127,11 +129,11 @@ function BlockEditor( props ) {
 				return <ListViewSidebar canClose={ false } />;
 			}
 
-			return <InserterSidebar canClose={ false } />;
+			return <InserterSidebar canClose={ false } tabs={ inserterTabs } />;
 		}
 
 		if ( editorMode === 'visual' && isInserterOpened ) {
-			return <InserterSidebar />;
+			return <InserterSidebar tabs={ inserterTabs } />;
 		}
 
 		if ( editorMode === 'visual' && isListViewOpened ) {
@@ -173,6 +175,7 @@ function BlockEditor( props ) {
 
 	return (
 		<>
+			<MediaCategoryRegistrar settings={ settings } />
 			<CustomSettingsSidebar documentInspector={ settings?.iso?.toolbar?.documentInspector ?? false } />
 			{ shouldUseDetachedSidebar && (
 				<DetachedSidebar

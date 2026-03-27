@@ -20,7 +20,7 @@ function getMenu(current, defaultMenu) {
  * @return {BlockEditorSettings}
  */
 export default function applyDefaultSettings(settings) {
-  var _iso$preferencesKey, _iso$persistenceKey, _iso$disallowEmbed, _iso$customStores, _iso$blocks$allowBloc, _iso$blocks$disallowB, _iso$toolbar, _iso$header, _iso$sidebar$detached, _iso$sidebar, _iso$footer, _iso$moreMenu, _iso$linkMenu, _iso$defaultPreferenc, _iso$allowApi, _iso$disableCanvasAni, _iso$currentPattern, _iso$patterns, _editor$bodyPlacehold, _editor$fetchLinkSugg, _editor$fetchLinkSugg2;
+  var _iso$preferencesKey, _iso$persistenceKey, _iso$disallowEmbed, _iso$customStores, _iso$blocks$allowBloc, _iso$blocks$disallowB, _iso$toolbar, _iso$header, _iso$sidebar$detached, _iso$sidebar, _iso$footer, _iso$moreMenu, _iso$linkMenu, _iso$defaultPreferenc, _iso$inserter, _iso$allowApi, _iso$disableCanvasAni, _iso$currentPattern, _iso$patterns, _editor$bodyPlacehold, _editor$fetchLinkSugg, _editor$fetchLinkSugg2;
   const {
     iso,
     editor
@@ -80,6 +80,13 @@ export default function applyDefaultSettings(settings) {
       // Default to top toolbar
       defaultPreferences: {
         ...((_iso$defaultPreferenc = iso?.defaultPreferences) !== null && _iso$defaultPreferenc !== void 0 ? _iso$defaultPreferenc : {})
+      },
+      // Inserter-specific overrides
+      inserter: {
+        // Which tabs to show in the block inserter. Defaults to all.
+        // Pass e.g. ['blocks'] to show only the Blocks tab, hiding Patterns and Media.
+        tabs: null,
+        ...((_iso$inserter = iso?.inserter) !== null && _iso$inserter !== void 0 ? _iso$inserter : {})
       },
       allowApi: (_iso$allowApi = iso?.allowApi) !== null && _iso$allowApi !== void 0 ? _iso$allowApi : false,
       disableCanvasAnimations: (_iso$disableCanvasAni = iso?.disableCanvasAnimations) !== null && _iso$disableCanvasAni !== void 0 ? _iso$disableCanvasAni : false,

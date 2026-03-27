@@ -90,6 +90,15 @@ export default function applyDefaultSettings( settings ) {
 				...( iso?.defaultPreferences ?? {} ),
 			},
 
+			// Inserter-specific overrides
+			inserter: {
+				// Which tabs to show in the block inserter. Defaults to all.
+				// Pass e.g. ['blocks'] to show only the Blocks tab, hiding Patterns and Media.
+				tabs: null,
+
+				...( iso?.inserter ?? {} ),
+			},
+
 			allowApi: iso?.allowApi ?? false,
 
 			disableCanvasAnimations: iso?.disableCanvasAnimations ?? false,

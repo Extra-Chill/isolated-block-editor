@@ -59,6 +59,7 @@
  * @property {boolean} [allowApi] - Allow API requests
  * @property {boolean} [disableCanvasAnimations] - Disable editor canvas animations
  * @property {SidebarSettings} [sidebar] - Configure sidebar functionality
+ * @property {{tabs?: string[]|null}} [inserter] - Inserter overrides. `tabs` controls which inserter tabs to show (e.g. ['blocks']). Defaults to all (['blocks','patterns','media']).
  */
 /**
  * Block Editor Settings
@@ -286,6 +287,12 @@ export type IsoSettings = {
      * - Configure sidebar functionality
      */
     sidebar?: SidebarSettings | undefined;
+    /**
+     * - Inserter overrides. `tabs` controls which inserter tabs to show (e.g. ['blocks']). Defaults to all (['blocks','patterns','media']).
+     */
+    inserter?: {
+        tabs?: string[] | null | undefined;
+    } | undefined;
 };
 /**
  * Block Editor Settings

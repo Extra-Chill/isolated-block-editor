@@ -24,6 +24,7 @@ var _blockEditorToolbar = _interopRequireDefault(require("../block-editor-toolba
 var _inserterSidebar = _interopRequireDefault(require("./inserter-sidebar"));
 var _listviewSidebar = _interopRequireDefault(require("./listview-sidebar"));
 var _detachedSidebar = _interopRequireDefault(require("./detached-sidebar"));
+var _mediaCategories = _interopRequireDefault(require("./media-categories"));
 var _footer = _interopRequireDefault(require("./footer"));
 var _actionArea = _interopRequireDefault(require("../action-area"));
 var _jsxRuntime = require("react/jsx-runtime");
@@ -77,7 +78,7 @@ var _jsxRuntime = require("react/jsx-runtime");
  * @param {OnMore} props.renderMoreMenu - Callback to render additional items in the more menu
  */
 function BlockEditor(props) {
-  var _settings$iso, _settings$iso2, _settings$iso3, _settings$iso$header, _settings$iso4, _settings$iso5, _settings$iso$sidebar, _settings$iso6, _settings$iso$toolbar, _settings$iso7;
+  var _settings$iso, _settings$iso2, _settings$iso3, _settings$iso4, _settings$iso$header, _settings$iso5, _settings$iso6, _settings$iso$sidebar, _settings$iso7, _settings$iso$toolbar, _settings$iso8;
   var isEditing = props.isEditing,
     editorMode = props.editorMode,
     children = props.children,
@@ -96,11 +97,12 @@ function BlockEditor(props) {
   var detachedListView = (detachedSidebarViews === null || detachedSidebarViews === void 0 ? void 0 : detachedSidebarViews.listView) || null;
   var isDetachedSidebarPersistent = Boolean((detachedSidebar === null || detachedSidebar === void 0 ? void 0 : detachedSidebar.persistent) && (detachedSidebar === null || detachedSidebar === void 0 ? void 0 : detachedSidebar.target));
   var detachedSidebarDefaultView = (detachedSidebar === null || detachedSidebar === void 0 ? void 0 : detachedSidebar.defaultView) || 'inserter';
+  var inserterTabs = (settings === null || settings === void 0 || (_settings$iso4 = settings.iso) === null || _settings$iso4 === void 0 || (_settings$iso4 = _settings$iso4.inserter) === null || _settings$iso4 === void 0 ? void 0 : _settings$iso4.tabs) || null;
   // When a persistent detached sidebar is active on mobile, the inserter button
   // is hidden and the sidebar collapses to single-column (unreachable). The
   // header bar becomes dead chrome eating vertical space — suppress it.
-  var showHeader = ((_settings$iso$header = settings === null || settings === void 0 || (_settings$iso4 = settings.iso) === null || _settings$iso4 === void 0 ? void 0 : _settings$iso4.header) !== null && _settings$iso$header !== void 0 ? _settings$iso$header : true) && !(isMobileViewport && isDetachedSidebarPersistent);
-  var showFooter = (settings === null || settings === void 0 || (_settings$iso5 = settings.iso) === null || _settings$iso5 === void 0 ? void 0 : _settings$iso5.footer) || false;
+  var showHeader = ((_settings$iso$header = settings === null || settings === void 0 || (_settings$iso5 = settings.iso) === null || _settings$iso5 === void 0 ? void 0 : _settings$iso5.header) !== null && _settings$iso$header !== void 0 ? _settings$iso$header : true) && !(isMobileViewport && isDetachedSidebarPersistent);
+  var showFooter = (settings === null || settings === void 0 || (_settings$iso6 = settings.iso) === null || _settings$iso6 === void 0 ? void 0 : _settings$iso6.footer) || false;
   var _useSelect = (0, _data.useSelect)(function (select) {
       var _select = select('isolated/editor'),
         isFeatureActive = _select.isFeatureActive,
@@ -141,11 +143,14 @@ function BlockEditor(props) {
         });
       }
       return /*#__PURE__*/(0, _jsxRuntime.jsx)(_inserterSidebar["default"], {
-        canClose: false
+        canClose: false,
+        tabs: inserterTabs
       });
     }
     if (editorMode === 'visual' && isInserterOpened) {
-      return /*#__PURE__*/(0, _jsxRuntime.jsx)(_inserterSidebar["default"], {});
+      return /*#__PURE__*/(0, _jsxRuntime.jsx)(_inserterSidebar["default"], {
+        tabs: inserterTabs
+      });
     }
     if (editorMode === 'visual' && isListViewOpened) {
       return /*#__PURE__*/(0, _jsxRuntime.jsx)(_listviewSidebar["default"], {});
@@ -177,10 +182,12 @@ function BlockEditor(props) {
     settings: settings,
     renderMoreMenu: renderMoreMenu
   }) : null;
-  var CustomSettingsSidebar = (_settings$iso$sidebar = settings === null || settings === void 0 || (_settings$iso6 = settings.iso) === null || _settings$iso6 === void 0 || (_settings$iso6 = _settings$iso6.sidebar) === null || _settings$iso6 === void 0 ? void 0 : _settings$iso6.customComponent) !== null && _settings$iso$sidebar !== void 0 ? _settings$iso$sidebar : _sidebar["default"];
+  var CustomSettingsSidebar = (_settings$iso$sidebar = settings === null || settings === void 0 || (_settings$iso7 = settings.iso) === null || _settings$iso7 === void 0 || (_settings$iso7 = _settings$iso7.sidebar) === null || _settings$iso7 === void 0 ? void 0 : _settings$iso7.customComponent) !== null && _settings$iso$sidebar !== void 0 ? _settings$iso$sidebar : _sidebar["default"];
   return /*#__PURE__*/(0, _jsxRuntime.jsxs)(_jsxRuntime.Fragment, {
-    children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(CustomSettingsSidebar, {
-      documentInspector: (_settings$iso$toolbar = settings === null || settings === void 0 || (_settings$iso7 = settings.iso) === null || _settings$iso7 === void 0 || (_settings$iso7 = _settings$iso7.toolbar) === null || _settings$iso7 === void 0 ? void 0 : _settings$iso7.documentInspector) !== null && _settings$iso$toolbar !== void 0 ? _settings$iso$toolbar : false
+    children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_mediaCategories["default"], {
+      settings: settings
+    }), /*#__PURE__*/(0, _jsxRuntime.jsx)(CustomSettingsSidebar, {
+      documentInspector: (_settings$iso$toolbar = settings === null || settings === void 0 || (_settings$iso8 = settings.iso) === null || _settings$iso8 === void 0 || (_settings$iso8 = _settings$iso8.toolbar) === null || _settings$iso8 === void 0 ? void 0 : _settings$iso8.documentInspector) !== null && _settings$iso$toolbar !== void 0 ? _settings$iso$toolbar : false
     }), shouldUseDetachedSidebar && /*#__PURE__*/(0, _jsxRuntime.jsx)(_detachedSidebar["default"], {
       target: detachedSidebar.target,
       className: detachedSidebar.className,

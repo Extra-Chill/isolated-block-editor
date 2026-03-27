@@ -27,7 +27,7 @@ function getMenu(current, defaultMenu) {
  * @return {BlockEditorSettings}
  */
 function applyDefaultSettings(settings) {
-  var _iso$preferencesKey, _iso$persistenceKey, _iso$disallowEmbed, _iso$customStores, _iso$blocks$allowBloc, _iso$blocks, _iso$blocks$disallowB, _iso$blocks2, _iso$toolbar, _iso$header, _iso$sidebar$detached, _iso$sidebar, _iso$sidebar2, _iso$footer, _iso$moreMenu, _iso$linkMenu, _iso$defaultPreferenc, _iso$allowApi, _iso$disableCanvasAni, _iso$currentPattern, _iso$patterns, _editor$bodyPlacehold, _editor$fetchLinkSugg, _editor$fetchLinkSugg2;
+  var _iso$preferencesKey, _iso$persistenceKey, _iso$disallowEmbed, _iso$customStores, _iso$blocks$allowBloc, _iso$blocks, _iso$blocks$disallowB, _iso$blocks2, _iso$toolbar, _iso$header, _iso$sidebar$detached, _iso$sidebar, _iso$sidebar2, _iso$footer, _iso$moreMenu, _iso$linkMenu, _iso$defaultPreferenc, _iso$inserter, _iso$allowApi, _iso$disableCanvasAni, _iso$currentPattern, _iso$patterns, _editor$bodyPlacehold, _editor$fetchLinkSugg, _editor$fetchLinkSugg2;
   var iso = settings.iso,
     editor = settings.editor;
   return {
@@ -80,6 +80,12 @@ function applyDefaultSettings(settings) {
       linkMenu: (_iso$linkMenu = iso === null || iso === void 0 ? void 0 : iso.linkMenu) !== null && _iso$linkMenu !== void 0 ? _iso$linkMenu : [],
       // Default to top toolbar
       defaultPreferences: _objectSpread({}, (_iso$defaultPreferenc = iso === null || iso === void 0 ? void 0 : iso.defaultPreferences) !== null && _iso$defaultPreferenc !== void 0 ? _iso$defaultPreferenc : {}),
+      // Inserter-specific overrides
+      inserter: _objectSpread({
+        // Which tabs to show in the block inserter. Defaults to all.
+        // Pass e.g. ['blocks'] to show only the Blocks tab, hiding Patterns and Media.
+        tabs: null
+      }, (_iso$inserter = iso === null || iso === void 0 ? void 0 : iso.inserter) !== null && _iso$inserter !== void 0 ? _iso$inserter : {}),
       allowApi: (_iso$allowApi = iso === null || iso === void 0 ? void 0 : iso.allowApi) !== null && _iso$allowApi !== void 0 ? _iso$allowApi : false,
       disableCanvasAnimations: (_iso$disableCanvasAni = iso === null || iso === void 0 ? void 0 : iso.disableCanvasAnimations) !== null && _iso$disableCanvasAni !== void 0 ? _iso$disableCanvasAni : false,
       // No default pattern

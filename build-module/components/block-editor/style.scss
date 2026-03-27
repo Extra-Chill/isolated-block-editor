@@ -26,12 +26,18 @@
 	}
 
 	&__detached-sidebar {
+		display: flex;
+		flex-direction: column;
 		height: 100%;
 		min-height: 0;
+		overflow: hidden;
 
 		.edit-widgets-layout__inserter-panel,
 		.editor-list-view-sidebar {
-			height: 100%;
+			display: flex;
+			flex-direction: column;
+			flex: 1;
+			min-height: 0;
 		}
 
 		// The inserter panel content wrapper has no Gutenberg styles (they live in
@@ -41,9 +47,29 @@
 		.edit-widgets-layout__inserter-panel-content {
 			display: flex;
 			flex-direction: column;
-			height: 100%;
+			flex: 1;
 			min-height: 0;
 			overflow: hidden;
+		}
+
+		// Gutenberg sets `overflow: visible` on the inserter menu (for popover
+		// positioning inside the inserter popover). Inside a detached sidebar the
+		// menu lives in a height-constrained flex column, so visible overflow
+		// breaks the scroll chain — the tabpanel's `overflow-y: auto` never
+		// activates because the menu just grows unbounded.
+		.block-editor-inserter__menu {
+			display: flex;
+			flex-direction: column;
+			flex: 1;
+			min-height: 0;
+			overflow: hidden;
+		}
+
+		.block-editor-inserter__main-area {
+			display: flex;
+			flex-direction: column;
+			flex: 1;
+			min-height: 0;
 		}
 	}
 
