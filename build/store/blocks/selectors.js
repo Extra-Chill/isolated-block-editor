@@ -6,9 +6,15 @@ Object.defineProperty(exports, "__esModule", {
 exports.getBlocks = getBlocks;
 exports.getEditCount = getEditCount;
 exports.getEditorSelection = getEditorSelection;
+exports.getSerializedContent = getSerializedContent;
 exports.hasEditorRedo = hasEditorRedo;
 exports.hasEditorUndo = hasEditorUndo;
+var _blocks = require("@wordpress/blocks");
 var _selectors = require("../editor/selectors");
+/**
+ * WordPress dependencies
+ */
+
 /**
  * Internal dependencies
  */
@@ -21,6 +27,17 @@ var _selectors = require("../editor/selectors");
  */
 function getBlocks(state) {
   return state.blocks.present.blocks;
+}
+
+/**
+ * Get the editor content as serialized HTML.
+ *
+ * @param {Object} state - Current state
+ * @return {string} Serialized block markup.
+ */
+function getSerializedContent(state) {
+  var blocks = getBlocks(state);
+  return blocks ? (0, _blocks.serialize)(blocks) : '';
 }
 
 /**

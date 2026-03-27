@@ -91,7 +91,10 @@ function BlockEditor(props) {
   const detachedListView = detachedSidebarViews?.listView || null;
   const isDetachedSidebarPersistent = Boolean(detachedSidebar?.persistent && detachedSidebar?.target);
   const detachedSidebarDefaultView = detachedSidebar?.defaultView || 'inserter';
-  const showHeader = (_settings$iso$header = settings?.iso?.header) !== null && _settings$iso$header !== void 0 ? _settings$iso$header : true;
+  // When a persistent detached sidebar is active on mobile, the inserter button
+  // is hidden and the sidebar collapses to single-column (unreachable). The
+  // header bar becomes dead chrome eating vertical space — suppress it.
+  const showHeader = ((_settings$iso$header = settings?.iso?.header) !== null && _settings$iso$header !== void 0 ? _settings$iso$header : true) && !(isMobileViewport && isDetachedSidebarPersistent);
   const showFooter = settings?.iso?.footer || false;
   const {
     sidebarIsOpened,

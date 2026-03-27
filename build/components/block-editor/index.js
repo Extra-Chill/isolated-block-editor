@@ -96,7 +96,10 @@ function BlockEditor(props) {
   var detachedListView = (detachedSidebarViews === null || detachedSidebarViews === void 0 ? void 0 : detachedSidebarViews.listView) || null;
   var isDetachedSidebarPersistent = Boolean((detachedSidebar === null || detachedSidebar === void 0 ? void 0 : detachedSidebar.persistent) && (detachedSidebar === null || detachedSidebar === void 0 ? void 0 : detachedSidebar.target));
   var detachedSidebarDefaultView = (detachedSidebar === null || detachedSidebar === void 0 ? void 0 : detachedSidebar.defaultView) || 'inserter';
-  var showHeader = (_settings$iso$header = settings === null || settings === void 0 || (_settings$iso4 = settings.iso) === null || _settings$iso4 === void 0 ? void 0 : _settings$iso4.header) !== null && _settings$iso$header !== void 0 ? _settings$iso$header : true;
+  // When a persistent detached sidebar is active on mobile, the inserter button
+  // is hidden and the sidebar collapses to single-column (unreachable). The
+  // header bar becomes dead chrome eating vertical space — suppress it.
+  var showHeader = ((_settings$iso$header = settings === null || settings === void 0 || (_settings$iso4 = settings.iso) === null || _settings$iso4 === void 0 ? void 0 : _settings$iso4.header) !== null && _settings$iso$header !== void 0 ? _settings$iso$header : true) && !(isMobileViewport && isDetachedSidebarPersistent);
   var showFooter = (settings === null || settings === void 0 || (_settings$iso5 = settings.iso) === null || _settings$iso5 === void 0 ? void 0 : _settings$iso5.footer) || false;
   var _useSelect = (0, _data.useSelect)(function (select) {
       var _select = select('isolated/editor'),

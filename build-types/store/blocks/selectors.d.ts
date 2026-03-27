@@ -6,6 +6,13 @@
  */
 export function getBlocks(state: any): object[];
 /**
+ * Get the editor content as serialized HTML.
+ *
+ * @param {Object} state - Current state
+ * @return {string} Serialized block markup.
+ */
+export function getSerializedContent(state: any): string;
+/**
  * Get selection
  *
  * @param {Object} state - Current state

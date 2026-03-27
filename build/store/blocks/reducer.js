@@ -124,6 +124,19 @@ var blocksHistoryReducer = function blocksHistoryReducer() {
           present: _nextPresent
         });
       }
+    case 'REPLACE_CONTENT':
+      {
+        // Full content replacement — reset undo/redo history and start fresh.
+        return {
+          past: [],
+          present: {
+            editCount: 0,
+            selection: null,
+            blocks: action.blocks || []
+          },
+          future: []
+        };
+      }
   }
   return historyState;
 };

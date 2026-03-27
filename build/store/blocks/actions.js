@@ -42,7 +42,7 @@ var actions = {
     }, redo);
   }),
   /**
-   * Update blocks without undo history
+   * Update blocks with undo history
    *
    * @param {object[]} blocks
    * @param {Object} options
@@ -86,7 +86,33 @@ var actions = {
         }
       }, _callee2);
     })();
-  }
+  },
+  /**
+   * Replace all editor content with new blocks and reset undo history.
+   *
+   * Use this when loading entirely new content (e.g. switching documents,
+   * restoring a draft, or loading a template). Unlike updateBlocksWithoutUndo,
+   * this clears the undo/redo history so the user starts fresh.
+   *
+   * Accepts parsed block objects — call parse(html) before dispatching
+   * if you have serialized HTML.
+   *
+   * @param {object[]} blocks - Parsed block objects to load.
+   */
+  replaceContent: /*#__PURE__*/_regenerator().m(function replaceContent(blocks) {
+    return _regenerator().w(function (_context5) {
+      while (1) switch (_context5.n) {
+        case 0:
+          _context5.n = 1;
+          return {
+            type: 'REPLACE_CONTENT',
+            blocks: blocks || []
+          };
+        case 1:
+          return _context5.a(2, _context5.v);
+      }
+    }, replaceContent);
+  })
 };
 var _default = exports["default"] = actions;
 //# sourceMappingURL=actions.js.map

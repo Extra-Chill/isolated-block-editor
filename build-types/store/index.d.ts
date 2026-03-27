@@ -529,6 +529,10 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
         }, any, unknown>;
         updateBlocksWithUndo(blocks: any[], options?: any): Generator<any, any, unknown>;
         updateBlocksWithoutUndo(blocks: any[], options?: any): Generator<any, any, unknown>;
+        replaceContent(blocks: any[]): Generator<{
+            type: string;
+            blocks: any[];
+        }, any, unknown>;
     };
     selectors: {
         /**
@@ -586,10 +590,8 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
             isRegistrySelector?: boolean | undefined;
             registry?: any;
         };
-        /**
-         * Internal dependencies
-         */
         getBlocks(state: any): any[];
+        getSerializedContent(state: any): string;
         getEditorSelection(state: any): any;
         hasEditorUndo(state: any): boolean;
         hasEditorRedo(state: any): boolean;

@@ -199,7 +199,7 @@ export type SidebarSettings = {
         target?: string | Element | null | undefined;
         className?: string | undefined;
         persistent?: boolean | undefined;
-        defaultView?: "inserter" | "list-view" | undefined;
+        defaultView?: "list-view" | "inserter" | undefined;
         views?: {
             inserter?: {
                 target?: string | Element | null | undefined;
