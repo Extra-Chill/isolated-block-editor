@@ -33,6 +33,18 @@
 		.editor-list-view-sidebar {
 			height: 100%;
 		}
+
+		// The inserter panel content wrapper has no Gutenberg styles (they live in
+		// @wordpress/edit-widgets which isn't bundled in IBE). Without explicit
+		// height + overflow, the inserter menu grows beyond the detached sidebar
+		// on desktop when the sidebar is constrained to a fixed-height container.
+		.edit-widgets-layout__inserter-panel-content {
+			display: flex;
+			flex-direction: column;
+			height: 100%;
+			min-height: 0;
+			overflow: hidden;
+		}
 	}
 
 	.edit-post-layout:not(.is-sidebar-opened):not(.is-inserter-opened) {
