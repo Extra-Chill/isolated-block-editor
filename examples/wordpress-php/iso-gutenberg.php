@@ -43,6 +43,9 @@ class IsoEditor_Gutenberg {
 		wp_enqueue_editor();
 
 		do_action( 'enqueue_block_editor_assets' );
+		// Also fire enqueue_block_assets so styles from plugins reach the
+		// Gutenberg 22.8+ iframe editor context.
+		do_action( 'enqueue_block_assets' );
 
 		add_action( 'wp_print_footer_scripts', array( '_WP_Editors', 'print_default_editor_scripts' ), 45 );
 
