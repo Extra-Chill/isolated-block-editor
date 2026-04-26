@@ -19,7 +19,6 @@ import withRegistryProvider from './components/with-registry-provider';
 import useEditorSetup from './components/editor-setup';
 import PatternMonitor from './components/pattern-monitor';
 import ContentSaver from './components/content-saver';
-import registerApiHandlers from './components/api-fetch';
 import storeHotSwapPlugin from './store/plugins/store-hot-swap';
 import DocumentSection from './components/document';
 import ToolbarSlot from './components/block-editor-toolbar/slot';
@@ -157,7 +156,6 @@ export function useInitializeIsoEditor( { undoManager } = {} ) {
 
 	// This allows the editor to swap stores dynamically
 	use( storeHotSwapPlugin, {} );
-	registerApiHandlers();
 
 	window.isoInitialisedBlocks = true;
 }
