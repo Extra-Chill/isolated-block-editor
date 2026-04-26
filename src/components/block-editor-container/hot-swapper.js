@@ -1,8 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { withDispatch, withSelect } from '@wordpress/data';
-import { compose } from '@wordpress/compose';
+import { useRegistry, useSelect } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
 
 /**
@@ -10,32 +9,27 @@ import { useEffect } from '@wordpress/element';
  */
 import storeHotSwapPlugin from '../../store/plugins/store-hot-swap';
 
-function HotSwapper( { isEditing, hotSwap } ) {
+/**
+ * Routes wp.data access for `core/block-editor` and `core/editor` to the
+ * focused editor instance's sub-registry. Without this, blocks that call
+ * `wp.data.select( 'core/block-editor' )` directly would always read from
+ * the parent registry and ignore the per-instance editor state.
+ */
+export default function HotSwapper() {
+	const registry = useRegistry();
+	const isEditing = useSelect(
+		// @ts-ignore
+		( select ) => select( 'isolated/editor' ).isEditing(),
+		[]
+	);
+
 	useEffect( () => {
-		hotSwap( isEditing );
-	}, [ isEditing ] );
+		storeHotSwapPlugin.resetEditor();
+
+		if ( isEditing ) {
+			storeHotSwapPlugin.setEditor( registry.select, registry.dispatch );
+		}
+	}, [ isEditing, registry ] );
 
 	return null;
 }
-
-// @ts-ignore
-export default compose( [
-	withSelect( ( select ) => {
-		const { isEditing } = select( 'isolated/editor' );
-
-		return {
-			isEditing: isEditing(),
-		};
-	} ),
-	withDispatch( ( dispatch, ownProps, { select } ) => {
-		return {
-			hotSwap: ( isEditing ) => {
-				storeHotSwapPlugin.resetEditor();
-
-				if ( isEditing ) {
-					storeHotSwapPlugin.setEditor( select, dispatch );
-				}
-			},
-		};
-	} ),
-] )( HotSwapper );
