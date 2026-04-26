@@ -16,7 +16,9 @@ import storeHotSwapPlugin from '../../store/plugins/store-hot-swap';
  * the parent registry and ignore the per-instance editor state.
  */
 export default function HotSwapper() {
-	const registry = useRegistry();
+	const registry = /** @type {{ select: Function, dispatch: Function }} */ (
+		/** @type {unknown} */ ( useRegistry() )
+	);
 	const isEditing = useSelect(
 		// @ts-ignore
 		( select ) => select( 'isolated/editor' ).isEditing(),
