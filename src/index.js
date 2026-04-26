@@ -30,8 +30,6 @@ import FooterSlot from './components/footer-slot';
 import EditorLoaded from './components/editor-loaded';
 import EditorHeadingSlot from './components/editor-heading-slot';
 
-// A fake edit-post store is needed
-import './store/edit-post';
 import './style.scss';
 
 /** @typedef {import('./components/block-editor-toolbar/more-menu').OnMore} OnMore */
