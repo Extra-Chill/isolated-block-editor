@@ -25,10 +25,18 @@ export default function HotSwapper() {
 
 	useEffect( () => {
 		storeHotSwapPlugin.resetEditor();
+		let didSetEditor = false;
 
 		if ( isEditing ) {
 			storeHotSwapPlugin.setEditor( registry.select, registry.dispatch );
+			didSetEditor = true;
 		}
+
+		return () => {
+			if ( didSetEditor ) {
+				storeHotSwapPlugin.resetEditor();
+			}
+		};
 	}, [ isEditing, registry ] );
 
 	return null;
