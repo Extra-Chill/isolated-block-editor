@@ -72,7 +72,13 @@ const interfaceLabels = {
  */
 function BlockEditor( props ) {
 	const { isEditing, editorMode, children, undo, redo, settings, renderMoreMenu } = props;
-	const styles = []; // TODO: do we need hasThemeStyles support here?
+	// Thread through the editor styles from settings (root.css, editor-style.css,
+	// block-editor.css, etc. registered via add_editor_style()) so they reach
+	// BlockCanvas / EditorStyles and land inside the iframe document. Without
+	// this, the host theme's CSS custom properties never define inside the
+	// iframe and the editor canvas falls back to plain white / browser default
+	// font.
+	const styles = settings?.editor?.styles || [];
 	const isMobileViewport = useViewportMatch( 'medium', '<' );
 	const isLargeViewport = useViewportMatch( 'medium' );
 	const inspectorInSidebar = settings?.iso?.sidebar?.inspector || false;

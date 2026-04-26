@@ -78,7 +78,7 @@ var _jsxRuntime = require("react/jsx-runtime");
  * @param {OnMore} props.renderMoreMenu - Callback to render additional items in the more menu
  */
 function BlockEditor(props) {
-  var _settings$iso, _settings$iso2, _settings$iso3, _settings$iso4, _settings$iso$header, _settings$iso5, _settings$iso6, _settings$iso$sidebar, _settings$iso7, _settings$iso$toolbar, _settings$iso8;
+  var _settings$editor, _settings$iso, _settings$iso2, _settings$iso3, _settings$iso4, _settings$iso$header, _settings$iso5, _settings$iso6, _settings$iso$sidebar, _settings$iso7, _settings$iso$toolbar, _settings$iso8;
   var isEditing = props.isEditing,
     editorMode = props.editorMode,
     children = props.children,
@@ -86,7 +86,13 @@ function BlockEditor(props) {
     redo = props.redo,
     settings = props.settings,
     renderMoreMenu = props.renderMoreMenu;
-  var styles = []; // TODO: do we need hasThemeStyles support here?
+  // Thread through the editor styles from settings (root.css, editor-style.css,
+  // block-editor.css, etc. registered via add_editor_style()) so they reach
+  // BlockCanvas / EditorStyles and land inside the iframe document. Without
+  // this, the host theme's CSS custom properties never define inside the
+  // iframe and the editor canvas falls back to plain white / browser default
+  // font.
+  var styles = (settings === null || settings === void 0 || (_settings$editor = settings.editor) === null || _settings$editor === void 0 ? void 0 : _settings$editor.styles) || [];
   var isMobileViewport = (0, _compose.useViewportMatch)('medium', '<');
   var isLargeViewport = (0, _compose.useViewportMatch)('medium');
   var inspectorInSidebar = (settings === null || settings === void 0 || (_settings$iso = settings.iso) === null || _settings$iso === void 0 || (_settings$iso = _settings$iso.sidebar) === null || _settings$iso === void 0 ? void 0 : _settings$iso.inspector) || false;
