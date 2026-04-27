@@ -22,7 +22,7 @@
 		"build:cjs": "BUILD_ENV=cjs babel src --out-dir build --source-maps --ignore 'src/**/__tests__/*.js','src/browser/*' --copy-files --no-copy-ignored && rm -rf build/browser",
 		"build:browser": "BUILD_ENV=es6 NODE_ENV=production webpack --mode production --progress --config ./webpack.config.browser.js && rm build-browser/core.js",
 		"build:types": "tsc --build",
-		"build": "npm run build:es6 && npm run build:cjs && npm run build:browser && npm run build:types",
+		"build": "npm run clean && npm run build:es6 && npm run build:cjs && npm run build:browser && npm run build:types",
 		"clean": "rm -rf build build-module build-browser build-types dist tsconfig.tsbuildinfo",
 		"dist": "npm run build && rm -rf dist && mkdir dist && zip build-browser.zip -r build-browser && mv build-browser.zip dist/isolated-block-editor.zip && release-it",
 		"format": "wp-scripts format",
@@ -131,7 +131,6 @@
 		"babel-plugin-inline-json-import": "^0.3.2",
 		"css-loader": "^7.1.2",
 		"eslint": "^8.52.0",
-		"eslint-config-wpcalypso": "^6.1.0",
 		"eslint-plugin-eslint-comments": "^3.2.0",
 		"eslint-plugin-import": "^2.29.0",
 		"eslint-plugin-inclusive-language": "^2.2.1",
@@ -142,7 +141,6 @@
 		"eslint-plugin-react": "^7.33.2",
 		"eslint-plugin-storybook": "^0.6.15",
 		"eslint-plugin-testing-library": "^6.1.0",
-		"eslint-plugin-wpcalypso": "^8.0.0",
 		"mini-css-extract-plugin": "^2.9.2",
 		"prettier": "npm:wp-prettier@3.0.3",
 		"react": "^18.2.0",
@@ -157,10 +155,6 @@
 		"typescript": "^5.4.2",
 		"webpack": "^5.99.9",
 		"webpack-cli": "^6.0.1"
-	},
-	"overrides": {
-		"ajv": "^8.17.1",
-		"ajv-keywords": "^5.1.0"
 	},
 	"release-it": {
 		"github": {

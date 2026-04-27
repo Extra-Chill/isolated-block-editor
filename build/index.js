@@ -56,7 +56,6 @@ var _withRegistryProvider = _interopRequireDefault(require("./components/with-re
 var _editorSetup = _interopRequireDefault(require("./components/editor-setup"));
 var _patternMonitor = _interopRequireDefault(require("./components/pattern-monitor"));
 var _contentSaver = _interopRequireDefault(require("./components/content-saver"));
-var _apiFetch = _interopRequireDefault(require("./components/api-fetch"));
 var _storeHotSwap = _interopRequireDefault(require("./store/plugins/store-hot-swap"));
 var _document = _interopRequireDefault(require("./components/document"));
 var _slot = _interopRequireDefault(require("./components/block-editor-toolbar/slot"));
@@ -64,7 +63,6 @@ var _actionArea = _interopRequireDefault(require("./components/action-area"));
 var _footerSlot = _interopRequireDefault(require("./components/footer-slot"));
 var _editorLoaded = _interopRequireDefault(require("./components/editor-loaded"));
 var _editorHeadingSlot = _interopRequireDefault(require("./components/editor-heading-slot"));
-require("./store/edit-post");
 require("./style.scss");
 var _jsxRuntime = require("react/jsx-runtime");
 var _excluded = ["children", "onSaveContent", "onSaveBlocks", "__experimentalUndoManager", "__experimentalOnInput", "__experimentalOnChange", "__experimentalValue", "__experimentalOnSelection"]; // @ts-nocheck
@@ -75,7 +73,6 @@ var _excluded = ["children", "onSaveContent", "onSaveBlocks", "__experimentalUnd
  * Internal dependencies
  */
 // Export library components
-// A fake edit-post store is needed
 /** @typedef {import('./components/block-editor-toolbar/more-menu').OnMore} OnMore */
 /** @typedef {import('./store/editor/reducer').Pattern} Pattern */
 /** @typedef {import('./components/block-editor-contents/index').OnUpdate} OnUpdate */
@@ -194,7 +191,6 @@ function useInitializeIsoEditor() {
 
   // This allows the editor to swap stores dynamically
   (0, _data.use)(_storeHotSwap["default"], {});
-  (0, _apiFetch["default"])();
   window.isoInitialisedBlocks = true;
 }
 

@@ -1,12 +1,16 @@
 {
   "auto_cleanup": false,
+  "build_command": "npm run build",
   "changelog_target": "CHANGELOG.md",
+  "extensions": {
+    "nodejs": {}
+  },
   "id": "isolated-block-editor",
   "remote_path": "",
   "version_targets": [
     {
       "file": "package.json",
-      "pattern": "\"version\": \"([0-9.]+)\""
+      "pattern": "\"version\":\\s*\"([0-9.]+)\""
     }
   ]
 }
