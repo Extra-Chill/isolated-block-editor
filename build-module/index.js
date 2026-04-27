@@ -19,7 +19,6 @@ import withRegistryProvider from './components/with-registry-provider';
 import useEditorSetup from './components/editor-setup';
 import PatternMonitor from './components/pattern-monitor';
 import ContentSaver from './components/content-saver';
-import registerApiHandlers from './components/api-fetch';
 import storeHotSwapPlugin from './store/plugins/store-hot-swap';
 import DocumentSection from './components/document';
 import ToolbarSlot from './components/block-editor-toolbar/slot';
@@ -29,9 +28,6 @@ import FooterSlot from './components/footer-slot';
 // Export library components
 import EditorLoaded from './components/editor-loaded';
 import EditorHeadingSlot from './components/editor-heading-slot';
-
-// A fake edit-post store is needed
-import './store/edit-post';
 import './style.scss';
 
 /** @typedef {import('./components/block-editor-toolbar/more-menu').OnMore} OnMore */
@@ -160,7 +156,6 @@ export function useInitializeIsoEditor({
 
   // This allows the editor to swap stores dynamically
   use(storeHotSwapPlugin, {});
-  registerApiHandlers();
   window.isoInitialisedBlocks = true;
 }
 
