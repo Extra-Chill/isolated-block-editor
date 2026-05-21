@@ -6,8 +6,21 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
+import { Popover } from '@wordpress/components';
 import { createPortal, useEffect, useMemo, useState } from '@wordpress/element';
-import { jsx as _jsx } from "react/jsx-runtime";
+
+/**
+ * Name of the Popover slot mounted inside the detached sidebar portal.
+ *
+ * Popovers rendered inside the detached subtree (e.g. the inserter preview)
+ * are scoped to this slot via Popover.__unstableSlotNameProvider so they
+ * render in the same stacking context as their anchors, instead of falling
+ * back to the default Popover.Slot inside `.iso-editor` (which is isolated
+ * via `isolation: isolate` and therefore paints behind the editor canvas
+ * when the anchor lives outside it).
+ */
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+const DETACHED_POPOVER_SLOT_NAME = 'iso-editor/detached-sidebar';
 function resolveTarget(target) {
   if (!target) {
     return null;
@@ -51,9 +64,14 @@ export default function DetachedSidebar({
   if (!resolvedTarget || !children) {
     return null;
   }
-  return createPortal(/*#__PURE__*/_jsx("div", {
-    className: sidebarClassName,
-    children: children
+  return createPortal(/*#__PURE__*/_jsx(Popover.__unstableSlotNameProvider, {
+    value: DETACHED_POPOVER_SLOT_NAME,
+    children: /*#__PURE__*/_jsxs("div", {
+      className: sidebarClassName,
+      children: [children, /*#__PURE__*/_jsx(Popover.Slot, {
+        name: DETACHED_POPOVER_SLOT_NAME
+      })]
+    })
   }), resolvedTarget);
 }
 //# sourceMappingURL=detached-sidebar.js.map
