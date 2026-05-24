@@ -10,7 +10,7 @@ var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/creat
 var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
 var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
 var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
-var _reactAutosizeTextarea = _interopRequireDefault(require("react-autosize-textarea"));
+var _reactTextareaAutosize = _interopRequireDefault(require("react-textarea-autosize"));
 var _i18n = require("@wordpress/i18n");
 var _element = require("@wordpress/element");
 var _data = require("@wordpress/data");
@@ -83,7 +83,7 @@ var PostTextEditor = exports.PostTextEditor = /*#__PURE__*/function (_Component)
           htmlFor: "post-content-".concat(instanceId),
           className: "screen-reader-text",
           children: (0, _i18n.__)('Type text or HTML')
-        }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactAutosizeTextarea["default"], {
+        }), /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactTextareaAutosize["default"], {
           autoComplete: "off",
           dir: "auto",
           value: value

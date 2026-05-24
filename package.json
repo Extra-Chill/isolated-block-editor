@@ -97,8 +97,11 @@
 		"lib0": "^0.2.87",
 		"lodash": "^4.17.21",
 		"memize": "^2.1.0",
-		"react-autosize-textarea": "^7.1.0",
+		"react-textarea-autosize": "^8.5.9",
 		"uuid": "^9.0.1"
+	},
+	"overrides": {
+		"react-autosize-textarea": "npm:react-textarea-autosize@^8.5.9"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.23.0",
