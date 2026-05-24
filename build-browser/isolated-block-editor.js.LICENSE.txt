@@ -5,18 +5,10 @@
 */
 
 /*!
- * The buffer module from node.js, for the browser.
- *
- * @author   Feross Aboukhadijeh <https://feross.org>
- * @license  MIT
- */
-
-/*!
- * clipboard.js v2.0.11
- * https://clipboardjs.com/
- *
- * Licensed MIT © Zeno Rocha
- */
+	autosize 4.0.4
+	license: MIT
+	http://www.jacklmoore.com/autosize
+*/
 
 /*!
  * is-plain-object <https://github.com/jonschlinkert/is-plain-object>
@@ -25,17 +17,9 @@
  * Released under the MIT License.
  */
 
-/*! Fast Average Color | © 2022 Denis Seleznev | MIT License | https://github.com/fast-average-color/fast-average-color */
-
-/*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
-
-/*! queue-microtask. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
-
-/*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
+/*! Fast Average Color | © 2026 Denis Seleznev | MIT License | https://github.com/fast-average-color/fast-average-color */
 
 /*! showdown v 1.9.1 - 02-11-2019 */
-
-/*! simple-peer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
 
 /**
  * @license
@@ -114,4 +98,4 @@
 
 //! moment.js locale configuration
 
-//! version : 0.5.43
+//! version : 0.5.48

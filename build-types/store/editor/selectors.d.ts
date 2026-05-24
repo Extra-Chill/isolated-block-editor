@@ -131,11 +131,11 @@ export function isIframePreview(state: {
 }): boolean;
 export const isEditorSidebarOpened: {
     (): any;
-    isRegistrySelector?: boolean | undefined;
+    isRegistrySelector?: boolean;
     registry?: any;
 };
-export type IsoSettings = import('../../index').IsoSettings;
-export type EditorMode = import('./reducer').EditorMode;
-export type Pattern = import('./reducer').Pattern;
-export type EditorState = import('./reducer').EditorState;
+export type IsoSettings = import("../../index").IsoSettings;
+export type EditorMode = import("./reducer").EditorMode;
+export type Pattern = import("./reducer").Pattern;
+export type EditorState = import("./reducer").EditorState;
 //# sourceMappingURL=selectors.d.ts.map

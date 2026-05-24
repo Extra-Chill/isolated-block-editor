@@ -1,5 +1,5 @@
 export default reducer;
-export type IsoSettings = import('../../index').IsoSettings;
+export type IsoSettings = import("../../index").IsoSettings;
 /**
  * Pattern type.
  */
@@ -16,7 +16,7 @@ export type Pattern = {
 /**
  * Editor mode
  */
-export type EditorMode = ('visual' | 'text');
+export type EditorMode = ("visual" | "text");
 /**
  * The editor state object
  */

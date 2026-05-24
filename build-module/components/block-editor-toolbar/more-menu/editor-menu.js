@@ -70,17 +70,17 @@ function EditorMenu({
 export default compose([withSelect(select => {
   const {
     getEditorMode
-  } = select('isolated/editor');
+  } = /** @type {any} */select('isolated/editor');
   const {
     codeEditingEnabled
-  } = select('core/editor').getEditorSettings();
+  } = /** @type {any} */select('core/editor').getEditorSettings();
   return {
     editorMode: getEditorMode(),
     isCodeEditingEnabled: codeEditingEnabled
   };
 }), withDispatch(dispatch => ({
   onSetMode(mode) {
-    dispatch('isolated/editor').setEditorMode(mode);
+    /** @type {any} */dispatch('isolated/editor').setEditorMode(mode);
   }
 }))])(EditorMenu);
 //# sourceMappingURL=editor-menu.js.map

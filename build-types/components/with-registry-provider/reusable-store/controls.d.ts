@@ -21,20 +21,14 @@ export function convertBlocksToReusable(clientIds: any[]): any;
 export function deleteReusableBlock(id: string): any;
 export default controls;
 declare namespace controls {
-    let CONVERT_BLOCK_TO_STATIC: ((registry: any) => ({ clientId }: {
-        clientId: any;
-    }) => void) & {
-        isRegistryControl?: boolean | undefined;
+    let CONVERT_BLOCK_TO_STATIC: ((registry: import("@wordpress/data").DataRegistry) => ({ clientId }: any) => void) & {
+        isRegistryControl?: boolean;
     };
-    let CONVERT_BLOCKS_TO_REUSABLE: ((registry: any) => ({ clientIds }: {
-        clientIds: any;
-    }) => Promise<void>) & {
-        isRegistryControl?: boolean | undefined;
+    let CONVERT_BLOCKS_TO_REUSABLE: ((registry: import("@wordpress/data").DataRegistry) => ({ clientIds }: any) => Promise<void>) & {
+        isRegistryControl?: boolean;
     };
-    let DELETE_REUSABLE_BLOCK: ((registry: any) => ({ id }: {
-        id: any;
-    }) => Promise<void>) & {
-        isRegistryControl?: boolean | undefined;
+    let DELETE_REUSABLE_BLOCK: ((registry: import("@wordpress/data").DataRegistry) => ({ id }: any) => Promise<void>) & {
+        isRegistryControl?: boolean;
     };
 }
 //# sourceMappingURL=controls.d.ts.map

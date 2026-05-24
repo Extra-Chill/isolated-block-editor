@@ -5,5 +5,5 @@
  * @param {string} feature - Feature name
  * @param {boolean} [defaultValue=false] - Default value
  */
-export function isFeatureActive(state: any, feature: string, defaultValue?: boolean | undefined): any;
+export function isFeatureActive(state: any, feature: string, defaultValue?: boolean): any;
 //# sourceMappingURL=selectors.d.ts.map

@@ -12,14 +12,14 @@ declare namespace actions {
      * @param {object[]} blocks
      * @param {Object} options
      */
-    function updateBlocksWithUndo(blocks: any[], options?: any): Generator<any, any, unknown>;
+    function updateBlocksWithUndo(blocks: object[], options?: any): Generator<any, any, unknown>;
     /**
      * Update blocks without undo history
      *
      * @param {object[]} blocks
      * @param {Object} options
      */
-    function updateBlocksWithoutUndo(blocks: any[], options?: any): Generator<any, any, unknown>;
+    function updateBlocksWithoutUndo(blocks: object[], options?: any): Generator<any, any, unknown>;
     /**
      * Replace all editor content with new blocks and reset undo history.
      *
@@ -32,7 +32,7 @@ declare namespace actions {
      *
      * @param {object[]} blocks - Parsed block objects to load.
      */
-    function replaceContent(blocks: any[]): Generator<{
+    function replaceContent(blocks: object[]): Generator<{
         type: string;
         blocks: any[];
     }, any, unknown>;

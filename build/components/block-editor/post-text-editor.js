@@ -111,20 +111,20 @@ var PostTextEditor = exports.PostTextEditor = /*#__PURE__*/function (_Component)
   }]);
 }(_element.Component); // @ts-ignore
 var _default = exports["default"] = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
-  var _select = select('isolated/editor'),
+  var _select = /** @type {any} */select('isolated/editor'),
     getBlocks = _select.getBlocks;
   return {
     value: (0, _blocks.serialize)(getBlocks())
   };
 }), (0, _data.withDispatch)(function (dispatch) {
-  var _dispatch = dispatch('isolated/editor'),
+  var _dispatch = /** @type {any} */dispatch('isolated/editor'),
     updateBlocksWithoutUndo = _dispatch.updateBlocksWithoutUndo;
   return {
-    onChange: function onChange(content) {
+    /** @param {any} content */onChange: function onChange(content) {
       var blocks = (0, _blocks.parse)(content);
       updateBlocksWithoutUndo(blocks);
     },
-    onPersist: function onPersist(content) {
+    /** @param {any} content */onPersist: function onPersist(content) {
       var blocks = (0, _blocks.parse)(content);
       updateBlocksWithoutUndo(blocks);
     }

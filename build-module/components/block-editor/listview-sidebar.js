@@ -46,6 +46,9 @@ export default function ListViewSidebar({
   // Use internal state instead of a ref to make sure that the component
   // re-renders when the dropZoneElement updates.
   const [dropZoneElement, setDropZoneElement] = useState(null);
+  const setDropZoneElementRef = useCallback(element => {
+    setDropZoneElement(element || null);
+  }, []);
   // Tracks our current tab.
   const [tab, setTab] = useState('list-view');
 
@@ -57,7 +60,7 @@ export default function ListViewSidebar({
   const listViewRef = useRef();
 
   // Must merge the refs together so focus can be handled properly in the next function.
-  const listViewContainerRef = useMergeRefs([focusOnMountRef, listViewRef, setDropZoneElement]);
+  const listViewContainerRef = useMergeRefs([focusOnMountRef, listViewRef, setDropZoneElementRef]);
 
   /*
    * Callback function to handle list view or outline focus.

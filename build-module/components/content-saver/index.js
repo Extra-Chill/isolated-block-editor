@@ -29,11 +29,10 @@ function ContentSaver(props) {
     blocks,
     ignoredContent
   } = useSelect(select => {
-    var _store$getIgnoredCont;
     const store = /** @type {any} */select('isolated/editor');
     return {
       blocks: store?.getBlocks?.(),
-      ignoredContent: (_store$getIgnoredCont = store?.getIgnoredContent?.()) !== null && _store$getIgnoredCont !== void 0 ? _store$getIgnoredCont : []
+      ignoredContent: store?.getIgnoredContent?.() ?? []
     };
   }, []);
   function saveBlocks() {

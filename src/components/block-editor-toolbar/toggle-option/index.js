@@ -23,12 +23,13 @@ function OptionToggle( { onToggle, isActive, label, info } ) {
 // @ts-ignore
 export default compose( [
 	withSelect( ( select, { option } ) => ( {
-		isActive: select( 'isolated/editor' ).isOptionActive( option ),
+		isActive: /** @type {any} */ ( select( 'isolated/editor' ) ).isOptionActive( option ),
 	} ) ),
 	withDispatch( ( dispatch, ownProps ) => ( {
 		onToggle() {
-			dispatch( 'isolated/editor' ).toggleOption( ownProps.option );
-			ownProps.onClose();
+			const { option, onClose } = /** @type {{ option: string, onClose: Function }} */ ( ownProps );
+			/** @type {any} */ ( dispatch( 'isolated/editor' ) ).toggleOption( option );
+			onClose();
 		},
 	} ) ),
 	withSpokenMessages,

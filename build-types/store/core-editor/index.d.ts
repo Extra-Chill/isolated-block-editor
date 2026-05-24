@@ -6,6 +6,6 @@
  */
 export default function _default(existingSelectors: any, newSelect: any): {
     getEditedPostAttribute: (state: any, attributeName: any) => any;
-    getEditedPostContent: () => any;
+    getEditedPostContent: () => string;
 };
 //# sourceMappingURL=index.d.ts.map

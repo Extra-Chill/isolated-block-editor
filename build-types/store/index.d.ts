@@ -81,7 +81,7 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
             /**
              * - the Gutenberg template
              */
-            gutenbergTemplate: any;
+            gutenbergTemplate: object | null;
             /**
              * - is this editor being used?
              */
@@ -93,7 +93,7 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
             /**
              * - editor settings
              */
-            settings: import("..").IsoSettings;
+            settings: import("./editor/reducer").IsoSettings;
             /**
              * - current device type
              */
@@ -129,7 +129,7 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
             /**
              * - the Gutenberg template
              */
-            gutenbergTemplate: any;
+            gutenbergTemplate: object | null;
             /**
              * - is this editor being used?
              */
@@ -141,7 +141,7 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
             /**
              * - editor settings
              */
-            settings: import("..").IsoSettings;
+            settings: import("./editor/reducer").IsoSettings;
             /**
              * - current device type
              */
@@ -180,7 +180,7 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
             /**
              * - the Gutenberg template
              */
-            gutenbergTemplate: any;
+            gutenbergTemplate: object | null;
             /**
              * - is this editor being used?
              */
@@ -192,7 +192,7 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
             /**
              * - editor settings
              */
-            settings: import("..").IsoSettings;
+            settings: import("./editor/reducer").IsoSettings;
             /**
              * - current device type
              */
@@ -228,7 +228,7 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
             /**
              * - the Gutenberg template
              */
-            gutenbergTemplate: any;
+            gutenbergTemplate: object | null;
             /**
              * - is this editor being used?
              */
@@ -240,7 +240,7 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
             /**
              * - editor settings
              */
-            settings: import("..").IsoSettings;
+            settings: import("./editor/reducer").IsoSettings;
             /**
              * - current device type
              */
@@ -282,7 +282,7 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
             /**
              * - the Gutenberg template
              */
-            gutenbergTemplate: any;
+            gutenbergTemplate: object | null;
             /**
              * - is the editor ready?
              */
@@ -290,7 +290,7 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
             /**
              * - editor settings
              */
-            settings: import("..").IsoSettings;
+            settings: import("./editor/reducer").IsoSettings;
             /**
              * - current device type
              */
@@ -332,7 +332,7 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
             /**
              * - the Gutenberg template
              */
-            gutenbergTemplate: any;
+            gutenbergTemplate: object | null;
             /**
              * - is this editor being used?
              */
@@ -340,7 +340,7 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
             /**
              * - editor settings
              */
-            settings: import("..").IsoSettings;
+            settings: import("./editor/reducer").IsoSettings;
             /**
              * - current device type
              */
@@ -382,7 +382,7 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
             /**
              * - the Gutenberg template
              */
-            gutenbergTemplate: any;
+            gutenbergTemplate: object | null;
             /**
              * - is this editor being used?
              */
@@ -394,7 +394,7 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
             /**
              * - editor settings
              */
-            settings: import("..").IsoSettings;
+            settings: import("./editor/reducer").IsoSettings;
             /**
              * - editor canvas styles
              */
@@ -432,7 +432,7 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
             /**
              * - the Gutenberg template
              */
-            gutenbergTemplate: any;
+            gutenbergTemplate: object | null;
             /**
              * - is this editor being used?
              */
@@ -444,7 +444,7 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
             /**
              * - editor settings
              */
-            settings: import("..").IsoSettings;
+            settings: import("./editor/reducer").IsoSettings;
             /**
              * - current device type
              */
@@ -483,11 +483,11 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
             type: string;
             isReady: boolean;
         };
-        setEditorMode(editorMode: import("./editor/reducer").EditorMode): {
+        setEditorMode(editorMode: EditorMode): {
             type: string;
             editorMode: import("./editor/reducer").EditorMode;
         };
-        setupEditor(settings: import("..").BlockEditorSettings): {
+        setupEditor(settings: BlockEditorSettings): {
             type: string;
             settings: import("..").BlockEditorSettings;
         };
@@ -515,8 +515,18 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
             type: string;
             isEditing: boolean;
         };
-        openGeneralSidebar(name: string): Generator<Object, void, unknown>;
-        closeGeneralSidebar(): Generator<Object, void, unknown>;
+        openGeneralSidebar(name: string): Generator<{
+            type: string;
+            storeKey: string;
+            actionName: string;
+            args: unknown[];
+        }, void, unknown>;
+        closeGeneralSidebar(): Generator<{
+            type: string;
+            storeKey: string;
+            actionName: string;
+            args: unknown[];
+        }, void, unknown>;
         setIsListViewOpened(isOpen: boolean): {
             type: string;
             isOpen: boolean;
@@ -527,70 +537,64 @@ declare function storeConfig(preferencesKey: any, defaultPreferences: any): {
         redo(): Generator<{
             type: string;
         }, any, unknown>;
-        updateBlocksWithUndo(blocks: any[], options?: any): Generator<any, any, unknown>;
-        updateBlocksWithoutUndo(blocks: any[], options?: any): Generator<any, any, unknown>;
-        replaceContent(blocks: any[]): Generator<{
+        updateBlocksWithUndo(blocks: object[], options?: any): Generator<any, any, unknown>;
+        updateBlocksWithoutUndo(blocks: object[], options?: any): Generator<any, any, unknown>;
+        replaceContent(blocks: object[]): Generator<{
             type: string;
             blocks: any[];
         }, any, unknown>;
     };
     selectors: {
-        /**
-         * WordPress dependencies
-         */
         isOptionActive(state: any, option: string): boolean;
-        /**
-         * WordPress dependencies
-         */
-        isFeatureActive(state: any, feature: string, defaultValue?: boolean | undefined): any;
+        isFeatureActive(state: any, feature: string, defaultValue?: boolean): any;
         getEditorMode(state: {
-            editor: import("./editor/reducer").EditorState;
-        }): import("./editor/reducer").EditorMode;
+            editor: EditorState;
+        }): EditorMode;
         getEditorSettings(state: {
-            editor: import("./editor/reducer").EditorState;
-        }): import("..").IsoSettings;
+            editor: EditorState;
+        }): IsoSettings;
         isEditorReady(state: {
-            editor: import("./editor/reducer").EditorState;
+            editor: EditorState;
         }): boolean;
         getCurrentPatternName(state: {
-            editor: import("./editor/reducer").EditorState;
+            editor: EditorState;
         }): string | null;
         getCurrentPattern(state: {
-            editor: import("./editor/reducer").EditorState;
-        }): import("./editor/reducer").Pattern | null;
+            editor: EditorState;
+        }): Pattern | null;
         getIgnoredContent(state: {
-            editor: import("./editor/reducer").EditorState;
+            editor: EditorState;
         }): string[];
         getNamedPattern(state: {
-            editor: import("./editor/reducer").EditorState;
-        }, patternName: any): import("./editor/reducer").Pattern | null;
+            editor: EditorState;
+        }, patternName: any): Pattern | null;
         isInserterOpened(state: {
-            editor: import("./editor/reducer").EditorState;
+            editor: EditorState;
         }): boolean;
         isEditing(state: {
-            editor: import("./editor/reducer").EditorState;
+            editor: EditorState;
         }): boolean;
         getPatterns(state: {
-            editor: import("./editor/reducer").EditorState;
-        }): import("./editor/reducer").Pattern[];
+            editor: EditorState;
+        }): Pattern[];
         isListViewOpened(state: {
-            editor: import("./editor/reducer").EditorState;
+            editor: EditorState;
         }): boolean;
         getPreviewDeviceType(state: {
-            editor: import("./editor/reducer").EditorState;
+            editor: EditorState;
         }): string;
         getCanvasStyles(state: {
-            editor: import("./editor/reducer").EditorState;
+            editor: EditorState;
         }): any;
         isIframePreview(state: {
-            editor: import("./editor/reducer").EditorState;
+            editor: EditorState;
         }): boolean;
         isEditorSidebarOpened: {
             (): any;
-            isRegistrySelector?: boolean | undefined;
+            isRegistrySelector?: boolean;
             registry?: any;
         };
-        getBlocks(state: any): any[];
+        getBlocks(state: any): object[];
         getSerializedContent(state: any): string;
         getEditorSelection(state: any): any;
         hasEditorUndo(state: any): boolean;

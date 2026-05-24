@@ -8,6 +8,6 @@
  * @return {EditorSettings}
  */
 export default function getEditorSettings(editorSettings: EditorSettings, isoSettings: IsoSettings, allBlockTypes: object[], fixedToolbar: boolean): EditorSettings;
-export type EditorSettings = import('../../index').EditorSettings;
-export type IsoSettings = import('../../index').IsoSettings;
+export type EditorSettings = import("../../index").EditorSettings;
+export type IsoSettings = import("../../index").IsoSettings;
 //# sourceMappingURL=editor-settings.d.ts.map

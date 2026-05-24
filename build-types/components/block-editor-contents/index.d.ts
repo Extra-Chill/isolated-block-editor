@@ -1,9 +1,9 @@
 declare const _default: unknown;
 export default _default;
-export type EditorMode = import('../../store/editor/reducer').EditorMode;
-export type BlockEditorSettings = import('../../index').BlockEditorSettings;
-export type OnLoad = import('../../index').OnLoad;
-export type OnMore = import('../../index').OnMore;
+export type EditorMode = import("../../store/editor/reducer").EditorMode;
+export type BlockEditorSettings = import("../../index").BlockEditorSettings;
+export type OnLoad = import("../../index").OnLoad;
+export type OnMore = import("../../index").OnMore;
 /**
  * Get editor selection
  */

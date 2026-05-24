@@ -8,6 +8,6 @@
  * particular editor.
  */
 export default function PatternMonitor(): null;
-export type BlockEditorSettings = import('../../index').BlockEditorSettings;
-export type Pattern = import('../../store/editor/reducer').Pattern;
+export type BlockEditorSettings = import("../../index").BlockEditorSettings;
+export type Pattern = import("../../store/editor/reducer").Pattern;
 //# sourceMappingURL=index.d.ts.map

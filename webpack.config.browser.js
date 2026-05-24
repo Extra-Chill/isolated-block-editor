@@ -18,6 +18,12 @@ const config = {
 	module: {
 		rules: [
 			{
+				test: /\.m?js$/,
+				resolve: {
+					fullySpecified: false,
+				},
+			},
+			{
 				test: /\.(js|mjs)$/,
 				exclude: /node_modules/,
 				loader: 'babel-loader',

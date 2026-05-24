@@ -101,11 +101,11 @@ export function initializeEditor(): void;
 export function useInitializeIsoEditor({ undoManager }?: {
     undoManager?: UndoManager | undefined;
 }): void;
-declare const _default: (props: any) => import("react").JSX.Element;
+declare const _default: (props: Record<string, unknown>) => import("react").JSX.Element;
 export default _default;
-export type OnMore = import('./components/block-editor-toolbar/more-menu').OnMore;
-export type Pattern = import('./store/editor/reducer').Pattern;
-export type OnUpdate = import('./components/block-editor-contents/index').OnUpdate;
+export type OnMore = import("./components/block-editor-toolbar/more-menu").OnMore;
+export type Pattern = import("./store/editor/reducer").Pattern;
+export type OnUpdate = import("./components/block-editor-contents/index").OnUpdate;
 /**
  * Undo Manager
  */
@@ -197,20 +197,20 @@ export type SidebarSettings = {
      * - Render sidebar content into an external target instead of the internal editor shell
      */
     detached?: {
-        target?: string | Element | null | undefined;
-        className?: string | undefined;
-        persistent?: boolean | undefined;
-        defaultView?: "list-view" | "inserter" | undefined;
+        target?: string | Element | null;
+        className?: string;
+        persistent?: boolean;
+        defaultView?: "inserter" | "list-view";
         views?: {
             inserter?: {
-                target?: string | Element | null | undefined;
-                className?: string | undefined;
-            } | undefined;
+                target?: string | Element | null;
+                className?: string;
+            };
             listView?: {
-                target?: string | Element | null | undefined;
-                className?: string | undefined;
-            } | undefined;
-        } | undefined;
+                target?: string | Element | null;
+                className?: string;
+            };
+        };
     } | null | undefined;
 };
 /**
@@ -270,7 +270,7 @@ export type IsoSettings = {
     /**
      * - List of patterns
      */
-    patterns?: import("./components/pattern-monitor").Pattern[] | undefined;
+    patterns?: import("./store/editor/reducer").Pattern[] | undefined;
     /**
      * - Default preferences if nothing in localStorage
      */
@@ -291,7 +291,7 @@ export type IsoSettings = {
      * - Inserter overrides. `tabs` controls which inserter tabs to show (e.g. ['blocks']). Defaults to all (['blocks','patterns','media']).
      */
     inserter?: {
-        tabs?: string[] | null | undefined;
+        tabs?: string[] | null;
     } | undefined;
 };
 /**

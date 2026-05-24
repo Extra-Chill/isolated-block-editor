@@ -90,18 +90,20 @@ export class PostTextEditor extends Component {
 // @ts-ignore
 export default compose( [
 	withSelect( ( select ) => {
-		const { getBlocks } = select( 'isolated/editor' );
+		const { getBlocks } = /** @type {any} */ ( select( 'isolated/editor' ) );
 		return {
 			value: serialize( getBlocks() ),
 		};
 	} ),
 	withDispatch( ( dispatch ) => {
-		const { updateBlocksWithoutUndo } = dispatch( 'isolated/editor' );
+		const { updateBlocksWithoutUndo } = /** @type {any} */ ( dispatch( 'isolated/editor' ) );
 		return {
+			/** @param {any} content */
 			onChange( content ) {
 				const blocks = parse( content );
 				updateBlocksWithoutUndo( blocks );
 			},
+			/** @param {any} content */
 			onPersist( content ) {
 				const blocks = parse( content );
 				updateBlocksWithoutUndo( blocks );

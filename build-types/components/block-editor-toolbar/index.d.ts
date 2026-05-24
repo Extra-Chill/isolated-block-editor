@@ -1,7 +1,7 @@
 export default BlockEditorToolbar;
-export type EditorMode = import('../../store/editor/reducer').EditorMode;
-export type BlockEditorSettings = import('../../index').BlockEditorSettings;
-export type OnMore = import('../../index').OnMore;
+export type EditorMode = import("../../store/editor/reducer").EditorMode;
+export type BlockEditorSettings = import("../../index").BlockEditorSettings;
+export type OnMore = import("../../index").OnMore;
 /** @typedef {import('../../store/editor/reducer').EditorMode} EditorMode */
 /** @typedef {import('../../index').BlockEditorSettings} BlockEditorSettings */
 /** @typedef {import('../../index').OnMore} OnMore */

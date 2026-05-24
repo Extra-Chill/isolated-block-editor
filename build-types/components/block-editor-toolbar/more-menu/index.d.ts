@@ -1,5 +1,5 @@
 export default MoreMenu;
-export type BlockEditorSettings = import('../../../index').BlockEditorSettings;
+export type BlockEditorSettings = import("../../../index").BlockEditorSettings;
 /**
  * Close dropdown callback
  */
