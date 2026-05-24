@@ -1,5 +1,5 @@
 export default LinkMenu;
-export type BlockEditorSettings = import('../../../index').BlockEditorSettings;
+export type BlockEditorSettings = import("../../../index").BlockEditorSettings;
 /** @typedef {import('../../../index').BlockEditorSettings} BlockEditorSettings */
 /**
  * Link menu

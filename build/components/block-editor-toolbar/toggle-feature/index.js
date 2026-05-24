@@ -48,13 +48,16 @@ function FeatureToggle(_ref) {
 var _default = exports["default"] = (0, _compose.compose)([(0, _data.withSelect)(function (select, _ref2) {
   var feature = _ref2.feature;
   return {
-    isActive: select('isolated/editor').isFeatureActive(feature)
+    isActive: /** @type {any} */select('isolated/editor').isFeatureActive(feature)
   };
 }), (0, _data.withDispatch)(function (dispatch, ownProps) {
   return {
     onToggle: function onToggle() {
-      dispatch('isolated/editor').toggleFeature(ownProps.feature);
-      ownProps.onClose();
+      var feature = (/** @type {{ feature: string, onClose: Function }} */ownProps).feature,
+        onClose = (/** @type {{ feature: string, onClose: Function }} */ownProps).onClose;
+      /** @type {any} */
+      dispatch('isolated/editor').toggleFeature(feature);
+      onClose();
     }
   };
 }), _components.withSpokenMessages])(FeatureToggle);

@@ -117,7 +117,7 @@ function BlockEditorContents( props ) {
 // @ts-ignore
 export default compose( [
 	withSelect( ( select, ownProps ) => {
-		const { getBlocks, getEditorSelection, getEditorMode, isEditing } = select( 'isolated/editor' );
+		const { getBlocks, getEditorSelection, getEditorMode, isEditing } = /** @type {any} */ ( select( 'isolated/editor' ) );
 		return {
 			blocks: ownProps.blocks ?? getBlocks(),
 			selection: getEditorSelection(),
@@ -126,8 +126,8 @@ export default compose( [
 		};
 	} ),
 	withDispatch( ( dispatch, ownProps ) => {
-		const { updateBlocksWithUndo, updateBlocksWithoutUndo } = dispatch( 'isolated/editor' );
-		const { onInput, onChange } = ownProps;
+		const { updateBlocksWithUndo, updateBlocksWithoutUndo } = /** @type {any} */ ( dispatch( 'isolated/editor' ) );
+		const { onInput, onChange } = /** @type {{ onInput?: Function, onChange?: Function }} */ ( ownProps );
 
 		return {
 			onChange: ( ...args ) => {

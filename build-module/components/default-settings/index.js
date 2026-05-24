@@ -20,7 +20,6 @@ function getMenu(current, defaultMenu) {
  * @return {BlockEditorSettings}
  */
 export default function applyDefaultSettings(settings) {
-  var _iso$preferencesKey, _iso$persistenceKey, _iso$disallowEmbed, _iso$customStores, _iso$blocks$allowBloc, _iso$blocks$disallowB, _iso$toolbar, _iso$header, _iso$sidebar$detached, _iso$sidebar, _iso$footer, _iso$moreMenu, _iso$linkMenu, _iso$defaultPreferenc, _iso$inserter, _iso$allowApi, _iso$disableCanvasAni, _iso$currentPattern, _iso$patterns, _editor$bodyPlacehold, _editor$fetchLinkSugg, _editor$fetchLinkSugg2;
   const {
     iso,
     editor
@@ -28,15 +27,15 @@ export default function applyDefaultSettings(settings) {
   return {
     iso: {
       // No preferences or persistence
-      preferencesKey: (_iso$preferencesKey = iso?.preferencesKey) !== null && _iso$preferencesKey !== void 0 ? _iso$preferencesKey : null,
-      persistenceKey: (_iso$persistenceKey = iso?.persistenceKey) !== null && _iso$persistenceKey !== void 0 ? _iso$persistenceKey : null,
+      preferencesKey: iso?.preferencesKey ?? null,
+      persistenceKey: iso?.persistenceKey ?? null,
       // No disallowed embeds
-      disallowEmbed: (_iso$disallowEmbed = iso?.disallowEmbed) !== null && _iso$disallowEmbed !== void 0 ? _iso$disallowEmbed : [],
-      customStores: (_iso$customStores = iso?.customStores) !== null && _iso$customStores !== void 0 ? _iso$customStores : [],
+      disallowEmbed: iso?.disallowEmbed ?? [],
+      customStores: iso?.customStores ?? [],
       // Default to all blocks
       blocks: {
-        allowBlocks: (_iso$blocks$allowBloc = iso?.blocks?.allowBlocks) !== null && _iso$blocks$allowBloc !== void 0 ? _iso$blocks$allowBloc : [],
-        disallowBlocks: (_iso$blocks$disallowB = iso?.blocks?.disallowBlocks) !== null && _iso$blocks$disallowB !== void 0 ? _iso$blocks$disallowB : []
+        allowBlocks: iso?.blocks?.allowBlocks ?? [],
+        disallowBlocks: iso?.blocks?.disallowBlocks ?? []
       },
       // Inserter, undo, and inspector is on, everything else is off
       toolbar: {
@@ -52,9 +51,9 @@ export default function applyDefaultSettings(settings) {
         undo: true,
         // @ts-ignore */}
         selectorTool: false,
-        ...((_iso$toolbar = iso?.toolbar) !== null && _iso$toolbar !== void 0 ? _iso$toolbar : {})
+        ...(iso?.toolbar ?? {})
       },
-      header: (_iso$header = iso?.header) !== null && _iso$header !== void 0 ? _iso$header : true,
+      header: iso?.header ?? true,
       sidebar: {
         inserter: false,
         inspector: false,
@@ -62,38 +61,38 @@ export default function applyDefaultSettings(settings) {
         detached: {
           persistent: false,
           defaultView: 'inserter',
-          ...((_iso$sidebar$detached = iso?.sidebar?.detached) !== null && _iso$sidebar$detached !== void 0 ? _iso$sidebar$detached : {})
+          ...(iso?.sidebar?.detached ?? {})
         },
-        ...((_iso$sidebar = iso?.sidebar) !== null && _iso$sidebar !== void 0 ? _iso$sidebar : {})
+        ...(iso?.sidebar ?? {})
       },
-      footer: (_iso$footer = iso?.footer) !== null && _iso$footer !== void 0 ? _iso$footer : false,
+      footer: iso?.footer ?? false,
       // Nothing appears in the 'more menu'
       moreMenu: getMenu(iso?.moreMenu, {
         editor: false,
         fullscreen: false,
         preview: false,
         topToolbar: false,
-        ...((_iso$moreMenu = iso?.moreMenu) !== null && _iso$moreMenu !== void 0 ? _iso$moreMenu : {})
+        ...(iso?.moreMenu ?? {})
       }),
       // No link menu
-      linkMenu: (_iso$linkMenu = iso?.linkMenu) !== null && _iso$linkMenu !== void 0 ? _iso$linkMenu : [],
+      linkMenu: iso?.linkMenu ?? [],
       // Default to top toolbar
       defaultPreferences: {
-        ...((_iso$defaultPreferenc = iso?.defaultPreferences) !== null && _iso$defaultPreferenc !== void 0 ? _iso$defaultPreferenc : {})
+        ...(iso?.defaultPreferences ?? {})
       },
       // Inserter-specific overrides
       inserter: {
         // Which tabs to show in the block inserter. Defaults to all.
         // Pass e.g. ['blocks'] to show only the Blocks tab, hiding Patterns and Media.
         tabs: null,
-        ...((_iso$inserter = iso?.inserter) !== null && _iso$inserter !== void 0 ? _iso$inserter : {})
+        ...(iso?.inserter ?? {})
       },
-      allowApi: (_iso$allowApi = iso?.allowApi) !== null && _iso$allowApi !== void 0 ? _iso$allowApi : false,
-      disableCanvasAnimations: (_iso$disableCanvasAni = iso?.disableCanvasAnimations) !== null && _iso$disableCanvasAni !== void 0 ? _iso$disableCanvasAni : false,
+      allowApi: iso?.allowApi ?? false,
+      disableCanvasAnimations: iso?.disableCanvasAnimations ?? false,
       // No default pattern
-      currentPattern: (_iso$currentPattern = iso?.currentPattern) !== null && _iso$currentPattern !== void 0 ? _iso$currentPattern : null,
+      currentPattern: iso?.currentPattern ?? null,
       // No patterns
-      patterns: (_iso$patterns = iso?.patterns) !== null && _iso$patterns !== void 0 ? _iso$patterns : []
+      patterns: iso?.patterns ?? []
     },
     editor: {
       alignWide: true,
@@ -126,14 +125,15 @@ export default function applyDefaultSettings(settings) {
       hasFixedToolbar: true,
       hasInlineToolbar: false,
       ...editor,
-      bodyPlaceholder: (_editor$bodyPlacehold = editor?.bodyPlaceholder) !== null && _editor$bodyPlacehold !== void 0 ? _editor$bodyPlacehold : __('Start writing or type / to choose a block'),
+      bodyPlaceholder: editor?.bodyPlaceholder ?? __('Start writing or type / to choose a block'),
       // @ts-ignore */}
       availableLegacyWidgets: {},
       hasPermissionsToManageWidgets: false,
       // Default to no link suggestions
       // @ts-ignore */}
-      fetchLinkSuggestions: ((_editor$fetchLinkSugg = editor?.fetchLinkSuggestions) !== null && _editor$fetchLinkSugg !== void 0 ? _editor$fetchLinkSugg : editor?.__experimentalFetchLinkSuggestions) ? // @ts-ignore */}
-      (_editor$fetchLinkSugg2 = editor?.fetchLinkSuggestions) !== null && _editor$fetchLinkSugg2 !== void 0 ? _editor$fetchLinkSugg2 : editor?.__experimentalFetchLinkSuggestions : () => []
+      fetchLinkSuggestions: editor?.fetchLinkSuggestions ?? editor?.__experimentalFetchLinkSuggestions ?
+      // @ts-ignore */}
+      editor?.fetchLinkSuggestions ?? editor?.__experimentalFetchLinkSuggestions : () => []
     }
   };
 }

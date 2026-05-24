@@ -71,7 +71,6 @@ const interfaceLabels = {
  * @param {OnMore} props.renderMoreMenu - Callback to render additional items in the more menu
  */
 function BlockEditor(props) {
-  var _settings$iso$header, _settings$iso$sidebar, _settings$iso$toolbar;
   const {
     isEditing,
     editorMode,
@@ -102,7 +101,7 @@ function BlockEditor(props) {
   // When a persistent detached sidebar is active on mobile, the inserter button
   // is hidden and the sidebar collapses to single-column (unreachable). The
   // header bar becomes dead chrome eating vertical space — suppress it.
-  const showHeader = ((_settings$iso$header = settings?.iso?.header) !== null && _settings$iso$header !== void 0 ? _settings$iso$header : true) && !(isMobileViewport && isDetachedSidebarPersistent);
+  const showHeader = (settings?.iso?.header ?? true) && !(isMobileViewport && isDetachedSidebarPersistent);
   const showFooter = settings?.iso?.footer || false;
   const {
     sidebarIsOpened,
@@ -185,12 +184,12 @@ function BlockEditor(props) {
     settings: settings,
     renderMoreMenu: renderMoreMenu
   }) : null;
-  const CustomSettingsSidebar = (_settings$iso$sidebar = settings?.iso?.sidebar?.customComponent) !== null && _settings$iso$sidebar !== void 0 ? _settings$iso$sidebar : SettingsSidebar;
+  const CustomSettingsSidebar = settings?.iso?.sidebar?.customComponent ?? SettingsSidebar;
   return /*#__PURE__*/_jsxs(_Fragment, {
     children: [/*#__PURE__*/_jsx(MediaCategoryRegistrar, {
       settings: settings
     }), /*#__PURE__*/_jsx(CustomSettingsSidebar, {
-      documentInspector: (_settings$iso$toolbar = settings?.iso?.toolbar?.documentInspector) !== null && _settings$iso$toolbar !== void 0 ? _settings$iso$toolbar : false
+      documentInspector: settings?.iso?.toolbar?.documentInspector ?? false
     }), shouldUseDetachedSidebar && /*#__PURE__*/_jsx(DetachedSidebar, {
       target: detachedSidebar.target,
       className: detachedSidebar.className,

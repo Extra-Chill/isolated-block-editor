@@ -32,13 +32,16 @@ function OptionToggle(_ref) {
 var _default = exports["default"] = (0, _compose.compose)([(0, _data.withSelect)(function (select, _ref2) {
   var option = _ref2.option;
   return {
-    isActive: select('isolated/editor').isOptionActive(option)
+    isActive: /** @type {any} */select('isolated/editor').isOptionActive(option)
   };
 }), (0, _data.withDispatch)(function (dispatch, ownProps) {
   return {
     onToggle: function onToggle() {
-      dispatch('isolated/editor').toggleOption(ownProps.option);
-      ownProps.onClose();
+      var option = (/** @type {{ option: string, onClose: Function }} */ownProps).option,
+        onClose = (/** @type {{ option: string, onClose: Function }} */ownProps).onClose;
+      /** @type {any} */
+      dispatch('isolated/editor').toggleOption(option);
+      onClose();
     }
   };
 }), _components.withSpokenMessages])(OptionToggle);

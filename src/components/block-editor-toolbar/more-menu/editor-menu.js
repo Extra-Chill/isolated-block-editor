@@ -70,8 +70,8 @@ function EditorMenu( { onClose, editorMode, onSetMode, isCodeEditingEnabled, set
 // @ts-ignore
 export default compose( [
 	withSelect( ( select ) => {
-		const { getEditorMode } = select( 'isolated/editor' );
-		const { codeEditingEnabled } = select( 'core/editor' ).getEditorSettings();
+		const { getEditorMode } = /** @type {any} */ ( select( 'isolated/editor' ) );
+		const { codeEditingEnabled } = /** @type {any} */ ( select( 'core/editor' ) ).getEditorSettings();
 
 		return {
 			editorMode: getEditorMode(),
@@ -80,7 +80,7 @@ export default compose( [
 	} ),
 	withDispatch( ( dispatch ) => ( {
 		onSetMode( mode ) {
-			dispatch( 'isolated/editor' ).setEditorMode( mode );
+			/** @type {any} */ ( dispatch( 'isolated/editor' ) ).setEditorMode( mode );
 		},
 	} ) ),
 ] )( EditorMenu );

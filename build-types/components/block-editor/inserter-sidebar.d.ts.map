@@ -1,1 +1,1 @@
-{"version":3,"file":"inserter-sidebar.d.ts","sourceRoot":"","sources":["../../../src/components/block-editor/inserter-sidebar.js"],"names":[],"mappings":"AAsDA;;;;;GAKG;AACH;IAJ2B,QAAQ;IACG,IAAI,GAA/B,MAAM,EAAE,GAAC,SAAS;gCA2C5B"}
+{"version":3,"file":"inserter-sidebar.d.ts","sourceRoot":"","sources":["../../../src/components/block-editor/inserter-sidebar.js"],"names":[],"mappings":"AAsDA;;;;;GAKG;AACH,4DAJG;IAAwB,QAAQ;IACG,IAAI,GAA/B,MAAM,EAAE,GAAC,SAAS;CAE5B,+BAyCA"}

@@ -1,6 +1,6 @@
 export default WritingMenu;
-export type BlockEditorSettings = import('../../../index').BlockEditorSettings;
-export type OnClose = import('./index').OnClose;
+export type BlockEditorSettings = import("../../../index").BlockEditorSettings;
+export type OnClose = import("./index").OnClose;
 /** @typedef {import('../../../index').BlockEditorSettings} BlockEditorSettings */
 /** @typedef {import('./index').OnClose} OnClose */
 /**

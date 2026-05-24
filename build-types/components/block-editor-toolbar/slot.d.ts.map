@@ -1,1 +1,1 @@
-{"version":3,"file":"slot.d.ts","sourceRoot":"","sources":["../../../src/components/block-editor-toolbar/slot.js"],"names":[],"mappings":";AAQA;;;;;;GAMG;AACH;IAHyB,QAAQ;gCAKhC;;IAED,uDAEC"}
+{"version":3,"file":"slot.d.ts","sourceRoot":"","sources":["../../../src/components/block-editor-toolbar/slot.js"],"names":[],"mappings":";AAQA;;;;;;GAMG;AACH,2CAHG;IAAsB,QAAQ;CAC9B,+BAIF;;IAED,uDAEC"}

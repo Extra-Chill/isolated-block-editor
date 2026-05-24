@@ -1,1 +1,1 @@
-{"version":3,"file":"visual-editor.d.ts","sourceRoot":"","sources":["../../../src/components/block-editor/visual-editor.js"],"names":[],"mappings":"AA6EA;;;;;;;GAOG;AACH;IAFe,MAAM;gCA6TpB"}
+{"version":3,"file":"visual-editor.d.ts","sourceRoot":"","sources":["../../../src/components/block-editor/visual-editor.js"],"names":[],"mappings":"AA6EA;;;;;;;GAOG;AACH,iDAFG;IAAY,MAAM;CACpB,+BA4TA"}

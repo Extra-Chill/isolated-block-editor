@@ -56,6 +56,9 @@ function ListViewSidebar(_ref) {
     _useState2 = (0, _slicedToArray2["default"])(_useState, 2),
     dropZoneElement = _useState2[0],
     setDropZoneElement = _useState2[1];
+  var setDropZoneElementRef = (0, _element.useCallback)(function (element) {
+    setDropZoneElement(element || null);
+  }, []);
   // Tracks our current tab.
   var _useState3 = (0, _element.useState)('list-view'),
     _useState4 = (0, _slicedToArray2["default"])(_useState3, 2),
@@ -70,7 +73,7 @@ function ListViewSidebar(_ref) {
   var listViewRef = (0, _element.useRef)();
 
   // Must merge the refs together so focus can be handled properly in the next function.
-  var listViewContainerRef = (0, _compose.useMergeRefs)([focusOnMountRef, listViewRef, setDropZoneElement]);
+  var listViewContainerRef = (0, _compose.useMergeRefs)([focusOnMountRef, listViewRef, setDropZoneElementRef]);
 
   /*
    * Callback function to handle list view or outline focus.

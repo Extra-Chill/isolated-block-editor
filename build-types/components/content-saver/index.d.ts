@@ -1,6 +1,6 @@
 export default ContentSaver;
-export type OnSaveBlocks = import('../../index').OnSaveBlocks;
-export type OnSaveContent = import('../../index').OnSaveContent;
+export type OnSaveBlocks = import("../../index").OnSaveBlocks;
+export type OnSaveContent = import("../../index").OnSaveContent;
 /** @typedef {import('../../index').OnSaveBlocks} OnSaveBlocks */
 /** @typedef {import('../../index').OnSaveContent} OnSaveContent */
 /**

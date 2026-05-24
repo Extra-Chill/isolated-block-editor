@@ -1,6 +1,6 @@
 export default actions;
-export type BlockEditorSettings = import('../../index').BlockEditorSettings;
-export type EditorMode = import('./reducer').EditorMode;
+export type BlockEditorSettings = import("../../index").BlockEditorSettings;
+export type EditorMode = import("./reducer").EditorMode;
 declare namespace actions {
     /**
      * Set whether the editor is ready for editing
@@ -16,7 +16,7 @@ declare namespace actions {
      *
      * @param {EditorMode} editorMode Editor mode
      */
-    function setEditorMode(editorMode: import("./reducer").EditorMode): {
+    function setEditorMode(editorMode: EditorMode): {
         type: string;
         editorMode: import("./reducer").EditorMode;
     };
@@ -25,7 +25,7 @@ declare namespace actions {
      *
      * @param {BlockEditorSettings} settings
      */
-    function setupEditor(settings: import("../../index").BlockEditorSettings): {
+    function setupEditor(settings: BlockEditorSettings): {
         type: string;
         settings: import("../../index").BlockEditorSettings;
     };
@@ -88,11 +88,21 @@ declare namespace actions {
      *
      * @param {string} name Name of sidebar section
      */
-    function openGeneralSidebar(name: string): Generator<Object, void, unknown>;
+    function openGeneralSidebar(name: string): Generator<{
+        type: string;
+        storeKey: string;
+        actionName: string;
+        args: unknown[];
+    }, void, unknown>;
     /**
      * Close the sidebar (or popover)
      */
-    function closeGeneralSidebar(): Generator<Object, void, unknown>;
+    function closeGeneralSidebar(): Generator<{
+        type: string;
+        storeKey: string;
+        actionName: string;
+        args: unknown[];
+    }, void, unknown>;
     /**
      * Set the status of the listview sidebar section
      *

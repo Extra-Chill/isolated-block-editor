@@ -77,9 +77,9 @@ var _jsxRuntime = require("react/jsx-runtime");
 
 // @ts-ignore
 var _default = exports["default"] = (0, _compose.compose)([(0, _data.withSelect)(function (select) {
-  var _select = select('isolated/editor'),
+  var _select = /** @type {any} */select('isolated/editor'),
     getEditorMode = _select.getEditorMode;
-  var _select$getEditorSett = select('core/editor').getEditorSettings(),
+  var _select$getEditorSett = /** @type {any} */select('core/editor').getEditorSettings(),
     codeEditingEnabled = _select$getEditorSett.codeEditingEnabled;
   return {
     editorMode: getEditorMode(),
@@ -88,7 +88,7 @@ var _default = exports["default"] = (0, _compose.compose)([(0, _data.withSelect)
 }), (0, _data.withDispatch)(function (dispatch) {
   return {
     onSetMode: function onSetMode(mode) {
-      dispatch('isolated/editor').setEditorMode(mode);
+      /** @type {any} */dispatch('isolated/editor').setEditorMode(mode);
     }
   };
 })])(EditorMenu);

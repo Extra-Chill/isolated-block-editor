@@ -14,7 +14,7 @@
  * @param {BlockEditorSettings} settings - Settings
  */
 export default function useEditorSetup(settings: BlockEditorSettings): import("../../index").BlockEditorSettings;
-export type BlockEditorSettings = import('../../index').BlockEditorSettings;
+export type BlockEditorSettings = import("../../index").BlockEditorSettings;
 /**
  * Settings callback
  */

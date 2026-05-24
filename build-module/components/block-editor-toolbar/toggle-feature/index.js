@@ -42,11 +42,16 @@ function FeatureToggle({
 export default compose([withSelect((select, {
   feature
 }) => ({
-  isActive: select('isolated/editor').isFeatureActive(feature)
+  isActive: /** @type {any} */select('isolated/editor').isFeatureActive(feature)
 })), withDispatch((dispatch, ownProps) => ({
   onToggle() {
-    dispatch('isolated/editor').toggleFeature(ownProps.feature);
-    ownProps.onClose();
+    const {
+      feature,
+      onClose
+    } = /** @type {{ feature: string, onClose: Function }} */ownProps;
+    /** @type {any} */
+    dispatch('isolated/editor').toggleFeature(feature);
+    onClose();
   }
 })), withSpokenMessages])(FeatureToggle);
 //# sourceMappingURL=index.js.map
