@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 
-import { createRoot, unmountComponentAtNode } from '@wordpress/element';
+import { createRoot } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -16,7 +16,7 @@ import IsolatedBlockEditor from '../index';
 /**
  * These are the Gutenberg and IsolatedBlockEditor settings. Everything not set uses the defaults.
  *
- * @type BlockEditorSettings
+ * @type {BlockEditorSettings}
  */
 const settings = {
 	iso: {
@@ -24,10 +24,12 @@ const settings = {
 	},
 };
 
+const editors = new WeakMap();
+
 /**
  * Saves content to the textarea
  *
- * @param {string} content Serialized block content
+ * @param {string}              content  Serialized block content
  * @param {HTMLTextAreaElement} textarea Textarea node
  */
 function saveBlocks( content, textarea ) {
@@ -37,9 +39,9 @@ function saveBlocks( content, textarea ) {
 /**
  * Initial content loader. Determine if the textarea contains blocks or raw HTML
  *
- * @param {string} content Text area content
- * @param {*} parser Gutenberg `parse` function
- * @param {*} rawHandler Gutenberg `rawHandler` function
+ * @param {string} content    Text area content
+ * @param {*}      parser     Gutenberg `parse` function
+ * @param {*}      rawHandler Gutenberg `rawHandler` function
  */
 function onLoad( content, parser, rawHandler ) {
 	// Does the content contain blocks?
@@ -55,7 +57,7 @@ function onLoad( content, parser, rawHandler ) {
 /**
  * Attach IsolatedBlockEditor to a textarea
  *
- * @param {HTMLTextAreaElement} textarea Textarea node
+ * @param {HTMLTextAreaElement} textarea     Textarea node
  * @param {BlockEditorSettings} userSettings Settings object
  */
 function attachEditor( textarea, userSettings = {} ) {
@@ -69,6 +71,9 @@ function attachEditor( textarea, userSettings = {} ) {
 	editor.classList.add( 'editor' );
 
 	const editorReactRoot = createRoot( editor );
+	const previousDisplay = textarea.style.display;
+
+	editors.set( textarea, { editor, root: editorReactRoot, previousDisplay } );
 
 	// Insert after the textarea, and hide it
 	// @ts-ignore
@@ -92,19 +97,13 @@ function attachEditor( textarea, userSettings = {} ) {
  * @param {HTMLTextAreaElement} textarea Textarea node
  */
 function detachEditor( textarea ) {
-	/**
-	 * @type {HTMLElement}
-	 */
-	// @ts-ignore
-	const editor = textarea.nextSibling;
+	const editorState = editors.get( textarea );
 
-	if ( editor && editor.classList.contains( 'editor' ) ) {
-		unmountComponentAtNode( editor );
-
-		// @ts-ignore
-		textarea.style.display = null;
-		// @ts-ignore
-		editor.parentNode.removeChild( editor );
+	if ( editorState ) {
+		editors.delete( textarea );
+		editorState.root.unmount();
+		textarea.style.display = editorState.previousDisplay;
+		editorState.editor.remove();
 	}
 }
 
